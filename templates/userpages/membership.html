@@ -1,0 +1,180 @@
+{% extends 'userpages/sidebar.html' %} {% block content %} {% load static %}
+
+
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      
+
+      <div class="row mt-4 pb-5 mb-5">
+        <div class="col-12">
+          <div
+            class="card bg-dark bg-opacity-25 border border-white shadow-lg border-opacity-25 rounded-4"
+          >
+            <div class="card-header rounded-4">
+              <h4 class="card-title">Membership Plans</h4>
+              <p class="card-title-desc pb-2">
+                Buy any plan to become a verified member.
+              </p>
+              <p class="card-title-desc">
+                Note : User can only deposite multiple of 50 USDT.
+              </p>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+                  id="test"
+                  class="table hover table-borderless dt-responsive nowrap w-100 text-nowrap mt-3"
+                >
+                  <thead>
+                    <tr>
+                      <th scope="col">
+                        <p class="text-white text-opacity-75 mb-0">Plan Name</p>
+                      </th>
+
+                      <th scope="col">
+                        <p class="text-white text-opacity-75 mb-0">
+                          Minimum Investment
+                        </p>
+                      </th>
+                      <th scope="col">
+                        <p class="text-white text-opacity-75 mb-0">
+                          Maximum Investment
+                        </p>
+                      </th>
+                      <th scope="col">
+                        <p class="text-white text-opacity-75 mb-0">
+                          ROI per day
+                        </p>
+                      </th>
+                      <th scope="col">
+                        <p class="text-white text-opacity-75 mb-0">
+                          Overall ROI
+                        </p>
+                      </th>
+                      <th scope="col">
+                        <p class="text-white text-opacity-75 mb-0">Action</p>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in data%}
+                    <tr>
+                      <td class="fw-bold planname">{{i.name}}</td>
+                      <td>$ {{i.min_amount}}</td>
+                      {% if i.max_amount %}
+                      <td>$ {{i.max_amount}}</td>
+                      {% else %}
+                      <td>Above</td>
+                      {% endif %}
+                      <td>{{i.roi}} %</td>
+                      <td>{{i.overall_roi}} %</td>
+
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-success waves-effect waves-light"
+                          data-bs-toggle="modal"
+                          data-bs-target="#firstmodal{{i.id}}"
+                        >
+                          BUY
+                        </button>
+                        <!-- First modal dialog -->
+                        <div
+                          class="modal fade"
+                          id="firstmodal{{i.id}}"
+                          aria-hidden="true"
+                          aria-labelledby="exampleModalToggleLabel"
+                          tabindex="-1"
+                        >
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5
+                                  class="modal-title"
+                                  id="exampleModalToggleLabel"
+                                >
+                                  Enter Amount
+                                </h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="../../../buyplan" method="post">
+                                  {% csrf_token %}
+
+                                  <input
+                                    type="text"
+                                    name="id"
+                                    hidden
+                                    value="{{i.id}}"
+                                  />
+                                  <div class="mb-3">
+                                    <label
+                                      class="form-label"
+                                      for="formrow-firstname-input"
+                                      >Enter Amount</label
+                                    >
+                                    {% if i.max_amount %}
+                                    <input
+                                      type="number"
+                                      class="form-control"
+                                      id="formrow-firstname-input"
+                                      placeholder="$ {{i.min_amount}}  -  $ {{i.max_amount}}"
+                                      name="amount"
+                                    />
+                                    {% else %}
+
+                                    <input
+                                      type="number"
+                                      class="form-control"
+                                      id="formrow-firstname-input"
+                                      placeholder="$ {{i.min_amount}}  -  Above"
+                                      name="amount"
+                                    />
+                                    {% endif %}
+                                  </div>
+
+                                  <div class="mt-4">
+                                    <button
+                                      type="submit"
+                                      class="btn btn-success w-md"
+                                      name="buyplan"
+                                    >
+                                      BUY
+                                    </button>
+                                  </div>
+                                  <p class="p-2 fw-bold planname">
+                                    Note* : User can only enter amount multiple
+                                    of 50 USDT
+                                  </p>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end col -->
+      </div>
+      <!-- end row -->
+
+      <!-- end row -->
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+
+{% endblock %}

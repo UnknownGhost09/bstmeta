@@ -1,0 +1,684 @@
+{% extends 'userpages/sidebar.html' %} {% block content %} {% load static %}
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="row pt-4">
+        {% if m == 'False' %}
+
+        <div class="col">
+          <div class="card">
+              <div class="card-body">
+                  <h3 class="card-title">You are not a premium member</h3>
+                  <p class="card-text">Kindly buy our plan to become a premium member.</p>
+                  <a href="../../../allplans" class="btn btn-primary waves-effect waves-light w-100">Buy Plan</a>
+              </div>
+          </div>
+      </div>
+        {% endif %}
+        <div class="col-12">
+         
+          <div
+            class="page-title-box d-sm-flex align-items-center justify-content-between"
+          >
+            <h4 class="mb-sm-0 font-size-18">Dashboard</h4>
+
+            <div class="page-title-right ">
+              <div class="bg-light border p-1 rounded-3" id="reffer">
+                <div class="p-1">
+                  <div class="d-md-flex">
+                    <p class="my-auto font-w-500 tx-s-12">
+                      Referral Link &nbsp;&nbsp;
+                    </p>
+                    <br />
+                    <div
+                      class="my-auto ml-auto pull-right"
+                      style="text-align: right; clear: both; position: relative"
+                    >
+                      <span
+                        class="px-1 cursor"
+                        title="copy"
+                        onclick=myFunction()
+                        >{{ref_link}}</span
+                      >
+
+                      <input
+                        type="text"
+                        value="{{ref_link}}"
+                        id="myInput"
+                        hidden
+                      />
+                      <i
+                        class="fas fa-copy text-secondary fs-4 px-1 cursor"
+                        title="copy"
+                        onclick=myFunction()
+                      ></i>
+
+                      <a href="whatsapp://send?text={{ref_link}}"
+                        ><i
+                          class="fab fa-whatsapp text-secondary fs-4 px-1"
+                          title="whatsapp"
+                        ></i
+                      ></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end page title -->
+
+      <div class="row">
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+
+            <a href="../../../wallet">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">Total Earn</span>
+                    <h4 class="mb-1">
+                      <span class="text-success">$</span>
+                      <span
+                        class="counter-value text-success"
+                        id="earn"
+                        data-target="{{total_income|floatformat:'2'}}"
+                      ></span>
+                    </h4>
+                  </div>
+
+                  <div class="col-6">
+                    <div
+                      id="mini-chart1"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="ms-1 text-muted font-size-13">USDT</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col -->
+
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+            <a href="../../../user_referal">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">Direct Refferals</span>
+                    <h4 class="mb-1">
+                      <span
+                        class="counter-value text-success"
+                        data-target="{{total_user_refferals|floatformat:'2'}}"
+                      ></span>
+                    </h4>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      id="mini-chart2"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="ms-1 text-muted font-size-13">ID's</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col-->
+
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+            <a href="../../../wallet">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">Main Wallet</span>
+                    <h4 class="mb-1">
+                      <span class="text-success">$</span>
+                      <span
+                        class="counter-value text-success"
+                        id="fixed"
+                        data-target="{{userwallet.avaliable_balance|floatformat:'2'}}"
+                        >20</span
+                      >
+                    </h4>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      id="mini-chart3"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="ms-1 text-muted font-size-13">USDT</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col -->
+
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+            <a href="../../../user_referal">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">Total Withdrawal</span>
+                    <h4 class="mb-1">
+                      <span class="text-success" id="total_withdraw">$</span>
+                      <span
+                        class="counter-value text-success"
+                        id="total_withdraw"
+                        data-target="{{total_withdrawls|floatformat:'2'}}"
+                      ></span>
+                    </h4>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      id="mini-chart4"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="ms-1 text-muted font-size-13">USDT</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col -->
+      </div>
+
+      <div class="row">
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+
+            <a href="../../../wallet">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">ROI Bonus</span>
+                    <h4 class="mb-1">
+                      <span class="text-success">$</span>
+                      <span
+                        class="counter-value text-success"
+                        id="earn"
+                        data-target="{{total_farming_roi|floatformat:'2'}}"
+                      ></span>
+                    </h4>
+                  </div>
+
+                  <div class="col-6">
+                    <div
+                      id="mini-chart5"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="ms-1 text-muted font-size-13">USDT</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col -->
+
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+            <a href="../../../user_referal">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">Membership Amount</span>
+                    <h4 class="mb-1">
+                      <span class="text-success">$ </span>
+                      <span
+                        class="counter-value text-success"
+                        id="stakingbal"
+                        data-target="{{farming_balance|floatformat:'2'}}"
+                      ></span>
+                    </h4>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      id="mini-chart6"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="ms-1 text-muted font-size-13">USDT</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col-->
+
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+            <a href="../../../wallet">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">Direct-Ref Income</span>
+                    <h4 class="mb-1">
+                      <span class="text-success">$</span>
+                      <span
+                        class="counter-value text-success"
+                        id="directref"
+                        data-target="{{refferal_income|floatformat:'2'}}"
+                      ></span>
+                    </h4>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      id="mini-chart7"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="ms-1 text-muted font-size-13">USDT</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col -->
+
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+            <a href="../../../user_referal">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">Team</span>
+                    <h4 class="mb-1">
+                      <span
+                        class="counter-value text-success"
+                        data-target="{{team}}"
+                      ></span>
+                    </h4>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      id="mini-chart8"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="ms-1 text-muted font-size-13">ID's</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col -->
+      </div>
+
+      <div class="row">
+       
+        <!-- end col -->
+
+     
+        <!-- end col-->
+
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+            <a href="../../../user_referal">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">Total Deposit</span>
+                    <h4 class="mb-1">
+                      <span class="text-success" id="total_withdraw">$</span>
+                      <span
+                        class="counter-value text-success"
+                        id="total_withdraw"
+                        data-target="{{total_deposit|floatformat:'2'}}"
+                      ></span>
+                    </h4>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      id="mini-chart9"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="ms-1 text-muted font-size-13">USDT</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col -->
+
+
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+            <a href="../../../user_referal">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">Overall Business</span>
+                    <h4 class="mb-1">
+                      <span class="text-success" id="total_withdraw">$</span>
+                      <span
+                        class="counter-value text-success"
+                        id="total_withdraw"
+                        data-target="{{user.business|floatformat:'2'}}"
+                      ></span>
+                    </h4>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      id="mini-chart10"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="ms-1 text-muted font-size-13">USDT</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col -->
+      </div>
+     
+    </div>
+
+      <div class="row">
+     
+        <!-- end col -->
+        <!-- end col -->
+
+        <div class="col-xl-4">
+          <div
+            class="card bg-black bg-opacity-50 shadow-lg border border-white border-opacity-25 rounded-4"
+          >
+            <div class="card-header align-items-center d-flex rounded-4">
+              <h4 class="card-title mb-0">ROI INCOME</h4>
+         
+            </div>
+            <!-- end card header -->
+
+            <div class="card-body px-0">
+     
+                  <div
+                    class="table-responsive px-3"
+                    data-simplebar
+                    style="max-height: 352px"
+                  >
+                  {% if farming_roi %}
+                    <table
+                      class="table table-hover align-middle table-nowrap table-borderless"
+                    >
+                      <tbody>
+                   
+                        <tr>
+                          {% for i in farming_roi %}
+
+                          <td style="width: 50px">
+                            <div class="font-size-22 text-success">
+                              <i class="bx bx-down-arrow-circle d-block"></i>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div>
+                              <h5 class="font-size-14 mb-1">
+                                {{i.plan_id.name}}
+                              </h5>
+                              <p id="date" class="text-muted mb-0 font-size-12">
+                                {{i.date|slice:"0:19"}}
+                              </p>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div class="text-end">
+                              <h5 class="font-size-14 mb-0">$ {{i.roi}}</h5>
+                              <p class="text-muted mb-0 font-size-12">Amount</p>
+                            </div>
+                          </td>
+                        </tr>
+
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    {% else %}
+                    No data Found
+                    {% endif %}
+                  </div>
+            
+            </div>
+            <!-- end card body -->
+          </div>
+          <!-- end card -->
+        </div>
+
+        <div class="col-xl-4">
+          <div
+            class="card bg-black bg-opacity-50 shadow-lg border border-white border-opacity-25 rounded-4"
+          >
+            <div class="card-header align-items-center d-flex rounded-4">
+              <h4 class="card-title mb-0 ">TOP ACHIVERS</h4>
+           
+            </div>
+            <!-- end card header -->
+
+            <div class="card-body px-0">
+       
+                  <div
+                    class="table-responsive px-3"
+                    data-simplebar
+                    style="max-height: 352px"
+                  >
+                  {% if farming_roi %}
+                    <table
+                      class="table table-hover align-middle table-nowrap table-borderless"
+                    >
+                      <tbody>
+                   
+                        <tr>
+                          {% for i in farming_roi %}
+
+                          <td style="width: 50px">
+                            <div class="font-size-22 text-success">
+                              <i class="bx bx-down-arrow-circle d-block"></i>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div>
+                              <h5 class="font-size-14 mb-1">
+                                {{i.plan_id.name}}
+                              </h5>
+                              <p id="date" class="text-muted mb-0 font-size-12">
+                                {{i.date|slice:"0:19"}}
+                              </p>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div class="text-end">
+                              <h5 class="font-size-14 mb-0">$ {{i.roi}}</h5>
+                              <p class="text-muted mb-0 font-size-12">Amount</p>
+                            </div>
+                          </td>
+                        </tr>
+
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    {% else %}
+                    No data Found
+                    {% endif %}
+                  </div>
+              
+             
+            </div>
+            <!-- end card body -->
+          </div>
+          <!-- end card -->
+        </div>
+
+        <div class="col-xl-4">
+          <div
+            class="card bg-black bg-opacity-50 shadow-lg border border-white border-opacity-25 rounded-4"
+          >
+            <div class="card-header align-items-center d-flex rounded-4">
+              <h4 class="card-title mb-0 ">LEVEL INCOME</h4>
+   
+            </div>
+            <!-- end card header -->
+
+            <div class="card-body px-0">
+       
+                  <div
+                    class="table-responsive px-3"
+                    data-simplebar
+                    style="max-height: 352px"
+                  >
+                  {% if farming_roi %}
+                    <table
+                      class="table table-hover align-middle table-nowrap table-borderless"
+                    >
+                      <tbody>
+                   
+                        <tr>
+                          {% for i in farming_roi %}
+
+                          <td style="width: 50px">
+                            <div class="font-size-22 text-success">
+                              <i class="bx bx-down-arrow-circle d-block"></i>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div>
+                              <h5 class="font-size-14 mb-1">
+                                {{i.plan_id.name}}
+                              </h5>
+                              <p id="date" class="text-muted mb-0 font-size-12">
+                                {{i.date|slice:"0:19"}}
+                              </p>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div class="text-end">
+                              <h5 class="font-size-14 mb-0">$ {{i.roi}}</h5>
+                              <p class="text-muted mb-0 font-size-12">Amount</p>
+                            </div>
+                          </td>
+                        </tr>
+
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    {% else %}
+                    No data Found
+                    {% endif %}
+                  </div>
+                </div>
+             
+              
+            <!-- end card body -->
+          </div>
+          <!-- end card -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

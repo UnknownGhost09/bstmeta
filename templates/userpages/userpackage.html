@@ -1,0 +1,58 @@
+{% extends 'userpages/sidebar.html' %}
+
+{% block content %}
+
+  
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="card-header">
+                <h4 class="card-title">Packages</h4>
+                <p class="card-title-desc">User Current Package
+                </p>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class='table-responsive'>
+                        <table id ='test' class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrapp">
+                            <thead>
+                              <tr>
+                                <th scope='col'>Plan Name</th>
+                                <th scope="col">Package Name</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Referral Commission </th>
+                                <th scope="col">Date</th>
+                                
+                              </tr>
+                            </thead>
+                            {% for i in data %}
+                            <tr>
+                                <td>{{i.plan_name}}</td>
+                                <td>{{i.name}}</td>
+                                <td>{{i.amount}}</td>
+                                <td>{{i.refferal_commision}}</td>
+                                <td>{{i.date}}</td>
+                            </tr>
+                            {% endfor %}
+                            <tbody>
+
+
+                            </tbody>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

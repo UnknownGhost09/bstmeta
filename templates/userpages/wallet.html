@@ -1,0 +1,396 @@
+{% extends 'userpages/sidebar.html' %} {% block content %}
+
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+     {% if m == 'False' %}
+
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">You are not a premium member</h3>
+            <p class="card-text">
+              Kindly buy our plan to become a premium member.
+            </p>
+            <a
+              href="../../../allplans"
+              class="btn btn-primary waves-effect waves-light w-100"
+              >Buy Plan</a
+            >
+          </div>
+        </div>
+      </div>
+
+      {% endif %}
+      <div class="card-header pb-3 mt-4">
+        <h4 class="card-title">Wallet</h4>
+      </div>
+
+      <div
+        class="card bg-black bg-opacity-25 rounded-4 border-white border-opacity-25"
+      >
+        <div class="card-body">
+          <div class="row flex-lg-row flex-column-reverse">
+            <!-- Left side column start -->
+            <div class="col">
+              <!-- First component start -->
+
+              <div
+                class="border position-relative rounded-4 p-lg-4 p-3 rounded shadow-lg border-white border-opacity-25 bg-dark bg-opacity-25"
+              >
+                <div
+                  class="d-lg-flex align-items-center mb-4 justify-content-between"
+                >
+                  <ul
+                    class="nav text-nowrap flex-nowrap gap-lg-4 funding_list"
+                    id="pills-tab"
+                    role="tablist"
+                  >
+                    <li class="nav-item" role="presentation">
+                      <button
+                        class="nav-link active btn bg-black bg-opacity-75"
+                        id="pills-wallet-tab"
+                        data-bs-toggle="pill"
+                        data-bs-target="#pills-wallet"
+                        type="button"
+                        role="tab"
+                        aria-controls="pills-wallet"
+                        aria-selected="true"
+                      >
+                        <p class="mb-0 text-white text-opacity-75">
+                          Spot wallet
+                        </p>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+                <div class="">
+                  <div class="tab-content" id="pills-tabContent">
+                    <div
+                      class="tab-pane fade show active"
+                      id="pills-wallet"
+                      role="tabpanel"
+                      aria-labelledby="pills-wallet-tab"
+                      tabindex="0"
+                    >
+                      <div
+                        class="text-uppercase fw-semibold d-flex justify-content-between px-lg-4"
+                      >
+                        <div class="col-3 text-uppercase">
+                          <p class="mb-0 theading">token</p>
+                        </div>
+                        <div class="col-3 text-uppercase text-center">
+                          <p class="mb-0 theading">Avaliable</p>
+                        </div>
+                        <div class="col-3 text-uppercase text-center">
+                          <p class="mb-0 theading">Reserved</p>
+                        </div>
+                      </div>
+                      <div class="d-flex flex-column mt-3 gap-3">
+                        <div
+                          class="text-uppercase fw-semibold py-lg-3 px-lg-4 p-2 rounded-5 d-flex align-items-center justify-content-between wallet_row"
+                        >
+                          <div class="col-3 d-flex align-items-center gap-2">
+                            <p class="mb-0">USDT</p>
+                          </div>
+
+                          <div class="col-3 text-center">
+                            <p class="mb-0 theading">
+                              $ {{wallet.avaliable_balance|floatformat:"2"}}
+                            </p>
+                          </div>
+                          <div class="col-3 text-center">
+                            <p class="mb-0 theading">
+                              $ {{wallet.reserved_balance|floatformat:"2"}}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="border mt-3 p-lg-4 p-3 rounded shadow-lg border-white border-opacity-25 rounded-4 bg-dark bg-opacity-25"
+              >
+                <div
+                  class="d-flex justify-content-between bg-black bg-opacity-25 align-items-center"
+                >
+                  <ul
+                    class="nav nav-tabs fw-bold gap-4 mb-0"
+                    id="pills-tab"
+                    role="tablist"
+                  >
+                    <li class="nav-item" role="presentation">
+                      <button
+                        class="nav-link active"
+                        id="pills-home-tab"
+                        data-bs-toggle="pill"
+                        data-bs-target="#pills-home"
+                        type="button"
+                        role="tab"
+                        aria-controls="pills-home"
+                        aria-selected="true"
+                      >
+                        <p class="text-white mb-0">Deposits</p>
+                      </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button
+                        class="nav-link text-white"
+                        id="pills-profile-tab"
+                        data-bs-toggle="pill"
+                        data-bs-target="#pills-profile"
+                        type="button"
+                        role="tab"
+                        aria-controls="pills-profile"
+                        aria-selected="false"
+                      >
+                        <p class="text-white mb-0">Withdrawals</p>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+                <div class="tab-content mt-3" id="pills-tabContent">
+                  <div
+                    class="tab-pane fade show active"
+                    id="pills-home"
+                    role="tabpanel"
+                    aria-labelledby="pills-home-tab"
+                    tabindex="0"
+                  >
+                    <div class="table-responsive">
+                      <table
+                        id="incometable"
+                        class="table hover table-borderless dt-responsive nowrap w-100 text-nowrap"
+                      >
+                        <thead>
+                          <tr>
+                            <th scope="col">
+                              <p class="text-white text-opacity-75 mb-0">
+                                Amount
+                              </p>
+                            </th>
+                            <th scope="col">
+                              <p class="text-white text-opacity-75 mb-0">
+                                Currency
+                              </p>
+                            </th>
+                            <th scope="col">
+                              <p class="text-white text-opacity-75 mb-0">
+                                Address
+                              </p>
+                            </th>
+                            <th scope="col">
+                              <p class="text-white text-opacity-75 mb-0">
+                                Status
+                              </p>
+                            </th>
+                            <th scope="col">
+                              <p class="text-white text-opacity-75 mb-0">
+                                Datetime
+                              </p>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for i in incomedata %}
+                          <tr>
+                            <td>{{i.amount}}</td>
+                            <td>{{i.currency}}</td>
+                            <td>{{i.address}}</td>
+                            {% if i.status == '0' %}
+                            <td>
+                              <span
+                                class="badge text-white text-bg-warning p-2 rounded-pill"
+                                >Pending</span
+                              >
+                            </td>
+                            {% elif i.status == '1' %}
+                            <td>
+                              <span class="badge text-bg-success p-2 rounded-3"
+                                >Completed</span
+                              >
+                            </td>
+                            {% else %}
+                            <td>
+                              <span class="badge text-bg-danger p-2 rounded-3"
+                                >Canceled</span
+                              >
+                            </td>
+                            {% endif %}
+                            <td>{{i.date|slice:"0:19"}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="d-lg-none d-grid">
+                      <button class="btn btn-outline-success rounded-5">
+                        See more
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="pills-profile"
+                    role="tabpanel"
+                    aria-labelledby="pills-profile-tab"
+                    tabindex="0"
+                  >
+                    <div class="table-responsive">
+                      <table
+                        id="outcome"
+                        class="table hover table-borderless dt-responsive nowrap w-100 text-nowrap"
+                      >
+                        <thead>
+                          <tr>
+                            <th scope="col">Amount</th>
+                            <th scope='col'>Fees</th>
+                            <th scope="col">Currency</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Datetime</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for i in outcomedata %}
+                          <tr>
+                            <td>{{i.amount}}</td>
+                            <td>{{i.fees}}</td>
+                            <td>{{i.currency}}</td>
+                            <td>{{i.address}}</td>
+                            {% if i.status == '0' %}
+                            <td>
+                              <span
+                                class="badge text-white text-bg-warning p-2 rounded-3"
+                                >Pending</span
+                              >
+                            </td>
+                            {% elif i.status == '1' %}
+                            <td>
+                              <span class="badge text-bg-success p-2 rounded-3"
+                                >Completed</span
+                              >
+                            </td>
+                            {% else %}
+                            <td>
+                              <span class="badge text-bg-danger p-2 rounded-3"
+                                >Canceled</span
+                              >
+                            </td>
+                            {% endif %}
+                            <td>{{i.date|slice:"0:19"}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="wallet" class="col-lg-4 col">
+              <div
+                class="card rounded border border-white border-opacity-25 rounded-4 bg-dark bg-opacity-25 shadow-lg"
+              >
+                <div class="card-body p-lg-4 p-3">
+                  <div
+                    class="d-flex align-items-center mb-4 justify-content-between"
+                  >
+                    <p class="mb-0 fw-semibold fs-5">Account balance</p>
+                  </div>
+
+                  <!-- Chart Column start -->
+
+                  <div class="chart"></div>
+
+                  <!-- Chart Column end -->
+                  <div
+                    class="card shadow-lg bg-black bg-opacity-25 border rounded-4 border-white border-opacity-25"
+                  >
+                    <div class="card-body">
+                      <div
+                        id="pie_chart1"
+                        data-colors='["#2ab57d", "#5156be"]'
+                        class="apex-charts"
+                        dir="ltr"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="d-flex justify-content-between fw-semibold border-secondary border-bottom border-opacity-25 py-2"
+                  >
+                    <div class="d-flex align-items-center gap-2">
+                      <i class="fa-solid fa-diamond text-warning"></i>
+                      <p class="mb-0">USDT</p>
+                    </div>
+                    <p class="mb-0">
+                      $ {{wallet.avaliable_balance|floatformat:"2"}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right side column end -->
+          </div>
+          {% load static %}
+
+          <script src="{% static 'assets/libs/apexcharts/apexcharts.min.js' %}"></script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  try{
+    function getChartColorsArray(r) {
+      r = $(r).attr("data-colors");
+      console.log(r)
+
+      return (r = JSON.parse(r)).map(function(r) {
+          r = r.replace(" ", "");
+          if (-1 == r.indexOf("--")) return r;
+          r = getComputedStyle(document.documentElement).getPropertyValue(r);
+          return r || void 0;
+      });
+  }
+    var pieColors = getChartColorsArray("#pie_chart1"),
+                options = {
+                  chart: { height: 320, type: "pie" },
+                  series: [{{wallet.reserved_balance}}, {{wallet.avaliable_balance}}],
+                  labels: ["Reserved Amount", "Available balance"],
+                  colors: pieColors,
+                  legend: {
+                    show: !0,
+                    position: "bottom",
+                    horizontalAlign: "center",
+                    verticalAlign: "middle",
+                    floating: !1,
+                    fontSize: "14px",
+                    offsetX: 0,
+                  },
+                  responsive: [
+                    {
+                      breakpoint: 600,
+                      options: { chart: { height: 240 }, legend: { show: !1 } },
+                    },
+                  ],
+                };
+              (chart = new ApexCharts(
+                document.querySelector("#pie_chart1"),
+                options
+              )).render();
+
+  }catch(e){
+    console.log("hello");
+    console.log(e);
+  }
+</script>
+
+{% endblock %}

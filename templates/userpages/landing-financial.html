@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <title>MlM Metaboxfy</title>
+    <link rel="stylesheet" href="{% static 'assets/css/mlm.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Silicon - Multipurpose Technology Bootstrap Template"
+    />
+    <meta
+      name="keywords"
+      content="bootstrap, business, creative agency, mobile app showcase, saas, fintech, finance, online courses, software, medical, conference landing, services, e-commerce, shopping cart, multipurpose, shop, ui kit, marketing, seo, landing, blog, portfolio, html5, css3, javascript, gallery, slider, touch, creative"
+    />
+    <meta name="author" content="Createx Studio" />
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Favicon and Touch Icons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/media/{{appdetail.favicon}}/"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'assets/favicon/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'assets/favicon/favicon-16x16.png' %}"
+    />
+    <link rel="manifest" href="{% static 'assets/favicon/site.webmanifest' %}" />
+    <link
+      rel="mask-icon"
+      href="{% static 'assets/favicon/safari-pinned-tab.svg' %}"
+      color="#6366f1"
+    />
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.ico' %}" />
+    <meta name="msapplication-TileColor" content="#080032" />
+    <meta
+      name="msapplication-config"
+      content="{% static 'assets/favicon/browserconfig.xml' %}"
+    />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Vendor Styles -->
+    <link
+      rel="stylesheet"
+      media="screen"
+      href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      media="screen"
+      href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}"
+    />
+
+    <!-- Main Theme Styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/css/theme.min.css' %}" />
+
+    <!-- Page loading styles -->
+    <style>
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all 0.4s 0.2s ease-in-out;
+        transition: all 0.4s 0.2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .dark-mode .page-loading {
+        background-color: #0b0f19;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity 0.2s ease-in-out;
+        transition: opacity 0.2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      .dark-mode .page-loading-inner > span {
+        color: #fff;
+        opacity: 0.6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: 0.75rem;
+        vertical-align: text-bottom;
+        border: 0.15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner 0.75s linear infinite;
+        animation: spinner 0.75s linear infinite;
+      }
+      .dark-mode .page-spinner {
+        border-color: rgba(255, 255, 255, 0.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <!-- Theme mode -->
+    <script>
+      let mode = window.localStorage.getItem("mode"),
+        root = document.getElementsByTagName("html")[0];
+      if (mode !== null && mode === "dark") {
+        root.classList.add("dark-mode");
+      } else {
+        root.classList.remove("dark-mode");
+      }
+    </script>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector(".page-loading");
+          preloader.classList.remove("active");
+          setTimeout(function () {
+            preloader.remove();
+          }, 1000);
+        };
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-WKV3GT5");
+    </script>
+  </head>
+
+  <!-- Body -->
+  <body>
+    <!-- Google Tag Manager (noscript)-->
+    <noscript>
+      <iframe
+        src="//www.googletagmanager.com/ns.html?id=GTM-WKV3GT5"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe>
+    </noscript>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Loading...</span>
+      </div>
+    </div>
+
+    <!-- Page wrapper for sticky footer -->
+    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+    <main class="container-xxl px-0 page-wrapper" id='home'>
+      <!-- Navbar -->
+      <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page -->
+      <header class="header navbar navbar-expand-lg bg-light navbar-sticky">
+        <div class="container px-3">
+          <a href=" " class="navbar-brand pe-3">
+            <img src="/media/{{appdetail.logodart}}/" width="47" alt="metaboxfy" />
+            
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+              <h5 class="offcanvas-title">Menu</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a
+                    href="#home"
+                    class="nav-link"
+                    
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item ">
+                  <a
+                    href="#services"
+                    class="nav-link"
+                   
+                    >Services</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="#blog"
+                    class="nav-link"
+                    >Blog</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a href="#contact" class="nav-link"
+                    >Contact us</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a href="#about" class="nav-link">About us</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4"
+            data-bs-toggle="mode"
+          >
+          <label class="form-check-label d-none d-sm-block" for="theme-mode">
+            <i class="fa-solid fa-sun text-primary"></i>
+          </label>
+          <input type="checkbox" class="form-check-input" id="theme-mode" />
+          <label class="form-check-label d-none d-sm-block" for="theme-mode">
+            <i class="fa-solid fa-moon"></i>
+          </label>
+          </div>
+          <button
+            type="button"
+            class="navbar-toggler"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <a
+            href="../../../loginpage"
+            class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex"
+            target="_blank"
+            rel="noopener"
+          >
+            Login
+          </a>
+        </div>
+      </header>
+
+      <!-- Hero -->
+      <section class="container-xxl px-0 pt-lg-4 mt-lg-3" >
+        <div class="position-relative overflow-hidden">
+          <!-- Image -->
+          <div
+            class="container-fluid position-relative position-lg-absolute top-0 start-0 h-100"
+          >
+            <div class="row h-100 me-n4 me-n2">
+              <div class="col-lg-7 position-relative">
+                <div
+                  class="d-none d-sm-block d-lg-none"
+                  style="height: 400px"
+                ></div>
+                <div class="d-sm-none" style="height: 300px"></div>
+                <div
+                  class="jarallax position-absolute top-0 start-0 w-100 h-100 rounded-3 rounded-start-0 overflow-hidden"
+                  data-jarallax
+                  data-speed="0.3"
+                >
+                  <div
+                    class="jarallax-img"
+                    style="
+                      background-image: url({% static 'assets/images/landing/financial/artem.jpg' %});
+                    "
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="container position-relative zindex-5 pt-lg-5 px-0 px-lg-3"
+          >
+            <div class="row pt-lg-5 mx-n4 mx-lg-n3">
+              <div class="col-xl-6 col-lg-7 offset-lg-5 offset-xl-6 pb-5">
+                <!-- Card -->
+                <div
+                  class="card bg-dark border-light overflow-hidden py-4 px-2 p-sm-4"
+                >
+                  <span
+                    class="position-absolute top-0 start-0 w-100 h-100"
+                    style="background-color: rgba(255, 255, 255, 0.05)"
+                  ></span>
+                  <div class="card-body position-relative zindex-5">
+                    <p
+                      class="fs-xl fw-bolder text-primary text-uppercase mb-3"
+                    >
+                    SIMPLE WAY TO POWER YOUR BUSINESS IS HERE
+                    </p>
+                    <h1 class="display-5 fw-semibold text-light pb-3 mb-3">
+                      Join Our MLM Community
+                    </h1>
+                    <p class="fs-lg text-light opacity-70 mb-5">
+                      we've spent more than ten years assisting our clients in meeting their financial needs. We provide you with the entire range of international financial services.
+                    </p>
+                    <div class="d-flex flex-column flex-sm-row">
+                      <a
+                        href="../../../register"
+                        class="btn btn-outline-light shadow-primary rounded-5 btn-lg mb-3 mb-sm-0 me-sm-4"
+                      >
+                        Join Us
+                        <i class="bx bx-right-arrow-alt"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-xxl-3 col-lg-4 offset-lg-8 offset-xxl-9 pt-lg-5 mt-xxl-5"
+              >
+                <!-- Contacts (List) -->
+                <ul class="list-unstyled mb-0 px-4 px-lg-0">
+                  <li class="d-flex align-items-center pb-1 mb-2">
+                    <i class="bx bx-map fs-xl text-primary me-2"></i>
+                    Sector 34, Chandigarh
+                  </li>
+                  <li class="d-flex align-items-center pb-1 mb-2">
+                    <i class="bx bx-envelope fs-xl text-primary me-2"></i>
+                    <a href="metaboxfy@gmail.com" class="nav-link fw-normal p-0"
+                      >metaboxfy@gmail.com</a
+                    >
+                  </li>
+                  <li class="d-flex align-items-center pb-1 mb-2">
+                    <i class="bx bx-phone-call fs-xl text-primary me-2"></i>
+                    <a href="tel:4065550120" class="nav-link fw-normal p-0"
+                      >+91 00000-00000</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+                  <!-- Events Modal Start -->
+          
+                  <div class="position-relative">
+                    <button type="button" class="event_btn rounded-circle" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="fa-solid fa-bell"></i>
+                        {% if size == '0' %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                          0
+                        </span>
+                        {% else %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                          {{size}}
+                        </span>
+                        {% endif %}
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content p-5">
+                          <div class="modal-header p-0 border-bottom-0">
+                            <h3 class="fw-bold mb-0">Events and news</h3>
+                          </div>
+                          <div class="modal-body py-0">
+                            <ul class="d-flex flex-column gap-4 my-5 list-unstyled small">
+                              {% for i in data %}
+                              <li class="row d-flex gap-2">
+                                <div class="col d-flex justify-content-center">
+                                  <i class="fa-solid fa-calendar text-center fs-4"></i>
+                                </div>
+                                <div class="col-10 d-flex">
+                                
+                                  <div>
+                                  <h6 class="mb-0">{{i.news}}</h6>
+                                  {{i.date}} to {{i.datato}}
+                                  </div>
+                                </div>
+                              </li>
+                              {% endfor %}
+                    
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+      
+                <!-- Events Modal End -->
+      </section>
+
+      <!-- Services (Turns into carousel on narrow screens) -->
+      <section id="services" class="container py-5 my-2 my-md-4 my">
+        <p class="fs-1 fw-bolder text-dark pt-xl-2 pb-4 mb-2 mb-lg-3">Our Services</p>
+        <div
+          class="swiper"
+          data-swiper-options='{
+          "slidesPerView": 1,
+          "spaceBetween": 24,
+          "autoHeight": true,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 2
+            },
+            "991": {
+              "slidesPerView": 3
+            }
+          }
+        }'
+        >
+          <div class="swiper-wrapper justify-content-between">
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card h-100 card-body card-hover bg-secondary">
+                <i
+                  class="fa-solid fa-users display-4 card-icon"
+                  style="color: #b4b7c9"
+                ></i>
+                <p class="fs-3 fw-bolder text-dark pt-3 pb-1 mb-2">Binary Plan</p>
+                <p class="mb-0 truncate-line-clamp">
+                  In this type of plan structure, a lot of MLM businesses focus on selling skincare, skincare products, and health products like vitamins.
+                </p>
+                <div class="d-flex flex-column mt-4 flex-sm-row">
+                  <a
+                    href=" "
+                    class="btn btn-outline-primary shadow-primary rounded-5 btn-lg mb-3 mb-sm-0 me-sm-4"
+                  >
+                    Click here
+                    <i class="bx bx-right-arrow-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card h-100 card-body card-hover bg-secondary">
+                <i
+                  class="fa-solid fa-people-group display-4 card-icon"
+                  style="color: #b4b7c9"
+                ></i>
+                <p class="fs-3 fw-bolder text-dark pt-3 pb-1 mb-2">Level Plan</p>
+                <p class="mb-0 truncate-line-clamp">
+                  Distributors might provide services for travelers, such as arranging flights, hotels, vacation packages, and travel insurance.
+                </p>
+                <div class="d-flex flex-column mt-4 flex-sm-row">
+                  <a
+                    href=" "
+                    class="btn btn-outline-primary shadow-primary rounded-5 btn-lg mb-3 mb-sm-0 me-sm-4"
+                  >
+                    Click here
+                    <i class="bx bx-right-arrow-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card h-100 card-body card-hover bg-secondary">
+                <i
+                  class="fa-solid fa-bitcoin-sign display-4 card-icon"
+                  style="color: #b4b7c9"
+                ></i>
+                <p class="fs-3 fw-bolder text-dark pt-3 pb-1 mb-2">Crypto Currency</p>
+                <p class="mb-0 truncate-line-clamp">
+                  Users are able to trade, buy, and sell bitcoins on these platforms. They provide a range of graphing tools and trading order types for bitcoin transactions.
+                </p>
+                <div class="d-flex flex-column mt-4 flex-sm-row">
+                  <a
+                    href=" "
+                    class="btn btn-outline-primary shadow-primary rounded-5 btn-lg mb-3 mb-sm-0 me-sm-4"
+                  >
+                    Click here
+                    <i class="bx bx-right-arrow-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination (bullets) -->
+          <div class="swiper-pagination position-relative d-lg-none mt-5"></div>
+        </div>
+      </section>
+
+      <!-- Features (Icon boxes) -->
+      <section class="container py-5 my-2 my-md-4 my-lg-5">
+        <p class="fs-1 text-dark fw-bolder text-start pt-1 pt-xl-3 mb-lg-4">Why Us?</p>
+        <div
+          class="swiper mx-n2"
+          data-swiper-options='{
+          "slidesPerView": 1,
+          "spaceBetween": 8,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 2
+            },
+            "800": {
+              "slidesPerView": 3
+            },
+            "1200": {
+              "slidesPerView": 3
+            }
+          }
+        }'
+        >
+          <div class="swiper-wrapper">
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card h-100 card-body card-hover bg-secondary mx-2">
+                <i
+                  class="fa-solid fa-laptop-code display-4 card-icon"
+                  style="color: #b4b7c9"
+                ></i>
+                <p class="fs-3 fw-bolder text-dark pt-3 pb-1 mb-2">How We Work</p>
+                <p class="mb-0">
+                  Technology might be challenging, but we've dealt with it all before and can assist you with any IT problem.
+                </p>
+              </div>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card h-100 card-body card-hover bg-secondary mx-2">
+                <i
+                  class="fa-solid fa-circle-question display-4 card-icon"
+                  style="color: #b4b7c9"
+                ></i>
+                <p class="fs-3 fw-bolder text-dark pt-3 pb-1 mb-2">Who Do We Aid?</p>
+                <p class="mb-0">
+                  Our expertise in vertical solutions enables your company to improve efficiency and streamline process.
+                </p>
+              </div>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card h-100 card-body card-hover bg-secondary mx-2">
+                <i
+                  class="fa-solid fa-user-check display-4 card-icon"
+                  style="color: #b4b7c9"
+                ></i>
+                <p class="fs-3 fw-bolder text-dark pt-3 pb-1 mb-2">Why Choose Us?</p>
+                <p class="mb-0">
+                  We are with you every step of the way and have a tested process to assist you in growing your business.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination (bullets) -->
+          <div
+            class="swiper-pagination position-relative d-xl-none pt-3 mt-4"
+          ></div>
+        </div>
+      </section>
+
+      <!-- Map -->
+      {% comment %} <section class="container bg-bottom mask">
+        <div class="my-5 pb-5">
+          <p class="fs-5 fw-semibold pt-3 text-center pb-1 mb-2">WHAT WE'VE FOUND</p>
+          <p class="fs-1 fw-bolder text-dark text-center pt-1 mb-lg-4">Numbers reveal everything about us.</p>
+          <div class="wpb_wrapper">
+            <div class="d-flex justify-content-center">
+              <img
+                class="img-fluid"
+                src="https://disunginfosys.com/wp-content/uploads/2018/04/map-1.svg"
+              />
+            </div>
+          </div>
+        </div>
+      </section> {% endcomment %}
+
+      <!-- Blogs  -->
+      <section id="blog" class="container py-5 my-2 my-md-4 my">
+        <p class="fs-1 fw-bolder text-dark pt-xl-2 pb-4 mb-2 mb-lg-3">Blogs</p>
+        <div
+          class="swiper"
+          data-swiper-options='{
+          "slidesPerView": 1,
+          "spaceBetween": 24,
+          "autoHeight": true,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 2
+            },
+            "991": {
+              "slidesPerView": 3
+            }
+          }
+        }'
+        >
+          <div class="swiper-wrapper justify-content-between">
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card h-100 card-hover bg-secondary">
+              <img src="assets/images/blog/image-1.jpg" class="card-img-top img-fluid" alt="">
+              <div class="card-body">
+                <div class="fw-bold">
+                <h3 class="h5 pb-1 mb-2 col-12 text-truncate">The MLM Story I Didn't Want to Write: My Entry and Exit</h3>
+              </div>
+                <p class="mb-0 truncate-line-clamp">
+                  This is the account of how I became engaged with a multi-level marketing business and how I managed to get out after spending a lot of time and effort for little return. It also deals with how I let the assurances and enthusiasm of others to trump my instincts and the strange, hazy junction of capitalism, faith, and belief.
+                </p>
+                <div class="d-flex justify-content-between fw-semibold mt-4 flex-sm-row">
+                  <p class="mb-0">Profile</p>
+                  <p class="mb-0">1h ago</p>
+                </div>
+              </div>
+              </div>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card h-100 card-hover bg-secondary">
+              <img src="{% static 'assets/images/blog/image-2.jpg' %}" class="card-img-top img-fluid" alt="">
+              <div class="card-body">
+                <h3 class="h5 pb-1 mb-2 col-12 text-truncate">Why does MLM (Multi-Level Marketing) have a poor reputation? What is MLM?</h3>
+                <p class="mb-0 truncate-line-clamp">
+                  The phrase MLM, or multi level marketing, may have come up recently if you've been on the internet. MLM may have you wondering what the heck it is.
+                </p>
+                <div class="d-flex justify-content-between fw-semibold mt-4 flex-sm-row">
+                  <p class="mb-0">Profile</p>
+                  <p class="mb-0">1h ago</p>
+                </div>
+              </div>
+              </div>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card h-100 card-hover bg-secondary">
+              <img src="assets/images/blog/image-3.jpg" class="card-img-top img-fluid" alt="">
+              <div class="card-body">
+                <h3 class="h5 pb-1 mb-2 col-12 text-truncate">What I've Learned from Being an MLM "Hun"
+                </h3>
+                <p class="mb-0 truncate-line-clamp">
+                  Although I nearly find it repulsive to say it, I was an MLM "Hun" for a little period of time in my life. The term "Hun" refers to the need of sending unsolicited messages to acquaintances on social networking, while MLM stands for multi-level marketing.
+                </p>
+                <div class="d-flex justify-content-between fw-semibold mt-4 flex-sm-row">
+                  <p class="mb-0">Profile</p>
+                  <p class="mb-0">1h ago</p>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination (bullets) -->
+          <div class="swiper-pagination position-relative d-lg-none mt-5"></div>
+        </div>
+      </section>
+
+      <!-- Articles -->
+      <section class="container-xxl bg-secondary py-5 my-2 my-md-4 my-lg-5">
+        <p class="fs-1 text-dark fw-bolder ps-4 ms-3 text-start">Articles From Library</p>
+        <div
+          class="swiper mx-n2"
+          data-swiper-options='{
+          "slidesPerView": 1,
+          "spaceBetween": 8,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 2
+            },
+            "800": {
+              "slidesPerView": 3
+            },
+            "1200": {
+              "slidesPerView": 3
+            }
+          }
+        }'
+        >
+          <div class="swiper-wrapper">
+            <div
+              id="article"
+              class="swiper-slide h-auto py-3 ms-lg-5 me-lg-4 col-lg col-12 my-4"
+            >
+              <div class="card card-hover mx-lg-0 mx-2">
+                <img
+                  src="{% static 'assets/images/article/image-3.png' %}"
+                  class="card-img-top card-icon"
+                  style="aspect-ratio: 1/0.5"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <p class="fw-bolder mb-2">February 28,2022</p>
+                  <h5 class="card-title fw-semibold">
+                    What services includes in mlm software?
+                  </h5>
+                  <p class="card-text mt-4">
+                    This blog aims to assuage the misconceptions of people who
+                    are genuinely interested in the MLM business. It aims to
+                    become a reliable destination and provide unbiased reviews,
+                    accurate news and all pertinent information related to the
+                    MLM industry.
+                  </p>
+                  <div class="d-grid mx-lg-5">
+                    <a
+                      href="#"
+                      class="btn btn-outline-primary shadow-primary rounded-5 btn-lg mb-3 mb-sm-0 me-sm-4"
+                      >Read more</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              id="article"
+              class="swiper-slide h-auto py-3 me-lg-5 col-lg col-12 my-4"
+            >
+              <div class="card card-hover mx-lg-0 mx-2">
+                <img
+                  src="{% static 'assets/images/article/image-4.png' %}"
+                  class="card-img-top card-icon"
+                  style="aspect-ratio: 1/0.5"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <p class="mb-2 fw-bolder">February 28,2022</p>
+                  <h5 class="card-title fw-semibold">What is product based Binary Plan?</h5>
+                  <p class="card-text mt-4">
+                    MLM Binary plan is popular on the industry
+                    and accepted on the world. In this
+                    plan every member is allowed to sponsor only two front-line
+                    members. If a member sponsors more than two members, the
+                    excess are placed below the sponsoring front-line.
+                  </p>
+                  <div class="d-grid mx-lg-5">
+                    <a
+                      href="#"
+                      class="btn btn-outline-primary shadow-primary rounded-5 btn-lg mb-3 mb-sm-0 me-sm-4"
+                      >Read more</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Brands -->
+      <!-- <section class="container my-n2 my-md-0">
+        <div
+          class="swiper mx-n2"
+          data-swiper-options='{
+          "slidesPerView": 2,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 3,
+              "spaceBetween": 8
+            },
+            "650": {
+              "slidesPerView": 4,
+              "spaceBetween": 8
+            },
+            "900": {
+              "slidesPerView": 5,
+              "spaceBetween": 8
+            },
+            "1100": {
+              "slidesPerView": 6,
+              "spaceBetween": 8
+            }
+          }
+        }'
+        >
+          <div class="swiper-wrapper">
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img
+                  src="assets/img/brands/01.svg"
+                  class="d-block mx-auto my-2"
+                  width="154"
+                  alt="Brand"
+                />
+              </a>
+            </div>
+
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img
+                  src="assets/img/brands/02.svg"
+                  class="d-block mx-auto my-2"
+                  width="154"
+                  alt="Brand"
+                />
+              </a>
+            </div>
+
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img
+                  src="assets/img/brands/03.svg"
+                  class="d-block mx-auto my-2"
+                  width="154"
+                  alt="Brand"
+                />
+              </a>
+            </div>
+
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img
+                  src="assets/img/brands/04.svg"
+                  class="d-block mx-auto my-2"
+                  width="154"
+                  alt="Brand"
+                />
+              </a>
+            </div>
+
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img
+                  src="assets/img/brands/05.svg"
+                  class="d-block mx-auto my-2"
+                  width="154"
+                  alt="Brand"
+                />
+              </a>
+            </div>
+
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img
+                  src="assets/img/brands/06.svg"
+                  class="d-block mx-auto my-2"
+                  width="154"
+                  alt="Brand"
+                />
+              </a>
+            </div>
+          </div>
+
+          <div class="swiper-pagination position-relative pt-2 mt-4"></div>
+        </div>
+      </section>  -->
+
+      <!-- Clients review -->
+      <section class="container py-5 mb-2 mt-md-2 mb-md-4 mt-lg-4 mb-lg-5">
+        <div class="row pt-xl-1 pb-xl-3">
+          <div class="col-lg-3 col-md-4">
+            <h2
+              class="text-center text-md-start mx-auto mx-md-0 pt-md-2"
+              style="max-width: 300px"
+            >
+              What Our <br class="d-none d-md-inline" />Clients Say
+              <br class="d-none d-md-inline" />About Us:
+            </h2>
+
+            <!-- Slider controls (Prev / next buttons) -->
+            <div
+              class="d-flex justify-content-center justify-content-md-start pb-4 mb-2 pt-2 pt-md-4 mt-md-5"
+            >
+              <button
+                type="button"
+                id="prev-testimonial"
+                class="btn btn-prev btn-icon btn-sm me-2"
+              >
+                <i class="bx bx-chevron-left"></i>
+              </button>
+              <button
+                type="button"
+                id="next-testimonial"
+                class="btn btn-next btn-icon btn-sm ms-2"
+              >
+                <i class="bx bx-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+          <div class="col-lg-9 col-md-8">
+            <div
+              class="swiper mx-n2"
+              data-swiper-options='{
+              "slidesPerView": 1,
+              "spaceBetween": 8,
+              "loop": true,
+              "navigation": {
+                "prevEl": "#prev-testimonial",
+                "nextEl": "#next-testimonial"
+              },
+              "breakpoints": {
+                "500": {
+                  "slidesPerView": 2
+                },
+                "1000": {
+                  "slidesPerView": 2
+                },
+                "1200": {
+                  "slidesPerView": 3
+                }
+              }
+            }'
+            >
+              <div class="swiper-wrapper">
+                <!-- Item -->
+                <div class="swiper-slide h-auto pt-4">
+                  <figure
+                    class="d-flex flex-column h-100 px-2 px-sm-0 mb-0 mx-2"
+                  >
+                    <div
+                      class="card h-100 position-relative border-0 shadow-sm pt-4"
+                    >
+                      <span
+                        class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4"
+                      >
+                        <i class="bx bxs-quote-left"></i>
+                      </span>
+                      <blockquote class="card-body pb-3 mb-0">
+                        <p class="mb-0">
+                          I've always been skeptical about MLM companies, but trying out [MLM Company Name] changed my perspective entirely! The products are top-notch and have made a real difference in my life.
+                        </p>
+                      </blockquote>
+                      <div class="card-footer border-0 text-nowrap pt-0">
+                        <i class="bx bxs-star text-warning"></i>
+                        <i class="bx bxs-star text-warning"></i>
+                        <i class="bx bxs-star text-warning"></i>
+                        <i class="bx bx-star text-muted opacity-75"></i>
+                        <i class="bx bx-star text-muted opacity-75"></i>
+                      </div>
+                    </div>
+                    <figcaption class="d-flex align-items-center ps-4 pt-4">
+                      <img
+                        src="{% static 'assets/images/profile/image-1.png' %}"
+                        width="48"
+                        class="rounded-circle"
+                        alt="Fannie Summers"
+                      />
+                      <div class="ps-3">
+                        <h6 class="fs-sm fw-semibold mb-0">Fannie Summers</h6>
+                        <span class="fs-xs text-muted"
+                          >Medical Center patient</span
+                        >
+                      </div>
+                    </figcaption>
+                  </figure>
+                </div>
+
+                <!-- Item -->
+                <div class="swiper-slide h-auto pt-4">
+                  <figure
+                    class="d-flex flex-column h-100 px-2 px-sm-0 mb-0 mx-2"
+                  >
+                    <div
+                      class="card h-100 position-relative border-0 shadow-sm pt-4"
+                    >
+                      <span
+                        class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4"
+                      >
+                        <i class="bx bxs-quote-left"></i>
+                      </span>
+                      <blockquote class="card-body pb-3 mb-0">
+                        <p class="mb-0">
+                          As a busy professional, I never thought I could manage a side business. However, the MLM opportunity with [MLM Company Name] proved me wrong.
+                        </p>
+                      </blockquote>
+                      <div class="card-footer border-0 text-nowrap pt-0">
+                        <i class="bx bxs-star text-warning"></i>
+                        <i class="bx bxs-star text-warning"></i>
+                        <i class="bx bxs-star text-warning"></i>
+                        <i class="bx bxs-star text-warning"></i>
+                        <i class="bx bxs-star text-warning"></i>
+                      </div>
+                    </div>
+                    <figcaption class="d-flex align-items-center ps-4 pt-4">
+                      <img
+                        src="{% static 'assets/images/profile/image-2.png' %}"
+                        width="48"
+                        class="rounded-circle"
+                        alt="Robert Fox"
+                      />
+                      <div class="ps-3">
+                        <h6 class="fs-sm fw-semibold mb-0">Robert Fox</h6>
+                        <span class="fs-xs text-muted"
+                          >Medical Center patient</span
+                        >
+                      </div>
+                    </figcaption>
+                  </figure>
+                </div>
+
+                <!-- Item -->
+                <div class="swiper-slide h-auto pt-4">
+                  <figure
+                    class="d-flex flex-column h-100 px-2 px-sm-0 mb-0 mx-2"
+                  >
+                    <div
+                      class="card h-100 position-relative border-0 shadow-sm pt-4"
+                    >
+                      <span
+                        class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4"
+                      >
+                        <i class="bx bxs-quote-left"></i>
+                      </span>
+                      <blockquote class="card-body pb-3 mb-0">
+                        <p class="mb-0">
+                          Being a part of [MLM Company Name] has been a game-changer for me. The extra income from selling the products and building a team has allowed us to achieve pursue our dreams.
+                        </p>
+                      </blockquote>
+                      <div class="card-footer border-0 text-nowrap pt-0">
+                        <i class="bx bxs-star text-warning"></i>
+                        <i class="bx bxs-star text-warning"></i>
+                        <i class="bx bxs-star text-warning"></i>
+                        <i class="bx bxs-star text-warning"></i>
+                        <i class="bx bx-star text-muted opacity-75"></i>
+                      </div>
+                    </div>
+                    <figcaption class="d-flex align-items-center ps-4 pt-4">
+                      <img
+                        src="assets/images/profile/image-3.png"
+                        width="48"
+                        class="rounded-circle"
+                        alt="Annette Black"
+                      />
+                      <div class="ps-3">
+                        <h6 class="fs-sm fw-semibold mb-0">Annette Black</h6>
+                        <span class="fs-xs text-muted"
+                          >Medical Center patient</span
+                        >
+                      </div>
+                    </figcaption>
+                  </figure>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact form -->
+      <section id="contact" class="px-lg-5 px-md-4 px-2 bg-secondary py-5">
+        <div class="container">
+          <div class="row">
+            <!-- Contact links -->
+            <div
+              class="col-xl-4 col-lg-5 d-flex align-items-center pb-4 pb-sm-5 mb-2 mb-sm-0"
+            >
+              <div class="pe-lg-4 pe-xl-0">
+                <p class="fs-1 fw-bolder text-dark pb-3 pb-md-4 mb-lg-5">Contact Us</p>
+                <div class="d-flex align-items-start pb-3 mb-sm-1 mb-md-3">
+                  <div
+                    class="bg-light text-primary rounded-circle flex-shrink-0 fs-3 lh-1 p-3"
+                  >
+                    <i class="bx bx-envelope"></i>
+                  </div>
+                  <div class="ps-3 ps-sm-4">
+                    <p class="fs-4 fw-semibold text-dark pb-1 mb-2">Email us</p>
+                    <p class="mb-2">
+                      Please feel free to drop us a line. We will respond as
+                      soon as possible.
+                    </p>
+                    <div class="btn btn-link btn-lg px-0">
+                      Leave a message
+                      <i class="bx bx-right-arrow-alt lead ms-2"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-start">
+                  <div
+                    class="bg-light text-primary rounded-circle flex-shrink-0 fs-3 lh-1 p-3"
+                  >
+                    <i class="bx bx-group"></i>
+                  </div>
+                  <div class="ps-3 ps-sm-4">
+                    <p class="fs-4 fw-semibold text-dark pb-1 mb-2">Careers</p>
+                    <p class="mb-2">
+                      Mention the individual's core values and how they reflect the values of the organization.
+                    </p>
+                    <div class="btn btn-link btn-lg px-0">
+                      Send an application
+                      <i class="bx bx-right-arrow-alt lead ms-2"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact form -->
+            <div class="col-xl-6 col-lg-7 offset-xl-2">
+              <div
+                class="card card-hover border-secondary border-opacity-25 shadow-lg py-3 p-sm-4 p-md-4"
+              >
+                <div
+                  class="bg-dark w-100 h-100 rounded-3 d-none d-dark-mode-block"
+                ></div>
+                <div class="card-body">
+                  <p class="card-title fs-2 fw-bolder text-dark pb-3 mb-4">Receive Consultations Online</h2>
+                  <form class="row g-4 needs-validation" novalidate="">
+                    <div class="col-12">
+                      <label for="fn" class="form-label fs-base"
+                        >Full name</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        id="fn"
+                        required=""
+                      />
+                      <div class="invalid-feedback">
+                        Please enter your full name!
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="email" class="form-label fs-base"
+                        >Email address</label
+                      >
+                      <input
+                        type="email"
+                        class="form-control form-control-lg"
+                        id="email"
+                        required=""
+                      />
+                      <div class="invalid-feedback">
+                        Please provid a valid email address!
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="specialist" class="form-label fs-base"
+                        >Specialist</label
+                      >
+                      <select
+                        class="form-select form-select-lg"
+                        id="specialist"
+                        required=""
+                      >
+                        <option value="" selected="" disabled="">
+                          Choose a specialist
+                        </option>
+                        <option value="Therapist">Therapist</option>
+                        <option value="Dentist">Dentist</option>
+                        <option value="Cardiologist">Cardiologist</option>
+                        <option value="Pediatrician">Pediatrician</option>
+                        <option value="Gynecologist">Gynecologist</option>
+                        <option value="Surgeon">Surgeon</option>
+                      </select>
+                      <div class="invalid-feedback">
+                        Choose a specialist from the list!
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label for="date" class="form-label fs-base">Date</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        id="date"
+                        placeholder="mm/dd"
+                        required=""
+                      />
+                      <div class="invalid-feedback">Enter a date!</div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label for="time" class="form-label fs-base">Time</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        id="time"
+                        placeholder="hh:mm"
+                        required=""
+                      />
+                      <div class="invalid-feedback">Enter a time!</div>
+                    </div>
+                    <div class="col-12 pt-2 pt-sm-3">
+                      <button
+                        type="submit"
+                        class="btn btn-lg btn-outline-primary shadow-primary rounded-5 w-100 w-sm-auto"
+                      >
+                        Make an appointment
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About us -->
+      <section id="about" class="position-relative px-lg-0 px-2 pt-5">
+
+        <!-- Background -->
+        <div class="position-absolute top-0 start-0 w-100 bg-position-bottom-center bg-size-cover bg-repeat-0">
+          <div class="d-lg-none" style="height: 960px;"></div>
+          <div class="d-none d-lg-block" style="height: 768px;"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="container position-relative zindex-5 pt-5">
+          <div class="row">
+            <div class="col-lg-6 d-flex flex-column justify-content-center">
+
+              <!-- Text -->
+              <h1 class="pb-2 pb-md-3">About Metaboxfy</h1>
+              <p class="fs-xl pb-4 mb-1 mb-md-2 mb-lg-3" style="max-width: 526px;">{{appdetail.aboutus}}
+              </p>
+              <div class="row row-cols-3 pt-4 pt-md-5 mt-2 mt-xl-4">
+                <div class="col">
+                  <h3 class="h2 mb-2">2,480</h3>
+                  <p class="mb-0"><strong>Remote</strong> Sales Experts</p>
+                </div>
+                <div class="col">
+                  <h3 class="h2 mb-2">760</h3>
+                  <p class="mb-0"><strong>New Clients</strong> per Month</p>
+                </div>
+                <div class="col">
+                  <h3 class="h2 mb-2">1,200</h3>
+                  <p class="mb-0"><strong>Requests</strong> per Week</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Images -->
+            <div class="col-lg-6 mt-xl-3 pt-5 pt-lg-4">
+              <div class="row row-cols-2 gx-3 gx-lg-4">
+                <div class="col pt-lg-5 mt-lg-1">
+                  <img src="{% static 'assets/images/about/image-1.png' %}" class="d-block card-hover shadow-lg rounded-3 mb-3 mb-lg-4" alt="Image">
+                  <img src="{% static 'assets/images/about/image-2.png' %}" class="d-block card-hover shadow-lg rounded-3" alt="Image">
+                </div>
+                <div class="col">
+                  <img src="{% static 'assets/images/about/image-4.png' %}" class="d-block card-hover shadow-lg rounded-3 mb-3 mb-lg-4" alt="Image">
+                  <img src="{% static 'assets/images/about/image-3.png' %}" class="d-block card-hover shadow-lg rounded-3" alt="Image">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="footer container-xxl px-0 dark-mode bg-dark border-top border-light mt-5 pt-5 pb-4 pb-lg-5"
+    >
+      <div class="container pt-lg-4">
+        <div class="row pb-5">
+          <div class="col-lg-4 col-md-6">
+            <div class="navbar-brand text-dark p-0 me-0 mb-3 mb-lg-4">
+              <img src="{% static 'assets/images/logo/logo-3.png' %}" width="47" alt="Silicon" />
+              <p class="mb-0 fw-normal">Metaboxfy</p>
+            </div>
+            <p class="fs-sm text-light opacity-70 pb-lg-3 mb-4">
+              Our Multi-Level Marketing business uses independent distributors to sell services to customers directly. In addition to receiving commissions on their sales, these distributors grow their own downline by adding new distributors to the network. Multiple levels inside the organization are created as a result of the recruits' ability to recruit more people.
+            </p>
+            <form class="needs-validation" novalidate>
+              <label for="subscr-email" class="form-label"
+                >Subscribe to our newsletter</label
+              >
+              <div class="input-group">
+                <input
+                  type="email"
+                  id="subscr-email"
+                  class="form-control rounded-start ps-5"
+                  placeholder="Your email"
+                  required
+                />
+                <i
+                  class="bx bx-envelope fs-lg text-muted position-absolute top-50 start-0 translate-middle-y ms-3 zindex-5"
+                ></i>
+                <div class="invalid-tooltip position-absolute top-100 start-0">
+                  Please provide a valid email address.
+                </div>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+              </div>
+            </form>
+          </div>
+          <div
+            class="col-xl-6 col-lg-7 col-md-5 offset-xl-2 offset-md-1 pt-4 pt-md-1 pt-lg-0"
+          >
+            <div id="footer-links" class="row">
+              <div class="col-lg-4">
+                <h6 class="mb-2">
+                  <a
+                    href="#useful-links"
+                    class="d-block text-dark dropdown-toggle d-lg-none py-2"
+                    data-bs-toggle="collapse"
+                    >Useful Links</a
+                  >
+                </h6>
+                <div
+                  id="useful-links"
+                  class="collapse d-lg-block"
+                  data-bs-parent="#footer-links"
+                >
+                  <ul class="nav flex-column pb-lg-1 mb-lg-3">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-inline-block px-0 pt-1 pb-2"
+                        >Home</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-inline-block px-0 pt-1 pb-2"
+                        >About</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-inline-block px-0 pt-1 pb-2"
+                        >Services</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-inline-block px-0 pt-1 pb-2"
+                        >Our Clients</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-inline-block px-0 pt-1 pb-2"
+                        >News</a
+                      >
+                    </li>
+                  </ul>
+                  <ul class="nav flex-column mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-inline-block px-0 pt-1 pb-2"
+                        >Terms &amp; Conditions</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-inline-block px-0 pt-1 pb-2"
+                        >Privacy Policy</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-3">
+                <h6 class="mb-2">
+                  <a
+                    href="#social-links"
+                    class="d-block text-dark dropdown-toggle d-lg-none py-2"
+                    data-bs-toggle="collapse"
+                    >Socials</a
+                  >
+                </h6>
+                <div
+                  id="social-links"
+                  class="collapse d-lg-block"
+                  data-bs-parent="#footer-links"
+                >
+                  <ul class="nav flex-column mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a href="{{appdetail.facebook}}" class="nav-link d-inline-block px-0 pt-1 pb-2"
+                        >Facebook</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{appdetail.linkedin}}" class="nav-link d-inline-block px-0 pt-1 pb-2"
+                        >LinkedIn</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{appdetail.twitter}}" class="nav-link d-inline-block px-0 pt-1 pb-2"
+                        >Twitter</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{appdetail.instagram}}" class="nav-link d-inline-block px-0 pt-1 pb-2"
+                        >Instagram</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-5 pt-2 pt-lg-0">
+                <h6 class="mb-2">Contact Us</h6>
+                <a href="mailto:{{appdetail.email}}" class="fw-medium"
+                  >{{appdetail.email}}</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <p
+          class="nav d-block fs-xs text-center text-md-start pb-2 pb-lg-0 mb-0"
+        >
+          <span class="text-light opacity-50"
+            >&copy; All rights reserved. Made by
+          </span>
+          <a
+            class="nav-link d-inline-block p-0"
+            href="https://createx.studio/"
+            target="_blank"
+            rel="noopener"
+            >Createx Studio</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+
+    <!-- Vendor Scripts -->
+    <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/jarallax/dist/jarallax.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/@lottiefiles/lottie-player/dist/lottie-player.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/cleave.js/dist/cleave.min.js' %}"></script>
+
+    <!-- Main Theme Script -->
+    <script src="{% static 'assets/js/theme.min.js' %}"></script>
+
+  </body>
+</html>

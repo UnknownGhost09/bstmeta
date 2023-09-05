@@ -1,0 +1,102 @@
+{% extends 'pages/sidebar.html' %}
+
+{% block content %}
+
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+        <div class='card'>
+          <div class="card-header">
+            <h4 class="card-title">Support History</h4>
+            <p class="card-title-desc">All Support History
+            </p>
+        </div>
+            <div class='card-body'>
+                <div class='table-responsive'>
+              <table id="test" class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap">
+                <thead>
+                    <tr >
+                        
+                        <th>Email</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        
+            
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                 
+                  {% for i in data %}
+                  
+                    <tr >
+                        
+                        <td>{{i.user_id.email}}</td>
+                        <td>{{i.title}}</td>
+                        {% if i.status == '1' %}
+                        <td>Filled</td>
+                        {% endif %}
+
+                        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal{{i.id}}">
+                            <i class=" fas fa-eye"></i>
+                          </button>
+                          <div class="modal fade" id="basicModal{{i.id}}" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">{{i.user_id.email}}</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  
+
+                                    
+                                  <div class="chat-conversation p-3 px-2" data-simplebar>
+                                    <ul class="list-unstyled mb-0">
+                                      
+                                        <li>
+                                            <div class="conversation-list">
+                                                <div class="ctext-wrap">
+                                                    <div class="ctext-wrap-content">
+                                                        <h5 class="conversation-name"><a href="../../../admin/users/{{i.user_id.id}}" class="user-name">{{i.user_id.email }}</a> <span class="time">{{i.date}}</span></h5>
+                                                        <p class="mb-0">{{i.question}}</p>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class='right'>
+                                          <div class="conversation-list">
+                                              <div class="ctext-wrap">
+                                                  <div class="ctext-wrap-content">
+                                                      <h5 class="conversation-name"><a href="#" class="user-name">{{i.email }}</a> <span class="time">{{i.date}}</span></h5>
+                                                      <p class="mb-0">{{i.answer}}</p>
+                                                  </div>
+                                                 
+                                              </div>
+                                          </div>
+                                      </li>
+                                      </ul>
+                                    </div>
+                          </div><!-- End Basic Modal-->
+                        </td>
+                        
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+
+
+  </div>
+</div>
+</div>
+
+
+{% endblock %}

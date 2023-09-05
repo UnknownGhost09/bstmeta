@@ -1,0 +1,80 @@
+{% extends 'userpages/sidebar.html' %}
+
+{% block content %}
+
+
+  {% load static %}
+ 
+
+
+  <div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">All Transactions</h4>
+      <p class="card-title-desc">All Wallet Tranasactions
+      </p>
+  </div>
+    <div class="card-body">
+   
+      <div class="table-responsive">
+
+      <table id='test' class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap">
+        <thead>
+            <tr>
+                <th scope="col">Coin</th>
+                <th scope="col">Network</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Wallet Address</th>
+                <th>Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created at</th>
+              </tr>
+        </thead>
+
+        <tbody>
+          {% for data in transactions %}
+        
+          <tr>
+ 
+            <td>{{data.coin}}</td>
+            <td>{{data.network}}</a></td>
+            <td>{{data.amount}}</td>
+            <td>{{data.address}}</td>
+            <td>
+              {% if i.type == '1' %}
+                Income
+              {% elif i.type == '2' %}
+                Pending
+              {% endif %}
+            </td>
+            <td> 
+              {% if i.status == '1' %}
+              Filled
+              {% elif i.status == '2' %}
+              Pending
+              {% elif i.status == '3' %}
+              Failed
+              {% endif %}
+            </td>
+            <td>{{data.created_at|slice:"0:19"}}</td>
+          </tr>
+      
+          {% endfor %}
+        </tbody>
+     
+      </table>
+      </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}

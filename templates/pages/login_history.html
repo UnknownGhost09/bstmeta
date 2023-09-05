@@ -1,0 +1,54 @@
+{% extends 'pages/sidebar.html' %}
+{% block content %}
+
+{% load static %}
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+
+    <div class='card'>
+      <div class="card-header">
+        <h4 class="card-title">Login History</h4>
+        <p class="card-title-desc">All Login History
+        </p>
+    </div>
+        <div class="card-body">
+          <div class='table-responsive'>
+    <table id='test' class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap">
+        <thead>
+          <tr >
+            <th scope="col">Username</th>
+            <th scope="col">Login Time</th>
+            <th scope="col">Logout Time</th>
+            <th scope="col">Ip Location</th>
+            <th scope="col">City</th>
+            <th scope='col'>Region</th>
+            <th scope='col'>Country</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+          <tr>
+            
+            <td>{{i.username}}</td>
+            <td>{{i.login_time}}</td>
+            <td>{{i.logout_time}}</td>
+            <td>{{i.ip_location}}</td>
+            <td>{{i.city}}</td>
+            <td>{{i.region}}</td>
+            <td>{{i.country}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}

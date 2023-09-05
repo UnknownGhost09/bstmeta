@@ -1,0 +1,244 @@
+{% extends 'userpages/sidebar.html' %}
+
+
+{% block content %}
+
+<div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <div class="card bg-dark bg-opacity-25 border border-white shadow-lg border-opacity-25 rounded-4 mt-4 mb-5 pb-5">
+            <div class="card-header rounded-4">
+          
+              <h4 class="card-title">Downline Team</h4>
+              
+          </div>
+
+          <div class='card-body'>
+
+            <form action='../../../downlineteam' method='post'>
+                {% csrf_token %}
+                <div class="row mb-3">
+                    
+                   
+                  </div>
+                  <div class="mb-4 col-4">
+                    <label class="form-label" for="form-sm-input">Username / Email</label>
+                    <input class="form-control form-control" type="text" id="form-sm-input" name="username" placeholder='Enter Username or Email'>
+                </div>
+
+          
+            
+           
+                <div class="row mb-3">
+                  
+                  <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary" name='save'>Search</button>
+                  </div>
+                </div>
+    
+              </form><!-- End General Form Elements -->
+
+              <div class='card bg-dark bg-opacity-25 border border-white shadow-lg border-opacity-25 rounded-4 mt-4 mb-5 pb-5'>
+                <div class='card-body downLineCard'>
+                    <div class="table-responsive">
+                        <table
+                          id="test"
+                          class="table hover table-borderless dt-responsive nowrap w-100 text-nowrap"
+                        >
+                          <thead>
+                            <tr>
+                              <th><p class="text-white text-opacity-75 mb-0 ps-1">Name</p></th>
+                              <th>
+                                <p class="text-white text-opacity-75 mb-0 px-3">Email</p>
+                              </th>
+                              <th>
+                                <p class="text-white text-opacity-75 mb-0 px-3">
+                                  Refferal Income
+                                </p>
+                              </th>
+                              <th>
+                                <p class="text-white text-opacity-75 mb-0 px-3">
+                                  Overall Business 
+                                </p>
+                              </th>
+                              <th><p class="text-white text-opacity-75 mb-0 px-3">Package Status</p></th>
+                              <th>
+                                <p class="text-white text-opacity-75 mb-0 px-3">Status</p>
+                              </th>
+                              <th>
+                                <p class="text-white text-opacity-75 mb-0 px-3">Created at</p>
+                              </th>
+                            </tr>
+                          </thead>
+            
+                          <tbody>
+                            {% for i in data %}
+                            <tr
+                               data-bs-toggle="collapse"
+                              data-bs-target="#demo{{i.data.id}}"
+                              class="accordion-toggle childItem"
+                              data-pid="{{ i.data.id }}"
+                              data-id="{{ i.data.id }}" 
+                            >
+                              <td class="px-3 fw-bold planname">{{i.data.username}}</td>
+                              <td class="px-3">{{i.data.email}}</td>
+                              <td class="px-3">$ {{i.direct_income}}</td>
+                              <td class="px-3">$ {{i.data.business}}</td>
+                              {% if i.data.paid_members == 'True' %}
+                                <td class="px-3"><span class='badge text-white text-bg-success p-2 rounded-pill'>Active</span></td>
+                               {% else %}
+                               <td class="px-3"><span class='badge text-white text-bg-warning p-2 rounded-pill'>Inactive</span></td>
+                               {% endif %}
+                              
+                              {% if i.data.status == '1' %}
+                                <td class="px-3"><span class='badge text-white text-bg-success p-2 rounded-pill'>Active</span></td>
+                               {% else %}
+                               <td class="px-3"><span class='badge text-white text-bg-warning p-2 rounded-pill'>Inactive</span></td>
+                               {% endif %}
+                              <td class="px-3">{{i.data.created_at|slice:"0:19"}}</td>
+                            </tr>
+            
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                </div>
+            </div>
+
+          </div>
+         
+
+        </div>
+        
+
+      </div>
+    </div>
+</div>
+
+
+<script>
+
+
+ 
+    $(document.body).on("click", ".childItem", function () {
+      var pid = $(this).attr("data-pid");
+  
+      var id = $(this).attr("data-id");
+      var ref = $(this);
+  
+      console.log(pid);
+  
+      $.ajax({
+        type: "GET",
+        url: "../../../get_refferal/" + `${pid}`,
+        success: function (data) {
+          var ar = [];
+          var ar1 = [];
+            console.log(data);
+          if (data.status == 1) {
+            
+            $.each(data.data, function (key, data) {
+              let v = `<tr data-bs-toggle="collapse" data-bs-target="#demo${data.data.id}" class="accordion-toggle childItem" data-pid="${data.data.id}" data-id="${data.data.id}">
+                          
+                          <td class='fw-bold planname'>${data.data.username}</td>
+                          <td>${data.data.email}</td>
+                          <td>$ ${data.direct_income}</td>
+                          <td>$ ${data.data.business}</td>`
+                          if (data.data.paid_members == 'True'){
+                            v+=`<td class="px-3"><span class='badge text-white text-bg-success p-2 rounded-pill'>Active</span></td>`
+                          }else{
+                            v+=`<td class="px-3"><span class='badge text-white text-bg-warning p-2 rounded-pill'>Inactive</span></td>`
+                          }
+                          if (data.data.status == '1'){
+                            v+=`<td class="px-3"><span class='badge text-white text-bg-success p-2 rounded-pill'>Active</span></td>`
+                          }else{
+                            v+=`<td class="px-3"><span class='badge text-white text-bg-warning p-2 rounded-pill'>Inactive</span></td>`
+                          }
+
+                          v+=`
+                          
+                          <td>${new Date(data.data.created_at).toLocaleString()}</td>
+                          
+                           
+                       </tr>`;
+              ar.push(v);
+            });
+            if ($(`#demo${id}`).length) {
+              console.log("hello if part");
+  
+              $(`#collapseOne-${id}`).remove();
+            } else {
+              console.log("hello else part");
+              $(`#collapseOne-${id}`).remove();
+              $(document).ready(function () {
+                $(`#test${id}`).DataTable();
+              });
+              let collapse = `
+                        <tr class="accordian-body collapse show px-0" id="demo${id}">
+                          <td colspan="12" class="hiddenRow p-0">
+                            <div class='card my-3 bg-light bg-opacity-10 border border-white shadow-lg border-opacity-25 rounded-4 mt-4 mb-0 pb-5'>
+                                <div class='card-body downLineCard'> 
+                            <table  class="table hover table-borderless dt-responsive mb-0 nowrap w-100  text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th><p class="text-white text-opacity-75 mb-0 p-2">Name</p></th>
+                                            <th>
+                                              <p class="text-white text-opacity-75 mb-0 p-2">Email</p>
+                                            </th>
+                                            <th>
+                                              <p class="text-white text-opacity-75 mb-0 p-2">
+                                                Refferal Income
+                                              </p>
+                                            </th>
+                                            <th>
+                                                <p class="text-white text-opacity-75 mb-0 p-2">
+                                                  Overall Business
+                                                </p>
+                                              </th>
+                                            <th><p class="text-white text-opacity-75 mb-0 p-2">Package Status</p></th>
+                                            <th>
+                                              <p class="text-white text-opacity-75 mb-0 p-2">Status</p>
+                                            </th>
+                                            <th>
+                                              <p class="text-white text-opacity-75 mb-0 p-2">Created at</p>
+                                            </th>
+                                          </tr>
+                                    </thead>	
+                                    ${ar.join("")}
+                                    <tbody>
+                                    </tbody>
+                                  </table>
+                                </div>
+                            </div>
+                                </div>
+                              </td>`;
+  
+              $(`#collapseOne-${id}`).remove();
+              ref.after(collapse);
+            }
+          } else {
+            if ($(`#collapseOne-${id}`).length) {
+              ar.push(`<div>No team Yet</div>`);
+  
+              $(`#collapseOne-${id}`).remove();
+            } else {
+              ar.push(`<div>No team Yet</div>`);
+              let collapse = ` <div id="collapseOne-${id}" class="accordion-collapse collapse show" data-bs-parent="#accordion-${id}">
+                <div class="accordion-body">
+                  ${ar.join("")}
+                </div>
+              </div>`;
+              console.log(ar);
+              $(`#collapseOne-${id}`).remove();
+              ref.after(collapse);
+            }
+          }
+        },
+        error: function () {},
+      });
+    });
+  </script>
+
+
+
+{% endblock %}

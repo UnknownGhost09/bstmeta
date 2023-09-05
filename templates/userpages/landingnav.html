@@ -1,0 +1,73 @@
+<header
+id="header"
+class="header navbar navbar-expand-lg px-lg-5 py-3 px-3 sticky-top bg-black"
+>
+{% load static %}
+<div class="container-fluid px-0">
+  <a href="/metaverse_3" class="navbar-brand pe-3">
+    <img
+      src="{% static 'assets/images/logo/meta-logo.png' %}"
+      width="180"
+      class="img-fluid"
+      alt="metaboxfy"
+    />
+  </a>
+  <div id="navbarNav" class="offcanvas offcanvas-end">
+    <div class="offcanvas-header border-bottom navbar_body">
+      <h5 class="offcanvas-title text-white">Menu</h5>
+      <button
+        type="button"
+        class="btn-close btn-close-white"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body navbar_body">
+      <ul class="navbar-nav mx-auto gap-3 mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a href="../../../" class="nav-link li px-3 py-1 text-white"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a href="../../../#Ecosystem" class="nav-link li px-3 py-1 text-white"
+            >Eco System</a
+          >
+        </li>
+        <li class="nav-item">
+          <a href="../../packages" class="nav-link li px-3 py-1 text-white"
+            >Packages</a
+          >
+        </li>
+        <li class="nav-item">
+          <a href="../../about" class="nav-link li px-3 py-1 text-white"
+            >About us</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <button
+    type="button"
+    class="navbar-toggler"
+    style="filter: invert(1)"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+{% if register %}
+  <a
+    href="../../../loginpage"
+    class="d-none d-lg-inline-flex text-decoration-none border rounded-5 px-5 py-2 text-white fw-semibold button"
+  
+    rel="noopener"
+  >
+    Login
+  </a>
+  {% endif %}
+</div>
+</header>

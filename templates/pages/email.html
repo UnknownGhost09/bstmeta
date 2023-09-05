@@ -1,0 +1,320 @@
+{% extends 'pages/sidebar.html' %} {% block content %}
+
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Email Setting</h4>
+        <p class="card-title-desc">Email Setting
+        </p>
+    </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 class="card-title">Email Services</h5>
+          <button
+            class="btn bg-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Add Email Sevice
+          </button>
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    Add Service
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body row mb-3">
+                  <form action="../../../admin/emailsettings" method="post">
+                    {% csrf_token %}
+                    <div class="row mb-3 gap-1">
+                      <div class="col-sm-10 w-100">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="service"
+                          placeholder="Service Name"
+                        />
+                      </div>
+
+                      <div class="col-sm-10 w-100">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="host"
+                          placeholder="Host"
+                        />
+                      </div>
+                      <div class="col-sm-10 w-100">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="user"
+                          placeholder="user"
+                        />
+                      </div>
+                      <div class="col-sm-10 w-100">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="password"
+                          placeholder="Password"
+                        />
+                      </div>
+                      <div class="col-sm-10 w-100">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="port"
+                          placeholder="port"
+                        />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col-sm-10">
+                        <button
+                          type="submit"
+                          class="btn bg-primary"
+                          name="addservice"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table
+            id="test"
+            class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap"
+          >
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Host</th>
+                <th>User</th>
+                <th>Password</th>
+                <th>Port</th>
+                <th>Status</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in emailsettings %}
+              <tr>
+                <td>{{i.service}}</td>
+                <td>{{i.host}}</td>
+                <td>{{i.user}}</td>
+                <td>{{i.password}}</td>
+                <td>{{i.port}}</td>
+                <td
+                  class="d-flex justify-content-between align-items-center ps-5"
+                >
+                  <div class="form-check form-switch">
+                    {% if i.status == '1' %}
+
+                    <input
+                      class="form-check-input h4"
+                      name="inactive"
+                      type="checkbox"
+                      role="switch"
+                      id="flexSwitchCheckChecked1"
+                      data-id="{{i.id}}"
+                      title="active"
+                      checked
+                      disabled
+                    />
+
+                    {% else %}
+                    <form action="../../../admin/emailsettings" method="post">
+                      {% csrf_token %}
+                      <input
+                        class="form-check-input h4"
+                        name="inactive"
+                        type="checkbox"
+                        role="switch"
+                        id="flexSwitchCheckChecked1"
+                        data-id="{{i.id}}"
+                        title="Inactive"
+                      />
+                    </form>
+                    {% endif %}
+                  </div>
+                </td>
+                <td>
+                  <button
+                    class="btn bg-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#edit{{i.id}}"
+
+                  >
+                    <i class="fas fa-pen"></i>
+                  </button>
+                  <div
+                    class="modal fade"
+                    id="edit{{i.id}}"
+                    tabindex="-1"
+                    aria-labelledby="edit{{i.id}}"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog  modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">
+                            Edit Service
+                          </h1>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body row mb-3">
+                          <form
+                            action="../../../admin/emailsettings"
+                            method="post"
+                          >
+                            {% csrf_token %}
+                            <div class="row mb-3 gap-1">
+                              <div class="col-sm-10 w-100">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="id"
+                                  hidden
+                                  value="{{i.id}}"
+                                />
+                              </div>
+                              <div class="col-sm-10 w-100">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="service"
+                                  placeholder="Service Name"
+                                  value="{{i.service}}"
+                                />
+                              </div>
+
+                              <div class="col-sm-10 w-100">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="host"
+                                  placeholder="Host"
+                                  value="{{i.host}}"
+                                />
+                              </div>
+                              <div class="col-sm-10 w-100">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="user"
+                                  placeholder="user"
+                                  value="{{i.user}}"
+                                />
+                              </div>
+                              <div class="col-sm-10 w-100">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="password"
+                                  placeholder="Password"
+                                  value="{{i.password}}"
+                                />
+                              </div>
+                              <div class="col-sm-10 w-100">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="port"
+                                  placeholder="port"
+                                  value="{{i.port}}"
+                                />
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-sm-10">
+                                <button
+                                  type="submit"
+                                  class="btn bg-primary"
+                                  name="editservice"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<script>
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      var cookies = document.cookie.split(";");
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  $(document.body).on("click", "#flexSwitchCheckChecked", function () {
+    var uid = $(this).attr("data-id");
+    var csrftoken = getCookie("csrftoken");
+
+    $.ajax({
+      type: "POST",
+      url: "../../../admin/emailsettings",
+      data: {
+        id: uid,
+
+        csrfmiddlewaretoken: csrftoken,
+      },
+
+      success: function () {
+        console.log("success");
+      },
+    });
+  });
+</script>
+
+{% endblock %}

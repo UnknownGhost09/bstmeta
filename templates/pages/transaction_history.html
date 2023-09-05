@@ -1,0 +1,54 @@
+{% extends 'pages/sidebar.html' %}
+{% block content %}
+
+{% load static %}
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+
+    <div class='card'>
+      <div class="card-header">
+        <h4 class="card-title">Transactions History</h4>
+        <p class="card-title-desc">All Transactions History
+        </p>
+    </div>
+        <div class="card-body">
+          <div class='table-responsive'>
+    <table id= 'test' class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap">
+        <thead>
+          <tr >
+            <th scope="col">Username</th>
+            <th scope="col">Coin</th>
+            <th scope="col">Network</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Type</th>
+            <th scope='col'>Status</th>
+            <th scope='col'>Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+          <tr>
+            
+            <td>{{i.name}}</td>
+            <td>{{i.coin}}</td>
+            <td>{{i.network}}</td>
+            <td>{{i.amount}}</td>
+            <td>{{i.type}}</td>
+            <td>{{i.status}}</td>
+            <td>{{i.created_at}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}

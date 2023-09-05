@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Document</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'mlm2.css' %}" />
+    <link rel="stylesheet" href="{% static 'mlm_page_2.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
+
+      body {
+        background-color: #000000;
+        font-family: "Poppins", sans-serif;
+        overflow-x: hidden;
+      }
+      .hero-bg img {
+        filter: drop-shadow(0px 0px 50px #17424b81);
+      }
+      .button {
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s ease-in;
+        z-index: 1;
+        box-shadow: 0px 0px 10px #2a7a8a;
+      }
+
+      .button::before,
+      .button::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 0;
+        height: 100%;
+        transform: skew(15deg);
+        transition: all 0.5s;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .button::before {
+        left: -10px;
+        background: #469cad;
+      }
+
+      .button::after {
+        right: -10px;
+        background: #2a7a8a;
+      }
+
+      .button:hover::before,
+      .button:hover::after {
+        width: 58%;
+      }
+
+      .li {
+        padding: 5px 30px;
+        font-size: 16px;
+        cursor: pointer;
+        color: black;
+        position: relative;
+        transition: transform 0.5s ease;
+        transform-origin: left;
+        z-index: 1;
+      }
+      .li::after {
+        content: "";
+        position: absolute;
+        background-color: #3ca9be;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s ease;
+      }
+      .li:hover::after {
+        transform: scaleX(1);
+        transition: transform 0.5s ease;
+        transform-origin: left;
+      }
+      .hero_col h1 {
+        font-family: "Josefin Sans", sans-serif;
+      }
+      .floating-image {
+        position: relative;
+        animation: floatAnimation 3s ease-in-out infinite;
+      }
+
+      @keyframes floatAnimation {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-25px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      .primary-color {
+        color: #3ca9be;
+      }
+      .metaCard {
+        background: linear-gradient(179deg, #002d36, #0c0c0c);
+        border: none !important;
+        border-radius: 10px !important;
+        transition: all 500ms ease !important;
+      }
+      .metaCard button {
+        background: linear-gradient(233deg, #1f3336, #3131318e);
+      }
+      .metaCard:hover i {
+        transform: scale(1.1);
+        transition: all 500ms ease;
+      }
+      .metaCard:hover {
+        box-shadow: 0px 0px 15px #469cad70 !important;
+        border: none !important;
+      }
+      .metaCard h3 {
+        font-family: "Josefin Sans", sans-serif;
+      }
+      .metaCard-bg {
+        background: url("{% static 'assets/images/bg-asset/image-3.png' %}");
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      .nftCard {
+        box-shadow: 0px 0px 15px rgba(182, 182, 182, 0.178);
+        border-radius: 15px !important;
+        background-color: black !important;
+      }
+      .card_icon {
+        background-color: #29728136;
+        padding: 20px 21px;
+      }
+      .about_col h1 {
+        font-family: "Josefin Sans", sans-serif;
+      }
+      .about_col img {
+        filter: drop-shadow(0px 0px 50px #4798a762);
+      }
+      .social_icon {
+        background: -webkit-linear-gradient(#4799a7, #7c7c7c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .footer_li {
+        color: #5db3c7 !important;
+      }
+      .footer_li:hover {
+        color: #498391 !important;
+      }
+      .package_bg {
+        background: url("{% static 'assets/images/bg-asset/image-6.png' %}");
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+      .package_card {
+        /* background: linear-gradient(233deg, #161616, #232527, #0a0c0e); */
+        background-color: rgba(78, 78, 78, 0.295);
+        backdrop-filter: blur(100px) !important;
+        border: none !important;
+        border-radius: 25px !important;
+        transition: all 500ms ease !important;
+      }
+      .package_card i {
+        background: -webkit-linear-gradient(#0089c9, #3c2377);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .asset_1 {
+        z-index: 99;
+        top: -200px;
+        left: -100px;
+      }
+      .asset_2 {
+        z-index: 99;
+        bottom: -150px;
+        right: -100px;
+      }
+      .community_adrs {
+        background-color: rgba(65, 65, 65, 0.315);
+      }
+      .tmln__item {
+        border-top: 2px dotted white;
+        padding-top: 30px;
+      }
+      .tmln__item--bg-dark::after,
+      .tmln__item--bg-lght::after {
+        content: "";
+        position: absolute;
+        padding: 10px 10px;
+        border-radius: 20%;
+        border: 3px solid #20b5cf;
+        background-color: #0a4d58;
+        left: 0;
+        top: -14px;
+      }
+      .tmln__item--bg-dark {
+        padding: 15px;
+        margin-left: 26px;
+        background: linear-gradient(#00000000, #20b5cf2c);
+        color: white !important;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+      .tmln__item--bg-lght {
+        padding: 15px;
+        margin-left: 26px;
+        background: linear-gradient(#001f2500, #20b5cf);
+        color: black !important;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+
+      @media only screen and (min-width: 52px) and (max-width: 992px) {
+        .navbar_body {
+          background-color: #000000;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid p-0">
+     {% include 'userpages/landingnav.html' %}
+      <div class="container-fluid">
+        <div class="container-xxl">
+          <div class="row mx-0 px-lg-5 px-0 my-lg-4 mt-md-0 mt-4 position-relative">
+            <div class="">
+                <img
+                  src="{% static 'assets/images/bg-asset/image-5.png' %}"
+                  class="img-fluid mt-5 position-absolute asset_1 floating-image"
+                  alt=""
+                />
+                <img
+                  src="{% static 'assets/images/bg-asset/image-5.png' %}"
+                  class="img-fluid mt-5 position-absolute asset_2 floating-image"
+                  alt=""
+                />
+              </div>
+            <div
+              class="col-lg-9 mx-auto p-lg-4 px-2 text-center hero mt-lg-4 hero_col"
+              data-aos="fade"
+              data-aos-duration="1500"
+            >
+              <h1 class="fw-bolder mb-0 primary-color display-3">Packages</h1>
+              <h3 class="mb-4 mt-2 text-white">Innovation's New Horizon</h3>
+              <p class="text-white text-opacity-75 mb-4 pt-2">
+                We understand that every individual and business has unique
+                requirements, and that's why we offer a range of flexible
+                pricing options to cater to your specific needs. Our goal is to
+                provide you with exceptional value while ensuring you have
+                access to the features and services that matter most to you.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="container-xxl">
+          <div
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            class="px-lg-5 py-lg-4 p-md-4 p-3 package_bg"
+          >
+            <div class="Swiper py-4 px-lg-2 px-2">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide h-100">
+                  <div
+                    class="card p-4 rounded-4 shadow-sm border-0 h-100 package_card"
+                  >
+                    <div class="card-body d-flex flex-column p-0">
+                      <div
+                        class="d-flex align-items-center justify-content-between gap-3"
+                      >
+                        <h2 class="fw-semibold mb-0 text-white text-opacity-75">
+                          Micro
+                        </h2>
+                        <i class="fa-solid fa-star fs-3"></i>
+                      </div>
+                      <div class="mt-1">
+                        <div
+                          class="d-flex align-items-end border-bottom border-white border-opacity-10 pt-4 pb-3"
+                        >
+                          <h2
+                            class="fw-semibold mb-0 text-white text-opacity-75"
+                          >
+                            $50
+                          </h2>
+                          <p class="ms-2 mb-1 text-white text-opacity-75">
+                            MINIMUM INVESTMENT
+                          </p>
+                        </div>
+                        <div class="d-flex align-items-end pt-3">
+                          <h2
+                            class="fw-semibold mb-0 text-white text-opacity-75"
+                          >
+                            $249
+                          </h2>
+                          <p class="ms-2 mb-1 text-white text-opacity-75">
+                            MAXIMUM INVESTMENT
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="border border-secondary border-opacity-50 px-3 py-4 shadow bg-black bg-opacity-25 rounded-4 mt-4"
+                      >
+                        <div class="d-flex align-items-center mb-3 gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <p class="heading mb-0 text-white text-opacity-50">
+                            RETURN ON INVESTMENT
+                          </p>
+                        </div>
+                        <div class="d-flex align-items-center mb-3 gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <h5 class="mb-0 text-white text-opacity-50">0.25%</h5>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <p class="mb-0 text-white text-opacity-50">DAILY</p>
+                        </div>
+                      </div>
+                      <div class="d-grid">
+                        <button
+                          class="btn bg-black bg-opacity-25 shadow border border-white border-opacity-25 py-2 rounded-5 mt-4"
+                        >
+                          <a
+                            href="../../../loginpage"
+                            class="text-decoration-none text-white"
+                          >
+                            Get Started
+                          </a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide h-100">
+                  <div
+                    class="card p-4 rounded-4 shadow-sm border-0 h-100 package_card"
+                  >
+                    <div class="card-body d-flex flex-column p-0">
+                      <div
+                        class="d-flex align-items-center justify-content-between gap-3"
+                      >
+                        <h2 class="fw-semibold mb-0 text-white text-opacity-75">
+                          Mini
+                        </h2>
+                        <i class="fa-solid fa-medal fs-3"></i>
+                      </div>
+                      <div class="mt-1">
+                        <div
+                          class="d-flex align-items-end border-bottom border-white border-opacity-10 pt-4 pb-3"
+                        >
+                          <h2
+                            class="fw-semibold mb-0 text-white text-opacity-75"
+                          >
+                            $250
+                          </h2>
+                          <p class="ms-2 mb-1 text-white text-opacity-75">
+                            MINIMUM INVESTMENT
+                          </p>
+                        </div>
+                        <div class="d-flex align-items-end pt-3">
+                          <h2
+                            class="fw-semibold mb-0 text-white text-opacity-75"
+                          >
+                            $499
+                          </h2>
+                          <p class="ms-2 mb-1 text-white text-opacity-75">
+                            MAXIMUM INVESTMENT
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="border border-secondary border-opacity-50 px-3 py-4 shadow bg-black bg-opacity-25 rounded-4 mt-4"
+                      >
+                        <div class="d-flex align-items-center mb-3 gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <p class="heading mb-0 text-white text-opacity-50">
+                            RETURN ON INVESTMENT
+                          </p>
+                        </div>
+                        <div class="d-flex align-items-center mb-3 gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <h5 class="mb-0 text-white text-opacity-50">0.30%</h5>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <p class="mb-0 text-white text-opacity-50">DAILY</p>
+                        </div>
+                      </div>
+                      <div class="d-grid">
+                        <button
+                          class="btn bg-black bg-opacity-25 shadow border border-white border-opacity-25 py-2 rounded-5 mt-4"
+                        >
+                          <a
+                            href="../../../loginpage"
+                            class="text-decoration-none text-white"
+                          >
+                            Get Started
+                          </a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide h-100">
+                  <div
+                    class="card p-4 rounded-4 shadow border-0 h-100 package_card"
+                  >
+                    <div class="card-body d-flex flex-column p-0">
+                      <div
+                        class="d-flex align-items-center justify-content-between gap-3"
+                      >
+                        <h2 class="fw-semibold mb-0 text-white text-opacity-75">
+                          Classic
+                        </h2>
+                        <i class="fa-solid fa-trophy fs-3"></i>
+                      </div>
+                      <div class="pt-2 mt-4 mb-3">
+                        <h2 class="mb-0 fw-semibold text-white text-opacity-75">
+                          $500
+                        </h2>
+                        <h2
+                          class="mb-0 fw-semibold mt-3 text-white text-opacity-75"
+                        >
+                          & Above
+                        </h2>
+                      </div>
+                      <div
+                        class="border border-secondary border-opacity-50 px-3 py-4 shadow bg-black bg-opacity-25 rounded-4 mt-3"
+                      >
+                        <div class="d-flex align-items-center mb-3 gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <p class="heading text-white text-opacity-50 mb-0">
+                            RETURN ON INVESTMENT
+                          </p>
+                        </div>
+                        <div class="d-flex align-items-center mb-3 gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <h5 class="text-white text-opacity-50 mb-0">0.50%</h5>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <p class="mb-0 text-white text-opacity-50">DAILY</p>
+                        </div>
+                      </div>
+                      <div class="d-grid mt-auto">
+                        <button
+                          class="btn bg-black bg-opacity-25 shadow border border-white border-opacity-25 py-2 rounded-5 mt-4"
+                        >
+                          <a
+                            href="../../../loginpage"
+                            class="text-decoration-none text-white"
+                          >
+                            Get Started
+                          </a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     {% include 'userpages/landingfooter.html' %}
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+      const swiper = new Swiper(".swiper", {
+        // Optional parameters
+
+        direction: "horizontal",
+        // loop: true,
+
+        // effect: "coverflow",
+        // coverflowEffect: {
+        //   rotate: 30,
+        //   slideShadows: false,
+        // },
+
+        // autoplay: {
+        //   delay: 4000,
+        // },
+        autoHeight: true,
+
+        // centeredSlides: true,
+        // centeredSlidesBounds: true,
+
+        slidesPerView: 5,
+        spaceBetween: 10,
+        // Responsive breakpoints
+        breakpoints: {
+          // when window width is >= 320px
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 0,
+          },
+          // when window width is >= 480px
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 0,
+          },
+          // when window width is >= 640px
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 0,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 0,
+          },
+        },
+      });
+
+      const sswiper = new Swiper(".Swiper", {
+        // Optional parameters
+        direction: "horizontal",
+
+        autoplay: {
+          delay: 4000,
+        },
+        autoHeight: true,
+
+        slidesPerView: 5,
+        spaceBetween: 10,
+        // Responsive breakpoints
+        breakpoints: {
+          // when window width is >= 320px
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          // when window width is >= 480px
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 30,
+          },
+          // when window width is >= 640px
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 40,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 40,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 70,
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

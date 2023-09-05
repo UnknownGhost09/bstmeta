@@ -1,0 +1,59 @@
+{% extends 'userpages/sidebar.html' %}
+
+{% block content %}
+
+{% load static %}
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+        <div class='card'>
+            <div class="card-header">
+                <h4 class="card-title">Rank & Rewards</h4>
+               
+            </div>
+            <div class='card-body'>
+
+                <div class='table-responsive'>
+                    <table id= 'test' class="table table-borderless dt-responsive nowrap w-100  text-nowrap">
+                        <thead>
+                          <tr >
+                            <th scope="col">Rank</th>
+                            <th scope="col">Cash Reward</th>
+                            <th scope="col">Reward</th>
+                            <th scope="col">Required Business</th>
+                            <th scope='col'>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in userrank %}
+                          <tr>         
+                            <td>{{i.rank.rank}}</td>
+                            <td>$ {{i.rank.royality_income}}</td>
+                            <td>{{i.rank.reward}}</td>
+                            <td>$ {{i.rank.business_required}}</td>
+
+                            <td>
+
+                                {% if i.status == '0' %}
+                                <span class="badge text-bg-danger p-2 rounded-pill">Not Achived</span>
+                                {% elif i.status == '1' %}
+                                <span class="badge text-bg-warning p-2 rounded-pill">Proceeding</span>
+                                {% elif i.status == '2' %}
+                                <span class="badge text-bg-success p-2 rounded-pill">Achived</span>
+                                {% endif %}
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                    </table>
+                  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+      {% load static %}
+        <meta charset="utf-8" />
+        <title>Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesbrand" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="/media/{{appdetail.logodart}}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+        <!-- plugin css -->
+        <link href="{% static 'assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet" type="text/css" />
+
+        <!-- preloader css -->
+        <link rel="stylesheet" href="{% static 'assets/css/preloader.min.css' %}" type="text/css" />
+        <link href="{% static 'assets/libs/dropzone/min/dropzone.min.css' %}" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap Css -->
+        <link href="{% static 'assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{% static 'assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{% static 'assets/libs/flatpickr/flatpickr.min.css' %}">
+
+
+
+        <!-- preloader css -->
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style type="text/css">
+            .scroll{
+              overflow-y: scroll;
+              height: 25rem !important;
+            }
+            .bg-success {
+            --bs-bg-opacity: 1;
+            background-color: #16CC86 !important;
+            color : white;
+        }
+        .card{
+          padding:0px !important;
+        }
+        .card-body{
+          padding:1rem !important;
+        }
+        .card-title{
+            padding:0rem !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent;
+             background: linear-gradient(90.04deg, #75e1e3 -2.16%, #75e288 101.5%);
+          }
+        .bg-warning {
+            --bs-bg-opacity: 1;
+            background-color: #dca961 !important;
+            color : white;
+        }
+        .bg-danger {
+            --bs-bg-opacity: 1;
+            background-color: #d9534f !important;
+            color : white;
+        }
+        
+        .btn:hover{
+        color:white !important;
+        transform:scale(0.95);
+        }
+        
+        .fa:hover{
+        
+        transform:scale(0.90);
+        }
+        .secondary{
+            color: #012970;
+        
+        }
+        
+        .sorting{
+        
+          color: #012970 !important;
+        }
+        
+        
+        
+        .menu .accordion-heading {  position: relative; }
+        .menu .accordion-heading .edit {
+            position: absolute;
+            top: 8px;
+            right: 30px; 
+        }
+        .menu .area { border-left: 4px solid #f38787; }
+        .menu .equipamento { border-left: 4px solid #16CC86; }
+        .menu .ponto { border-left: 4px solid #98b3fa; }
+        .menu .collapse.in { overflow: visible; }
+        
+        
+        
+        
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,.dataTables_wrapper .dataTables_paginate .paginate_button{
+          background: #5156be !important;
+          color: white  !important;
+          border-radius:0.5rem;
+        
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+          background : #D2D7DB !important;
+          color : black !important;
+          border-radius:0.5rem;
+        }
+        
+        element.style {
+        }
+        
+        .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+          color: white !important;
+          background-color: #5156be !important;
+        }
+        
+        .nav-link{
+        
+          color : #3c3c3e !important;
+        }
+        
+        
+        .bg-primary{
+        --bs-bg-opacity: 1;
+            background-color: #5156be !important;
+            color : white;
+        }
+
+        .planname {
+            background: -webkit-linear-gradient(#ded7d7, #2ab57d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+        
+        .primary{
+        color : #5156be !important;
+        }
+        
+        .menu .accordion-heading {  position: relative; }
+        .menu .accordion-heading .edit {
+            position: absolute;
+            top: 8px;
+            right: 30px; 
+        }
+        .menu .area { border-left: 4px solid #f38787; }
+        .menu .equipamento { border-left: 4px solid #65c465; }
+        .menu .ponto { border-left: 4px solid #98b3fa; }
+        .menu .collapse.in { overflow: visible; }
+        
+        
+        element.style {
+        }
+        .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate{
+          margin-top : 5px !important;
+        }
+        
+        
+        
+        .form-check-input:checked {
+          background-color: #16CC86 !important;
+        }
+        
+ 
+        
+        
+          </style>
+         
+    </head>
+
+    <body >
+
+
+
+
+    <!-- <body data-layout="horizontal"> -->
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <!-- LOGO -->
+                      
+                        <div class="navbar-brand-box">
+                            <a href="../../../dashboard" class="logo logo-dark">
+                                {% comment %} <span class="logo-sm">
+                                    <img src="/media/{{appdetail.logodart}}" alt="" height="24">
+                                </span> {% endcomment %}
+                                <span class="logo-lg">
+                                    <img src="/media/{{appdetail.logodart}}" alt="" height="24"> <span class="logo-txt"></span>
+                                </span>
+                            </a>
+  
+                            <a href="../../../admin/dashboard" class="logo logo-light">
+                              {% comment %} <span class="logo-sm">
+                                  <img src="/media/{{appdetail.logodart}}" alt="" height="24">
+                              </span> {% endcomment %}
+                                <span class="logo-lg">
+                                    <img src="/media/{{appdetail.logodart}}" alt="" height="24"> <span class="logo-txt"></span>
+                                </span>
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn btn-sm px-3 font-size-16 header-item " id="vertical-menu-btn">
+                            <i class="fa fa-fw fa-bars"></i>
+                        </button>
+
+              
+                    </div>
+
+                    <div class="d-flex">  
+                        <div class="dropdown d-inline-block ">
+                            <button type="button" class="btn header-item bg-soft-light border-start border-end" id="page-header-user-dropdown"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="rounded-circle header-profile-user" src="{% static 'assets/images/users/user.png' %}"
+                                    alt="Header Avatar">
+                                <span class="d-none d-xl-inline-block ms-1 fw-medium">{{u}}</span>
+                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <!-- item-->
+                                <a class="dropdown-item" href="../../../admin/myprofile"><i class="mdi mdi-face-profile font-size-16 align-middle me-1"></i> Profile</a>
+                               
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="../../../admin/signout"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="vertical-menu">
+
+                <div data-simplebar class="h-100">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+                        <!-- Left Menu Start -->
+                        <ul class="metismenu list-unstyled" id="side-menu">
+                            <li class="menu-title" data-key="t-menu">Menu</li>
+
+                            <li>
+                                <a href="../../../admin/dashboard">
+                                    <i class='fas fa-home'></i>
+                                    <span data-key="t-dashboard">Dashboard</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow" >
+                                    <i class='fas fa-users-cog' ></i>
+                                    <span data-key="t-apps">User Management</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li>
+                                        <a href="../../../admin/active">
+                                            <span data-key="t-calendar">Active Users</span>
+                                        </a>
+                                    </li>
+        
+                                    <li>
+                                        <a href="../../../admin/inactive">
+                                            <span data-key="t-chat">Inactive Users</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                      <a href="../../../admin/paid">
+                                          <span data-key="t-chat">Premium Members</span>
+                                      </a>
+                                  </li>
+                                  <li>
+                                    <a href="../../../admin/unpaid">
+                                        <span data-key="t-chat">Non-Premium Members</span>
+                                    </a>
+                                </li>
+                                <li>
+                                  <a href="../../../admin/users">
+                                      <span data-key="t-chat">All Users</span>
+                                  </a>
+                              </li>
+      
+                                    
+                                   
+                      
+                                   
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="../../../admin/referral_users">
+                                    <i class=" fas fa-network-wired"></i>
+                                    <span data-key="t-authentication">Refferals</span>
+                                </a>
+                              
+                            </li>
+
+
+                            <li>
+                                <a href="../../../admin/change_sponser">
+                                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                                    <span data-key="t-authentication">Change Sponser</span>
+                                </a>
+                              
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow">
+                                    <i class=' fas fa-money-bill-wave'></i>
+                                    <span data-key="t-pages">Requests</span>
+                                </a>
+                                <ul class="sub-menu">
+                                    
+                                    <li><a href="../../../admin/withdraw_manage" data-key="t-maintenance">Pending Withdrawls</a></li>
+                                    <li><a href="../../../admin/deposite_manage" data-key="t-maintenance">Pending Deposit</a></li>
+                                    
+                                
+                                </ul>
+                            </li>
+
+                      
+                            <li>
+                              <a href="../../../admin/packages">
+                                  <i class='fa-solid fa-money-bill-wheat'></i>
+                                  <span data-key="t-horizontal">Membership Plans</span>
+                              </a>
+                          </li>
+                     
+
+                        <li>
+                            <a href="../../../admin/rank">
+                                <i class="fa-solid fa-ranking-star"></i>
+                                <span data-key="t-horizontal">Rank & Rewards</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../../../admin/club">
+                                <i class='fas fa-crown'></i>
+                                <span data-key="t-horizontal">CO-FOUNDER CLUB</span>
+                            </a>
+                        </li>
+                    
+
+
+                          <li>
+                            <a href="javascript: void(0);" class="has-arrow">
+                                <i class="fas fa-file"></i>
+                                <span data-key="t-pages">Reports</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li><a href="../../../admin/login_log" data-key="t-starter-page">Login History</a></li>
+                                <li><a href="../../../admin/membership" data-key="t-starter-page">Members</a></li>
+                                
+                                <li><a href="../../../admin/internal_transfer" data-key="t-maintenance">Transfer History</a></li>
+                                <li><a href="../../../admin/deposite_history" data-key="t-starter-page">Deposit History</a></li>
+                                <li><a href="../../../admin/withdraw_history" data-key="t-starter-page">Withdraw History</a></li>
+                                <li><a href="../../../admin/topup_history" data-key="t-starter-page">Top Up History</a></li>
+                                <li><a href="../../../admin/roihistory" data-key="t-starter-page">ROI History</a></li>                    
+                                <li><a href="../../../admin/ticket_history" data-key="t-starter-page">Support History</a></li>  
+                                <li><a href="../../../admin/userrank" data-key="t-starter-page">User Ranks</a></li>  
+                                <li><a href="../../../admin/clubhistory" data-key="t-starter-page">Co-Founders</a></li> 
+
+                                                           
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="../../../admin/ticket">
+                                <i class=' fas fa-headset'></i>
+                                <span data-key="t-horizontal">Support</span>
+                            </a>
+                        </li>
+                     
+                        <li class="menu-title mt-2" data-key="t-components">Settings</li>
+                        
+                     
+
+                        <li>
+                          <a href="../../../admin/emailsettings">
+                              <i class=' fas fa-envelope'></i>
+                              <span data-key="t-horizontal">Email</span>
+                          </a>
+                      </li>
+
+                      <li>
+                        <a href="../../../admin/levels">
+                            <i class='fas fa-layer-group'></i>
+                            <span data-key="t-horizontal">Levels</span>
+                        </a>
+                    </li>
+
+
+                  
+                  <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="fas fa-cogs"></i>
+                        <span data-key="t-pages">General Settings </span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="../../../admin/app" data-key="t-starter-page">App Detail</a></li>
+                        <li><a href="../../../admin/gallery" data-key="t-maintenance">Gallery</a></li>
+                        <li><a href="../../../admin/ytvedio" data-key="t-maintenance">Plan video</a></li>
+                        <li><a href="../../../admin/manageroi" data-key="t-maintenance">Manage ROI</a></li>
+                        <li><a href="../../../admin/withdraw_settings" data-key="t-maintenance">Withdrawal</a></li>
+                        <li><a href="../../../admin/smart_contract" data-key="t-maintenance">BSC Smart Contract</a></li>
+                    </ul>
+                </li>
+    
+                
+               
+              <li>
+                <a href="../../../admin/events">
+                    <i class=' fas fa-newspaper'></i>
+                    <span data-key="t-horizontal">News & Events</span>
+                </a>
+            </li>
+
+                        </ul>
+
+                      
+                    </div>
+                    <!-- Sidebar -->
+                </div>
+            </div>
+            <!-- Left Sidebar End -->
+
+            {% if message %}
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script type="application/javascript">
+        Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '{{message}}',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    </script>
+
+      {% endif %} {% if message1 %}
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script type="application/javascript">
+        Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: '{{message1}}',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    </script>
+      {% endif %}
+            {% block content %}
+           
+        
+
+            {% endblock %}
+                        <!-- start page title -->
+                              
+        <!-- Right Sidebar -->
+        <div class="right-bar">
+            <div data-simplebar class="h-100">
+                <div class="rightbar-title d-flex align-items-center p-3">
+
+                    <h5 class="m-0 me-2">Theme Customizer</h5>
+
+                    <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
+                        <i class="mdi mdi-close noti-icon"></i>
+                    </a>
+                </div>
+
+                <!-- Settings -->
+                <hr class="m-0" />
+
+                <div class="p-4">
+                    <h6 class="mb-3">Layout</h6>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="layout"
+                            id="layout-vertical" value="vertical">
+                        <label class="form-check-label" for="layout-vertical">Vertical</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="layout"
+                            id="layout-horizontal" value="horizontal">
+                        <label class="form-check-label" for="layout-horizontal">Horizontal</label>
+                    </div>
+
+                    <h6 class="mt-4 mb-3 pt-2">Layout Mode</h6>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="layout-mode"
+                            id="layout-mode-light" value="light">
+                        <label class="form-check-label" for="layout-mode-light">Light</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="layout-mode"
+                            id="layout-mode-dark" value="dark">
+                        <label class="form-check-label" for="layout-mode-dark">Dark</label>
+                    </div>
+
+                    <h6 class="mt-4 mb-3 pt-2">Layout Width</h6>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="layout-width"
+                            id="layout-width-fuild" value="fuild" onchange="document.body.setAttribute('data-layout-size', 'fluid')">
+                        <label class="form-check-label" for="layout-width-fuild">Fluid</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="layout-width"
+                            id="layout-width-boxed" value="boxed" onchange="document.body.setAttribute('data-layout-size', 'boxed')">
+                        <label class="form-check-label" for="layout-width-boxed">Boxed</label>
+                    </div>
+
+                    <h6 class="mt-4 mb-3 pt-2">Layout Position</h6>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="layout-position"
+                            id="layout-position-fixed" value="fixed" onchange="document.body.setAttribute('data-layout-scrollable', 'false')">
+                        <label class="form-check-label" for="layout-position-fixed">Fixed</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="layout-position"
+                            id="layout-position-scrollable" value="scrollable" onchange="document.body.setAttribute('data-layout-scrollable', 'true')">
+                        <label class="form-check-label" for="layout-position-scrollable">Scrollable</label>
+                    </div>
+
+                    <h6 class="mt-4 mb-3 pt-2">Topbar Color</h6>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="topbar-color"
+                            id="topbar-color-light" value="light" onchange="document.body.setAttribute('data-topbar', 'light')">
+                        <label class="form-check-label" for="topbar-color-light">Light</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="topbar-color"
+                            id="topbar-color-dark" value="dark" onchange="document.body.setAttribute('data-topbar', 'dark')">
+                        <label class="form-check-label" for="topbar-color-dark">Dark</label>
+                    </div>
+
+                    <h6 class="mt-4 mb-3 pt-2 sidebar-setting">Sidebar Size</h6>
+
+                    <div class="form-check sidebar-setting">
+                        <input class="form-check-input" type="radio" name="sidebar-size"
+                            id="sidebar-size-default" value="default" onchange="document.body.setAttribute('data-sidebar-size', 'lg')">
+                        <label class="form-check-label" for="sidebar-size-default">Default</label>
+                    </div>
+                    <div class="form-check sidebar-setting">
+                        <input class="form-check-input" type="radio" name="sidebar-size"
+                            id="sidebar-size-compact" value="compact" onchange="document.body.setAttribute('data-sidebar-size', 'md')">
+                        <label class="form-check-label" for="sidebar-size-compact">Compact</label>
+                    </div>
+                    <div class="form-check sidebar-setting">
+                        <input class="form-check-input" type="radio" name="sidebar-size"
+                            id="sidebar-size-small" value="small" onchange="document.body.setAttribute('data-sidebar-size', 'sm')">
+                        <label class="form-check-label" for="sidebar-size-small">Small (Icon View)</label>
+                    </div>
+
+                    <h6 class="mt-4 mb-3 pt-2 sidebar-setting">Sidebar Color</h6>
+
+                    <div class="form-check sidebar-setting">
+                        <input class="form-check-input" type="radio" name="sidebar-color"
+                            id="sidebar-color-light" value="light" onchange="document.body.setAttribute('data-sidebar', 'light')">
+                        <label class="form-check-label" for="sidebar-color-light">Light</label>
+                    </div>
+                    <div class="form-check sidebar-setting">
+                        <input class="form-check-input" type="radio" name="sidebar-color"
+                            id="sidebar-color-dark" value="dark" onchange="document.body.setAttribute('data-sidebar', 'dark')">
+                        <label class="form-check-label" for="sidebar-color-dark">Dark</label>
+                    </div>
+                    <div class="form-check sidebar-setting">
+                        <input class="form-check-input" type="radio" name="sidebar-color"
+                            id="sidebar-color-brand" value="brand" onchange="document.body.setAttribute('data-sidebar', 'brand')">
+                        <label class="form-check-label" for="sidebar-color-brand">Brand</label>
+                    </div>
+
+                    <h6 class="mt-4 mb-3 pt-2">Direction</h6>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="layout-direction"
+                            id="layout-direction-ltr" value="ltr">
+                        <label class="form-check-label" for="layout-direction-ltr">LTR</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="layout-direction"
+                            id="layout-direction-rtl" value="rtl">
+                        <label class="form-check-label" for="layout-direction-rtl">RTL</label>
+                    </div>
+
+                </div>
+
+            </div> <!-- end slimscroll-menu-->
+        </div>
+        <!-- /Right-bar -->
+
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
+
+        <!-- JAVASCRIPT -->
+        
+        <script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'assets/libs/metismenu/metisMenu.min.js' %}"></script>
+        <script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+        <script src="{% static 'assets/libs/node-waves/waves.min.js' %}"></script>
+        <script src="{% static 'assets/libs/feather-icons/feather.min.js' %}"></script>
+        <!-- pace js -->
+        <script src="{% static 'assets/libs/pace-js/pace.min.js' %}"></script>
+
+        <!-- apexcharts -->
+        <script src="{% static 'assets/libs/apexcharts/apexcharts.min.js' %}"></script>
+
+        <!-- Plugins js-->
+        <script src="{% static 'assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js' %}"></script>
+        <script src="{% static 'assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js' %}"></script>
+        <!-- dashboard init -->
+        <script src="{% static 'assets/js/app.js' %}"></script>
+
+       
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
+        {% comment %} <script src="{% static 'assets/js/pages/dashboard.init.js' %}"></script> {% endcomment %}
+        <script>
+
+
+try{
+
+            $(document).ready(function() {
+                $('#test').DataTable();
+            } );
+            $(document).ready(function() {
+              $('#test1').DataTable();
+            } );
+            $(document).ready(function() {
+                $('#test2').DataTable();
+              } );
+
+              $(document).ready(function() {
+                $('#incometable').DataTable();
+              } );
+
+
+              $(document).ready(function() {
+                $('#outcome').DataTable();
+              } );
+
+
+
+
+
+            function getChartColorsArray(r) {
+              r = $(r).attr("data-colors");
+              console.log(r)
+              
+              return (r = JSON.parse(r)).map(function(r) {
+                  r = r.replace(" ", "");
+                  if (-1 == r.indexOf("--")) return r;
+                  r = getComputedStyle(document.documentElement).getPropertyValue(r);
+                  return r || void 0;
+              });
+          }
+          var minichart1Colors = getChartColorsArray("#mini-chart1"),
+              options = {
+                  series: [
+                      { data: [2, 10, 18, 22, 36, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15] },
+                  ],
+                  chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+                  colors: minichart1Colors,
+                  stroke: { curve: "smooth", width: 2 },
+                  tooltip: {
+                      fixed: { enabled: !1 },
+                      x: { show: !1 },
+                      y: {
+                          title: {
+                              formatter: function(r) {
+                                  return "";
+                              },
+                          },
+                      },
+                      marker: { show: !1 },
+                  },
+              },
+              chart = new ApexCharts(document.querySelector("#mini-chart1"), options);
+          chart.render();
+          var minichart2Colors = getChartColorsArray("#mini-chart2"),
+              options = {
+                  series: [
+                      { data: [15, 42, 47, 2, 14, 19, 65, 75, 47, 15, 42, 47, 2, 14, 12] },
+                  ],
+                  chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+                  colors: minichart2Colors,
+                  stroke: { curve: "smooth", width: 2 },
+                  tooltip: {
+                      fixed: { enabled: !1 },
+                      x: { show: !1 },
+                      y: {
+                          title: {
+                              formatter: function(r) {
+                                  return "";
+                              },
+                          },
+                      },
+                      marker: { show: !1 },
+                  },
+              };
+          (chart = new ApexCharts(
+              document.querySelector("#mini-chart2"),
+              options
+          )).render();
+          var minichart3Colors = getChartColorsArray("#mini-chart3"),
+              options = {
+                  series: [
+                      { data: [47, 15, 2, 67, 22, 20, 36, 60, 60, 30, 50, 11, 12, 3, 8] },
+                  ],
+                  chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+                  colors: minichart3Colors,
+                  stroke: { curve: "smooth", width: 2 },
+                  tooltip: {
+                      fixed: { enabled: !1 },
+                      x: { show: !1 },
+                      y: {
+                          title: {
+                              formatter: function(r) {
+                                  return "";
+                              },
+                          },
+                      },
+                      marker: { show: !1 },
+                  },
+              };
+          (chart = new ApexCharts(
+              document.querySelector("#mini-chart3"),
+              options
+          )).render();
+          var minichart4Colors = getChartColorsArray("#mini-chart4"),
+              options = {
+                  series: [
+                      { data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15] },
+                  ],
+                  chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+                  colors: minichart4Colors,
+                  stroke: { curve: "smooth", width: 2 },
+                  tooltip: {
+                      fixed: { enabled: !1 },
+                      x: { show: !1 },
+                      y: {
+                          title: {
+                              formatter: function(r) {
+                                  return "";
+                              },
+                          },
+                      },
+                      marker: { show: !1 },
+                  },
+              };
+          (chart = new ApexCharts(
+              document.querySelector("#mini-chart4"),
+              options
+          )).render();
+          var minichart5Colors = getChartColorsArray("#mini-chart5"),
+          options = {
+              series: [
+                  { data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15] },
+              ],
+              chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+              colors: minichart4Colors,
+              stroke: { curve: "smooth", width: 2 },
+              tooltip: {
+                  fixed: { enabled: !1 },
+                  x: { show: !1 },
+                  y: {
+                      title: {
+                          formatter: function(r) {
+                              return "";
+                          },
+                      },
+                  },
+                  marker: { show: !1 },
+              },
+          };
+      (chart = new ApexCharts(
+          document.querySelector("#mini-chart5"),
+          options
+      )).render();
+      var minichart6Colors = getChartColorsArray("#mini-chart6"),
+      options = {
+          series: [
+              { data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15] },
+          ],
+          chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+          colors: minichart4Colors,
+          stroke: { curve: "smooth", width: 2 },
+          tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                  title: {
+                      formatter: function(r) {
+                          return "";
+                      },
+                  },
+              },
+              marker: { show: !1 },
+          },
+      };
+  (chart = new ApexCharts(
+      document.querySelector("#mini-chart6"),
+      options
+  )).render();
+  var minichart7Colors = getChartColorsArray("#mini-chart7"),
+  options = {
+      series: [
+          { data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15] },
+      ],
+      chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+      colors: minichart4Colors,
+      stroke: { curve: "smooth", width: 2 },
+      tooltip: {
+          fixed: { enabled: !1 },
+          x: { show: !1 },
+          y: {
+              title: {
+                  formatter: function(r) {
+                      return "";
+                  },
+              },
+          },
+          marker: { show: !1 },
+      },
+  };
+(chart = new ApexCharts(
+  document.querySelector("#mini-chart7"),
+  options
+)).render();
+var minichart8Colors = getChartColorsArray("#mini-chart8"),
+options = {
+    series: [
+        { data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15] },
+    ],
+    chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+    colors: minichart4Colors,
+    stroke: { curve: "smooth", width: 2 },
+    tooltip: {
+        fixed: { enabled: !1 },
+        x: { show: !1 },
+        y: {
+            title: {
+                formatter: function(r) {
+                    return "";
+                },
+            },
+        },
+        marker: { show: !1 },
+    },
+};
+(chart = new ApexCharts(
+document.querySelector("#mini-chart8"),
+options
+)).render();
+
+var minichart8Colors = getChartColorsArray("#mini-chart9"),
+options = {
+    series: [
+        { data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15] },
+    ],
+    chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+    colors: minichart4Colors,
+    stroke: { curve: "smooth", width: 2 },
+    tooltip: {
+        fixed: { enabled: !1 },
+        x: { show: !1 },
+        y: {
+            title: {
+                formatter: function(r) {
+                    return "";
+                },
+            },
+        },
+        marker: { show: !1 },
+    },
+};
+(chart = new ApexCharts(
+document.querySelector("#mini-chart9"),
+options
+)).render();
+
+
+var minichart8Colors = getChartColorsArray("#mini-chart10"),
+options = {
+    series: [
+        { data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15] },
+    ],
+    chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+    colors: minichart4Colors,
+    stroke: { curve: "smooth", width: 2 },
+    tooltip: {
+        fixed: { enabled: !1 },
+        x: { show: !1 },
+        y: {
+            title: {
+                formatter: function(r) {
+                    return "";
+                },
+            },
+        },
+        marker: { show: !1 },
+    },
+};
+(chart = new ApexCharts(
+document.querySelector("#mini-chart10"),
+options
+)).render();
+
+var minichart8Colors = getChartColorsArray("#mini-chart11"),
+options = {
+    series: [
+        { data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15] },
+    ],
+    chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+    colors: minichart4Colors,
+    stroke: { curve: "smooth", width: 2 },
+    tooltip: {
+        fixed: { enabled: !1 },
+        x: { show: !1 },
+        y: {
+            title: {
+                formatter: function(r) {
+                    return "";
+                },
+            },
+        },
+        marker: { show: !1 },
+    },
+};
+(chart = new ApexCharts(
+document.querySelector("#mini-chart11"),
+options
+)).render();
+
+var minichart8Colors = getChartColorsArray("#mini-chart12"),
+options = {
+    series: [
+        { data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15] },
+    ],
+    chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+    colors: minichart4Colors,
+    stroke: { curve: "smooth", width: 2 },
+    tooltip: {
+        fixed: { enabled: !1 },
+        x: { show: !1 },
+        y: {
+            title: {
+                formatter: function(r) {
+                    return "";
+                },
+            },
+        },
+        marker: { show: !1 },
+    },
+};
+(chart = new ApexCharts(
+document.querySelector("#mini-chart12"),
+options
+)).render();
+
+        
+
+
+
+
+
+          var pieColors = getChartColorsArray("#pie_chart"),
+  options = {
+    chart: { height: 320, type: "pie" },
+    series: [{{total_users}}, {{total_active_users}}, {{total_inactive_users}}, {{total_verified_users}}, {{total_unverified_users}}],
+    labels: ["Total Users", "Active Users", "Inactive Users", "Verified users", "Unverified Users"],
+    colors: pieColors,
+    legend: {
+      show: !0,
+      position: "bottom",
+      horizontalAlign: "center",
+      verticalAlign: "middle",
+      floating: !1,
+      fontSize: "14px",
+      offsetX: 0,
+    },
+    responsive: [
+      {
+        breakpoint: 600,
+        options: { chart: { height: 240 }, legend: { show: !1 } },
+      },
+    ],
+  };
+(chart = new ApexCharts(
+  document.querySelector("#pie_chart"),
+  options
+)).render();
+
+
+
+
+
+
+
+
+
+var splneAreaColors = getChartColorsArray("#spline_area"),
+    options = {
+        chart: { height: 350, type: "area", toolbar: { show: !1 } },
+        dataLabels: { enabled: !1 },
+        stroke: { curve: "smooth", width: 3 },
+        series: [
+            { name: "amount", data: {% if subscription_amount %}
+            {{subscription_amount}}
+        {% else %}
+    0
+    {% endif %}  },
+           
+        ],
+        colors: splneAreaColors,
+        xaxis: {
+            
+            categories: [
+                "Jan",
+                "Fev",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+            ],
+        },
+        grid: { borderColor: "#f1f1f1" },
+        tooltip: { x: { format: "dd/MM/yy HH:mm" } },
+    };
+(chart = new ApexCharts(
+    document.querySelector("#spline_area"),
+    options
+)).render();
+
+
+}catch(e){
+    console.log(e)
+}
+
+          </script>
+        
+
+    </body>
+
+</html>

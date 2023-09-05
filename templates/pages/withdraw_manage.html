@@ -1,0 +1,125 @@
+{% extends 'pages/sidebar.html' %}
+{% block content %}
+
+{% load static %}
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+
+    <div class='card'>
+      <div class="card-header">
+        <h4 class="card-title">Withdrawal Requests</h4>
+        <p class="card-title-desc">All Pending Withdrawal Requests
+        </p>
+    </div>
+        <div class="card-body">
+          <div class='table-responsive'>
+    <table id= 'test' class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap">
+        <thead>
+          <tr >
+            <th scope="col">Username</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Currency</th>
+            <th scope="col">Address</th>
+            <th scope="col">Datetime</th>
+            <th scope='col'>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+          <tr >
+            
+            <td>{{i.user_id.username}}</td>
+            <td>{{i.amount}}</td>
+            <td>{{i.currency}}</td>
+            <td>{{i.address}}</td>
+            <td>{{i.date}}</td>
+            
+            <td>
+                <button class='btn bg-success'  data-bs-toggle="modal" data-bs-target="#edit{{i.id}}" title='approve'><i class='fas fa-eye text-primary'></i></button>
+                        <div class="modal fade" id="edit{{i.id}}" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Approve Withdraw</h1>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body row mb-3">
+                                
+                                            <form action="../../../admin/withdraw_manage" method="post">
+                                                {% csrf_token %}
+                                                <div class="row mb-3 gap-1">
+                                                    <div class="col-sm-10 w-100">
+                                                        <input type="text" class="form-control " name="id" hidden value="{{i.id}}">
+                                                        <input type="text" class="form-control " name="user_id" hidden value="{{i.user_id.id}}">
+                                                      </div>
+                                                  
+                                                </div>
+                                                     <div class="row mb-3">
+                                
+                                                  <div class="col-sm-10">
+                                                    <button type="submit" class="btn bg-success" name="approve">Approve</button>
+                                                    <button type="submit" class="btn bg-primary" name="close">Close</button>
+                                                  </div>
+                                                </div>
+                                                </form>
+                                      </div>
+                                
+                                    </div>
+                                  </div>
+                                    
+                                      </div>
+
+                                      <button class='btn bg-danger'  data-bs-toggle="modal" data-bs-target="#delete" title='delete'><i class=" fas fa-trash-alt"></i></button>
+                        <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="delete" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Are You Sure To delete</h1>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body row mb-3">
+                                
+                                            <form action="../../../admin/withdraw_manage" method="post">
+                                                {% csrf_token %}
+                                                <div class="row mb-3 gap-1">
+                                                    <div class="col-sm-10 w-100">
+                                                        <input type="text" class="form-control " name="id" hidden value="{{i.id}}">
+
+                                                        <input type="text" class="form-control " name="user_id" hidden value="{{i.user_id.id}}">
+                                                      </div>
+                                                    
+                                                     <div class="row mb-3">
+                                
+                                                  <div class="col-sm-10">
+                                                    <button type="submit" class="btn bg-danger" name="delete">Delete</button>
+                                                    <button type="submit" class="btn bg-primary" name="close" data-bs-dismiss="modal">Cancel</button>
+                                                  </div>
+                                                  
+                                                   
+                                                  
+                                                </div>
+                                                </form>
+                                      </div>
+                                
+                                    </div>
+                                  </div>
+                                    
+                                      </div>
+                               
+
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+{% endblock %}

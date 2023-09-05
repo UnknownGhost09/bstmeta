@@ -1,0 +1,60 @@
+{% extends 'pages/sidebar.html' %}
+
+{% block content %}
+
+{% load static %}
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+
+    <div class='card'>
+      <div class="card-header">
+        <h4 class="card-title">Staking Members</h4>
+        <p class="card-title-desc">All members 
+        </p>
+    </div>
+
+
+        
+        <div class="card-body">
+          <div class='table-responsive'>
+    <table id= 'test' class="table hover  table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap table-striped-columns text-nowrap">
+        <thead>
+          <tr >
+            
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Plan</th>
+            <th scope='col'>Amount</th>
+            <th scope="col">Joining Date</th>
+            <th scope='col'>ROI per month</th>
+            <th scope='col'>ROI Recieved</th>
+            <th scope="col">Profile</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+          <tr >
+            
+            <td>{{i.user_id.username}}</td>
+            <td>{{i.user_id.email}}</td>
+            <td>{{i.plan_id.plan_id.name}}</td>
+            <td>$ {{i.amount}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.roi_per_month}} %</td>
+            <td>$ {{i.roi_recieved}}</td>
+            <td><a href='../../../admin/users/{{i.id}}' class="h4 text-secondary"><i class="fas fa-arrow-alt-circle-right"></i></a> </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'userpages/sidebar.html' %}
+
+{% block content %}
+
+<main id="main" class="main">
+{% load static %}
+<div class="pagetitle">
+    <h1>Income</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="../dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Income</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+    <section class="section profile">
+      <div class="row">
+        <div class="col-xl-0">
+        </div>
+            </div>
+          </div>
+        </div>      
+      </div>
+      <div class="col-xl-11 ">
+
+        <div class="card">
+          <div class="card-body pt-3">
+            <!-- Bordered Tabs -->
+
+            <h5 class="card-title">Income</h5>
+
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Levels</th>
+                          <th scope="col">Points</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for i in child_users %}
+                        <tr>
+                     
+                          <td>{{i.first_name}}</td>
+                          <td>{{i.email}}</td>
+                          <td>{{userdata.bonus}}</td>
+                          <td>{{userdata.points}}</td>
+
+                        </tr>
+                        
+                      {% endfor %}
+                        </tbody>
+
+                        
+                </table>
+              </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      
+    </section>
+    
+
+
+  </main><!-- End #main -->
+
+
+{% endblock %}

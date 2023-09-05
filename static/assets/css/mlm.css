@@ -1,0 +1,65 @@
+:root {
+  --primary-color: #6366f1;
+}
+html {
+  scroll-behavior: smooth;
+}
+.container-xxl {
+  font-family: "Outfit", sans-serif;
+}
+.theading {
+  font-size: 14px;
+}
+#pills-tab .active {
+  background-color: var(--primary-color);
+  border-radius: 30px;
+}
+.wallet_row {
+  color: rgb(97, 97, 97);
+  background-color: rgb(245, 245, 245);
+}
+.funding_list {
+  overflow-x: auto;
+}
+#wallet .card {
+  position: fixed !important;
+  width: 439px;
+}
+#article .card img {
+  filter: grayscale(1);
+  transition: all 500ms ease-in-out;
+}
+#article .card:hover img {
+  filter: grayscale(0);
+  transition: all 500ms ease-in-out;
+}
+.truncate-line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.event_btn {
+  position: fixed;
+  top: 17vh;
+  right: 8vh;
+  z-index: 10;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  padding: 10px 17px;
+}
+#Header{
+    background-color: #171718;
+}
+.login_btn{
+    background-color: transparent;
+    border: 1px solid #af4cbc;
+}
+
+@media only screen and (max-width: 768px) {
+  #wallet .card {
+    width: auto;
+    position: relative !important;
+  }
+}

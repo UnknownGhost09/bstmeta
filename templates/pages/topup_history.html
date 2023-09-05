@@ -1,0 +1,84 @@
+{% extends 'pages/sidebar.html' %}
+
+{% block content %}
+
+
+  {% load static %}
+ 
+
+
+  <div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Top-up History</h4>
+     
+  </div>
+    <div class="card-body">
+   
+      <div class="table-responsive">
+
+      <table id='test' class="table hover table-borderless dt-responsive nowrap w-100  text-nowrap">
+        <thead>
+            <tr>
+                
+                <th scope='col'>Username</th>
+                <th scope='col'>Email</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+                <th scope='col'>Currency</th>
+                <th scope='col'>Type</th>
+                <th scope='col'>Status</th>
+                
+              </tr>
+        </thead>
+
+        <tbody>
+          {% for i in data %}
+        
+          <tr>
+            <td>{{i.user_id.username}}</td>
+            <td>{{i.user_id.email}}</td>
+            <td>$ {{i.amount}}</td>
+            <td>{{i.created_at|slice:"0:19"}}</td>
+            {% if i.coin == 'n/a' %}
+            <td>USDT</td>
+            {% else %}
+            <td>{{i.coin}}</td>
+            {% endif %}
+            <td>
+              {% if i.type == '1' %}
+                <span class='badge text-white text-bg-success p-2 rounded-pill'>Fund Added</span>
+              {% elif i.type == '2' %}
+              <span class='badge text-white text-bg-danger p-2 rounded-pill'>Fund Freezed</span>
+              {% endif %}
+            </td>
+            <td>
+                {% if i.status == '1' %}
+                  <span class='badge text-white text-bg-success p-2 rounded-pill'>Completed</span>
+                {% elif i.status == '0' %}
+                <span class='badge text-white text-bg-warning p-2 rounded-pill'>Pending</span>
+                {% endif %}
+              </td>
+  
+     
+          </tr>
+      
+          {% endfor %}
+        </tbody>
+     
+      </table>
+      </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}

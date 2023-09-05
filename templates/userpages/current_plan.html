@@ -1,0 +1,94 @@
+{% extends 'userpages/sidebar.html' %} {% block content %} {% load static %}
+
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+     
+
+      <div class="row mt-4 pb-5 mb-5">
+        <div class="col-12">
+          <div
+            class="card bg-dark bg-opacity-25 border border-white shadow-lg border-opacity-25 rounded-4"
+          >
+            <div class="card-header rounded-4">
+              <h4 class="card-title">Overall Plans</h4>
+              
+            </div>
+            <div class="card-body">
+            <div class='table-responsive'>
+             
+
+              <table
+                id="test"
+                class="table hover table-borderless dt-responsive nowrap w-100 text-nowrap mt-3"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <p class="text-white text-opacity-75 mb-0">Plan Name</p>
+                    </th>
+                    <th scope="col">
+                      <p class="text-white text-opacity-75 mb-0">
+                        Amount
+                      </p>
+                    </th>
+                    <th scope="col">
+                      <p class="text-white text-opacity-75 mb-0">
+                        Date
+                      </p>
+                    </th>
+                    <th scope="col">
+                      <p class="text-white text-opacity-75 mb-0">
+                        ROI Recieved
+                      </p>
+                    </th>
+                    <th scope="col">
+                      <p class="text-white text-opacity-75 mb-0">ROI per day</p>
+                    </th>
+                  
+                    <th scope="col">
+                      <p class="text-white text-opacity-75 mb-0">Status</p>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in data%}
+                  <tr>
+                    <td class='fw-bold planname'>{{i.plan_id.name}}</td>
+                    <td>{{i.amount}}</td>
+                    <td>{{i.date|slice:"0:19"}}</td>
+                    <td>{{i.roi_recieved}}</td>
+                    <td>{{i.plan_id.roi}} %</td>
+
+                
+                    {% if i.status == '1' %}
+                    <td><span class='badge text-white text-bg-success p-2 rounded-pill'>Active</span></td>
+                   {% else %}
+                   <td><span class='badge text-white text-bg-warning p-2 rounded-pill'>Completed</span></td>
+                   {% endif %}
+               
+                    
+
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            
+            </div>
+             
+            </div>
+          </div>
+        </div>
+        <!-- end col -->
+      </div>
+      <!-- end row -->
+
+      <!-- end row -->
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+</div>
+
+{% endblock %}

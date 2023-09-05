@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dashboard</title>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      content="Premium Multipurpose Admin & Dashboard Template"
+      name="description"
+    />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="/media/{{appdetail.favicon}}/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css'%}" rel="stylesheet" type="text/css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- plugin css -->
+    <link
+      href="{% static 'assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+  
+
+    <!-- preloader css -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/css/preloader.min.css' %}"
+      type="text/css"
+    />
+
+    <!-- Bootstrap Css -->
+    <link
+      href="{% static 'assets/css/bootstrap.min.css' %}"
+      id="bootstrap-style"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Icons Css -->
+    <link
+      href="{% static 'assets/css/icons.min.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- App Css-->
+    <link
+      href="{% static 'assets/css/app.min.css' %}"
+      id="app-style"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+      integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css"
+    />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      .scroll {
+        overflow-y: scroll;
+        height: 25rem !important;
+      }
+      .bg-success {
+        --bs-bg-opacity: 1;
+        background-color: #16cc86 !important;
+        color: white;
+      }
+      .card {
+        padding: 0px !important;
+      }
+      .card-body {
+        padding: 1rem !important;
+      }
+      .card-title {
+        padding: 0rem !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent;
+        background: linear-gradient(90.04deg, #75e1e3 -2.16%, #75e288 101.5%);
+      }
+      .bg-warning {
+        --bs-bg-opacity: 1;
+        background-color: #dca961 !important;
+        color: white;
+      }
+    
+        .planname {
+          background: -webkit-linear-gradient(#ded7d7, #2ab57d);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+    
+      .bg-danger {
+        --bs-bg-opacity: 1;
+        background-color: #d9534f !important;
+        color: white;
+      }
+
+
+      .fa:hover {
+        transform: scale(0.9);
+      }
+      .secondary {
+        color: #012970;
+      }
+
+      .sorting {
+        color: #012970 !important;
+      }
+
+      .menu .accordion-heading {
+        position: relative;
+      }
+      .menu .accordion-heading .edit {
+        position: absolute;
+        top: 8px;
+        right: 30px;
+      }
+      .menu .area {
+        border-left: 4px solid #f38787;
+      }
+      .menu .equipamento {
+        border-left: 4px solid #16cc86;
+      }
+      .menu .ponto {
+        border-left: 4px solid #98b3fa;
+      }
+      .menu .collapse.in {
+        overflow: visible;
+      }
+
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+      .dataTables_wrapper .dataTables_paginate .paginate_button {
+        background: #5156be !important;
+        color: white !important;
+        border-radius: 0.5rem;
+      }
+      .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+      .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
+      .dataTables_wrapper
+        .dataTables_paginate
+        .paginate_button.disabled:active {
+        background: #d2d7db !important;
+        color: black !important;
+        border-radius: 0.5rem;
+      }
+
+      element.style {
+      }
+
+      .nav-pills .nav-link.active,
+      .nav-pills .show > .nav-link {
+        color: white !important;
+        background-color: #3c3c3e !important;
+      }
+
+      .nav-link {
+        color: #3c3c3e !important;
+      }
+
+      .bg-primary {
+        --bs-bg-opacity: 1;
+        background-color: #5156be !important;
+        color: white;
+      }
+
+      .primary {
+        color: #5156be !important;
+      }
+
+      .menu .accordion-heading {
+        position: relative;
+      }
+      .menu .accordion-heading .edit {
+        position: absolute;
+        top: 8px;
+        right: 30px;
+      }
+      .menu .area {
+        border-left: 4px solid #f38787;
+      }
+      .menu .equipamento {
+        border-left: 4px solid #65c465;
+      }
+      .menu .ponto {
+        border-left: 4px solid #98b3fa;
+      }
+      .menu .collapse.in {
+        overflow: visible;
+      }
+
+      element.style {
+      }
+      .dataTables_wrapper .dataTables_length,
+      .dataTables_wrapper .dataTables_filter,
+      .dataTables_wrapper .dataTables_info,
+      .dataTables_wrapper .dataTables_processing,
+      .dataTables_wrapper .dataTables_paginate {
+        margin-top: 5px !important;
+        padding: 10px 15px;
+      }
+
+      .form-check-input:checked {
+        background-color: #157C55 !important;
+      }
+      #sidebar-menu {
+        position: fixed;
+      }
+      #reffer {
+        background: #f2f2f2;
+      }
+      .downLineCard{
+        padding: 0rem !important;
+      }
+
+      .cursor {
+        cursor: pointer;
+      }
+      #sidebar-menu {
+        position: unset !important;
+      }
+    </style>
+  </head>
+
+  <body
+    data-layout-mode="dark"
+    data-topbar="dark"
+    data-sidebar="dark"
+    data-sidebar-size="sm"
+  >
+    <!-- <body data-layout="horizontal"> -->
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+      <header id="page-topbar">
+        <div
+          class="navbar-header bg-dark bg-opacity-25 border-secondary border-bottom border-opacity-25"
+        >
+          <div class="d-flex">
+            <!-- LOGO -->
+
+            <div class="navbar-brand-box">
+              <a href="../../../dashboard" class="logo logo-dark">
+                {% comment %} <span class="logo-sm">
+                  <img src="/media/{{appdetail.logodart}}" alt="" height="24" />
+                </span> {% endcomment %}
+                <span class="logo-lg">
+                  <img src="/media/{{appdetail.logodart}}" alt="" height="24" />
+                  <span class="logo-txt"></span>
+                </span>
+              </a>
+
+              <a href="../../../dashboard" class="logo logo-light">
+                {% comment %} <span class="logo-sm">
+                  <img src="/media/{{appdetail.logodart}}" alt="" height="24" />
+                </span> {% endcomment %}
+                <span class="logo-lg">
+                  <img src="/media/{{appdetail.logodart}}" alt="" height="24" />
+                  <span class="logo-txt"></span>
+                </span>
+              </a>
+            </div>
+            <button
+              type="button"
+              class="btn btn-sm px-3 font-size-16 header-item"
+              id="vertical-menu-btn"
+            >
+              <i class="fa fa-fw fa-bars"></i>
+            </button>
+             <div class="page-title-right pt-3">
+              <div class="bg-light border p-1 rounded-3" id="reffer">
+                <div class="p-1">
+                  <div class="d-md-flex">
+                    <p class="my-auto font-w-500 tx-s-12">BSC</p>
+                    <br />
+                    <div
+                      class="my-auto ml-auto pull-right"
+                      style="text-align: right; clear: both; position: relative"
+                    >
+                      <span
+                        class="px-1 cursor"
+                        title="copy"
+                        onclick="myFunction1()"
+                      >
+                        {{smart_contract.bscaddress}}
+                      </span>
+                    </div>
+                    <input
+                        type="text"
+                        value="{{smart_contract.bscaddress}}"
+                        id="myInput"
+                        hidden
+                      />
+                      <i
+                        class="fas fa-copy text-secondary fs-4 px-1 cursor"
+                        title="copy"
+                        onclick=myFunction1()
+                      ></i>
+                  </div>
+                </div>
+              </div>
+            </div> 
+            <!-- App Search-->
+          </div>
+
+          <div class="d-flex">
+            <div class="dropdown d-inline-block d-lg-none ms-2">
+              <button
+                type="button"
+                class="btn header-item"
+                id="page-header-search-dropdown"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i data-feather="search" class="icon-lg"></i>
+              </button>
+              <div
+                class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                aria-labelledby="page-header-search-dropdown"
+              >
+                <form class="p-3">
+                  <div class="form-group m-0"></div>
+                </form>
+              </div>
+            </div>
+
+            {% comment %}
+            <div class="dropdown d-none d-sm-inline-block">
+              <button
+                type="button"
+                class="btn header-item"
+                id="mode-setting-btn"
+              >
+                <i data-feather="moon" class="icon-lg layout-mode-dark"></i>
+                <i data-feather="sun" class="icon-lg layout-mode-light"></i>
+              </button>
+            </div>
+            {% endcomment %}
+            {% comment %} <div class="pt-4 d-inline-block">
+              <p>ALP Token Price <span class="text-success">{{last}}</span></p>
+            </div> {% endcomment %}
+
+            <div class="dropdown d-inline-block">
+              <button
+                type="button"
+                class="btn header-item noti-icon position-relative"
+                id="page-header-notifications-dropdown"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-bell" class="icon-lg"></i>
+                <span class="badge bg-danger rounded-pill">{{size}}</span>
+              </button>
+              <div
+                class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                aria-labelledby="page-header-notifications-dropdown"
+              >
+                <div class="p-3">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <h6 class="m-0">Events and News</h6>
+                    </div>
+                    <div class="col-auto">
+                      <a
+                        href="#!"
+                        class="small text-reset text-decoration-underline"
+                      >
+                        {{size}}</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div data-simplebar style="max-height: 230px">
+                  {% for i in newsdata %}
+                  <a href="#!" class="text-reset notification-item">
+                    <div class="d-flex">
+                      <div class="flex-grow-1">
+                        <h6 class="mb-1">{{i.news}}</h6>
+                        <div class="font-size-13 text-muted">
+                          <p class="mb-1">
+                            {{i.date|slice:"0:19"}} to {{i.datato|slice:"0:19"}}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            {% comment %} {% if ref_link %}
+            <button
+              class="btn header-item noti-icon position-relative"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >
+              <i class="fas fa-share-alt"></i>
+            </button>
+
+            <!-- Static Backdrop Modal -->
+            <div
+              class="modal fade"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      Invite Peoples
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <div
+                      class="d-flex justify-content-center gap-4 align-items-center"
+                    >
+                      <a href="whatsapp://send?text={{ref_link}}"
+                        ><i class="fab fa-whatsapp fs-1" title="whatsapp"></i
+                      ></a>
+                      <a href="https://instagram.com/"
+                        ><i
+                          class="fab fa-instagram fs-1"
+                          aria-hidden="true"
+                          title="instagram"
+                        ></i
+                      ></a>
+                      <a href="https://facebook.com"
+                        ><i class="fab fa-facebook fs-1" title="facebook"></i
+                      ></a>
+
+                      <input
+                        type="text"
+                        value="{{ref_link}}"
+                        id="myInput"
+                        hidden
+                      />
+                      <button class="btn btn-primary" onclick="myFunction()">
+                        Copy Invite code
+                      </button>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-light"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% endif %} {% endcomment %}
+            <div class="dropdown d-inline-block">
+              <button
+                type="button"
+                class="btn header-item"
+                id="page-header-user-dropdown"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <img
+                  class="rounded-circle header-profile-user"
+                  src="{% static 'assets/images/users/user.png' %}"
+                  alt="Header Avatar"
+                />
+                <span class="d-none d-xl-inline-block ms-1 fw-medium"
+                  >{{u}}</span
+                >
+                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-end">
+                <!-- item-->
+                <a class="dropdown-item" href="../../../users"
+                  ><i
+                    class="mdi mdi-face-profile font-size-16 align-middle me-1"
+                  ></i>
+                  Profile</a
+                >
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="../../../signout"
+                  ><i class="mdi mdi-logout font-size-16 align-middle me-1"></i>
+                  Logout</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ========== Left Sidebar Start ========== -->
+      <div class="vertical-menu">
+        <div data-simplebar class="h-100">
+          <!--- Sidemenu -->
+          <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+              <li class="menu-title" data-key="t-menu">Menu</li>
+
+              <li>
+                <a href="../../../dashboard">
+                  <i class="fas fa-home"></i>
+                  <span data-key="t-dashboard">Dashboard</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="../../../users">
+                  <i class="fas fa-users-cog"></i>
+                  <span data-key="t-apps">Profile Management</span>
+                </a>
+              </li>
+
+      
+              <li>
+                <a href="javascript: void(0);" class="has-arrow">
+                  <i class="fas fa-network-wired"></i>
+                  <span data-key="t-pages">Network</span>
+                </a>
+                <ul class="sub-menu">
+                  <li>
+                    <a href="../../../user_referal" data-key="t-starter-page"
+                      >Direct Members</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../../../tree" data-key="t-starter-page"
+                      >Referral Tree</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../../../downlineteam" data-key="t-starter-page"
+                      >Downline Team</a
+                    >
+                  </li>
+               
+              
+             
+                </ul>
+              </li>
+
+              <li>
+                <a href="javascript: void(0);" class="has-arrow">
+                  <i class="fas fa-wallet"></i>
+                  <span data-key="t-pages">Wallet</span>
+                </a>
+                <ul class="sub-menu">
+                  <li>
+                    <a href="../../../wallet" data-key="t-starter-page"
+                      >Wallet</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../../../wallettransfer" data-key="t-maintenance"
+                      >Transfer</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../../../deposit" data-key="t-maintenance"
+                      >Deposit</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../../../withdraw" data-key="t-maintenance"
+                      >Withdraw</a
+                    >
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <a href="javascript: void(0);" class="has-arrow">
+                  <i class="fa-solid fa-money-bill-trend-up"></i>
+                  <span data-key="t-pages">Income</span>
+                </a>
+                <ul class="sub-menu">
+                  <li>
+                    <a href="../../../level_income" data-key="t-starter-page"
+                      >Level Income</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../../../roi_history" data-key="t-starter-page"
+                      >ROI History</a
+                    >
+                  </li>
+                
+                  <li>
+                    <a href="../../../direct_income" data-key="t-starter-page"
+                      >Direct Refferal Income</a
+                    >
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <a href="javascript: void(0);" class="has-arrow">
+                  <i class="fa-solid fa-file"></i>
+                  <span data-key="t-pages">Reports</span>
+                </a>
+                <ul class="sub-menu">
+                  <li>
+                    <a href="../../../current_farming" data-key="t-starter-page"
+                      >Membership History</a
+                    >
+                  </li>
+                
+                  <li>
+                    <a href="../../../deposithistory" data-key="t-starter-page"
+                      >Deposit History</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../../../withdrawhistory" data-key="t-starter-page"
+                      >Withdraw History</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../../../transferhistory" data-key="t-starter-page"
+                      >Transfer History</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../../../tophistory" data-key="t-starter-page"
+                      >Top Up History</a
+                    >
+                  </li>
+             
+            
+                 
+                </ul>
+              </li>
+              {% comment %}
+              <li>
+                <a href="javascript: void(0);" class="has-arrow">
+                  <i class="fas fa-exchange-alt"></i>
+                  <span data-key="t-pages">Transactions Management </span>
+                </a>
+                <ul class="sub-menu">
+                  <li>
+                    <a href="../../../transfer" data-key="t-starter-page"
+                      >Transfer Money</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../../../transferhistory" data-key="t-maintenance"
+                      >Transfer History</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              {% endcomment %} {% comment %}
+              <li>
+                <a href="javascript: void(0);" class="has-arrow">
+                  <i class="fas fa-cart-plus"></i>
+                  <span data-key="t-pages">Plans</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                  <li>
+                    <a href="../../../allplans" data-key="t-starter-page"
+                      >All Plans</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../../../userpackage" data-key="t-starter-page"
+                      >Current Plans</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              {% endcomment %}
+
+
+     
+              <li>
+                <a href="../../../package">
+                  <i class="fa-solid fa-money-bill-wheat"></i>
+                  <span
+                    class="badge rounded-pill bg-soft-danger text-danger float-end"
+                  ></span>
+                  <span data-key="t-forms">Membership Plans</span>
+                </a>
+              </li> 
+              {% comment %} <li>
+                <a href="../../../package/5">
+                  <i class="fa-solid fa-money-bill-wheat"></i>
+                  <span
+                    class="badge rounded-pill bg-soft-danger text-danger float-end"
+                  ></span>
+                  <span data-key="t-forms">Staking Packages</span>
+                </a>
+              </li>  {% endcomment %}
+              <li>
+                <a href="../../../rankreward">
+                  <i class="fa-solid fa-ranking-star"></i>
+                  <span
+                    class="badge rounded-pill bg-soft-danger text-danger float-end"
+                  ></span>
+                  <span data-key="t-forms">Rank & Reward</span>
+                </a>
+              </li> 
+
+              <li>
+                <a href="../../../support">
+                  <i class="fas fa-headset"></i>
+                  <span
+                    class="badge rounded-pill bg-soft-danger text-danger float-end"
+                  ></span>
+                  <span data-key="t-forms">Support</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- Sidebar -->
+        </div>
+      </div>
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- Right Sidebar -->
+    <div class="right-bar">
+      <div data-simplebar class="h-100">
+        <div class="rightbar-title d-flex align-items-center p-3">
+          <h5 class="m-0 me-2">Theme Customizer</h5>
+
+          <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
+            <i class="mdi mdi-close noti-icon"></i>
+          </a>
+        </div>
+
+        <!-- Settings -->
+        <hr class="m-0" />
+
+        <div class="p-4">
+          <h6 class="mb-3">Layout</h6>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="layout"
+              id="layout-vertical"
+              value="vertical"
+            />
+            <label class="form-check-label" for="layout-vertical"
+              >Vertical</label
+            >
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="layout"
+              id="layout-horizontal"
+              value="horizontal"
+            />
+            <label class="form-check-label" for="layout-horizontal"
+              >Horizontal</label
+            >
+          </div>
+
+          <h6 class="mt-4 mb-3 pt-2">Layout Mode</h6>
+
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="layout-mode"
+              id="layout-mode-light"
+              value="light"
+            />
+            <label class="form-check-label" for="layout-mode-light"
+              >Light</label
+            >
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="layout-mode"
+              id="layout-mode-dark"
+              value="dark"
+            />
+            <label class="form-check-label" for="layout-mode-dark">Dark</label>
+          </div>
+
+          <h6 class="mt-4 mb-3 pt-2">Layout Width</h6>
+
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="layout-width"
+              id="layout-width-fuild"
+              value="fuild"
+              onchange="document.body.setAttribute('data-layout-size', 'fluid')"
+            />
+            <label class="form-check-label" for="layout-width-fuild"
+              >Fluid</label
+            >
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="layout-width"
+              id="layout-width-boxed"
+              value="boxed"
+              onchange="document.body.setAttribute('data-layout-size', 'boxed')"
+            />
+            <label class="form-check-label" for="layout-width-boxed"
+              >Boxed</label
+            >
+          </div>
+
+          <h6 class="mt-4 mb-3 pt-2">Layout Position</h6>
+
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="layout-position"
+              id="layout-position-fixed"
+              value="fixed"
+              onchange="document.body.setAttribute('data-layout-scrollable', 'false')"
+            />
+            <label class="form-check-label" for="layout-position-fixed"
+              >Fixed</label
+            >
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="layout-position"
+              id="layout-position-scrollable"
+              value="scrollable"
+              onchange="document.body.setAttribute('data-layout-scrollable', 'true')"
+            />
+            <label class="form-check-label" for="layout-position-scrollable"
+              >Scrollable</label
+            >
+          </div>
+
+          <h6 class="mt-4 mb-3 pt-2">Topbar Color</h6>
+
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="topbar-color"
+              id="topbar-color-light"
+              value="light"
+              onchange="document.body.setAttribute('data-topbar', 'light')"
+            />
+            <label class="form-check-label" for="topbar-color-light"
+              >Light</label
+            >
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="topbar-color"
+              id="topbar-color-dark"
+              value="dark"
+              onchange="document.body.setAttribute('data-topbar', 'dark')"
+            />
+            <label class="form-check-label" for="topbar-color-dark">Dark</label>
+          </div>
+
+          <h6 class="mt-4 mb-3 pt-2 sidebar-setting">Sidebar Size</h6>
+
+          <div class="form-check sidebar-setting">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="sidebar-size"
+              id="sidebar-size-default"
+              value="default"
+              onchange="document.body.setAttribute('data-sidebar-size', 'lg')"
+            />
+            <label class="form-check-label" for="sidebar-size-default"
+              >Default</label
+            >
+          </div>
+          <div class="form-check sidebar-setting">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="sidebar-size"
+              id="sidebar-size-compact"
+              value="compact"
+              onchange="document.body.setAttribute('data-sidebar-size', 'md')"
+            />
+            <label class="form-check-label" for="sidebar-size-compact"
+              >Compact</label
+            >
+          </div>
+          <div class="form-check sidebar-setting">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="sidebar-size"
+              id="sidebar-size-small"
+              value="small"
+              onchange="document.body.setAttribute('data-sidebar-size', 'sm')"
+            />
+            <label class="form-check-label" for="sidebar-size-small"
+              >Small (Icon View)</label
+            >
+          </div>
+
+          <h6 class="mt-4 mb-3 pt-2 sidebar-setting">Sidebar Color</h6>
+
+          <div class="form-check sidebar-setting">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="sidebar-color"
+              id="sidebar-color-light"
+              value="light"
+              onchange="document.body.setAttribute('data-sidebar', 'light')"
+            />
+            <label class="form-check-label" for="sidebar-color-light"
+              >Light</label
+            >
+          </div>
+          <div class="form-check sidebar-setting">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="sidebar-color"
+              id="sidebar-color-dark"
+              value="dark"
+              onchange="document.body.setAttribute('data-sidebar', 'dark')"
+            />
+            <label class="form-check-label" for="sidebar-color-dark"
+              >Dark</label
+            >
+          </div>
+          <div class="form-check sidebar-setting">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="sidebar-color"
+              id="sidebar-color-brand"
+              value="brand"
+              onchange="document.body.setAttribute('data-sidebar', 'brand')"
+            />
+            <label class="form-check-label" for="sidebar-color-brand"
+              >Brand</label
+            >
+          </div>
+
+          <h6 class="mt-4 mb-3 pt-2">Direction</h6>
+
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="layout-direction"
+              id="layout-direction-ltr"
+              value="ltr"
+            />
+            <label class="form-check-label" for="layout-direction-ltr"
+              >LTR</label
+            >
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="layout-direction"
+              id="layout-direction-rtl"
+              value="rtl"
+            />
+            <label class="form-check-label" for="layout-direction-rtl"
+              >RTL</label
+            >
+          </div>
+        </div>
+      </div>
+      <!-- end slimscroll-menu-->
+    </div>
+    <!-- /Right-bar -->
+
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+    {% if message %}
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script type="application/javascript">
+        Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '{{message}}',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    </script>
+
+      {% endif %} {% if message1 %}
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script type="application/javascript">
+        Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: '{{message1}}',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    </script>
+      {% endif %}
+
+    {% block content %} {% endblock %}
+
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/libs/metismenu/metisMenu.min.js' %}"></script>
+    <script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'assets/libs/node-waves/waves.min.js' %}"></script>
+    <script src="{% static 'assets/libs/feather-icons/feather.min.js' %}"></script>
+    <!-- pace js -->
+    <script src="{% static 'assets/libs/pace-js/pace.min.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js' %}"></script>
+
+  
+    <!-- apexcharts -->
+    <script src="{% static 'assets/libs/apexcharts/apexcharts.min.js' %}"></script>
+
+    <!-- Plugins js-->
+    <script src="{% static 'assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js' %}"></script>
+    <script src="{% static 'assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js' %}"></script>
+    <!-- dashboard init -->
+    {% comment %}
+    <script src="{% static 'assets/js/pages/dashboard.init.js' %}"></script>
+    {% endcomment %}
+
+    <script src="{% static 'assets/js/app.js' %}"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+      integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
+    <script>
+      try {
+        function myFunction() {
+          mytext = "{{ref_link}}";
+          var input = document.createElement("input");
+          input.setAttribute("value", mytext);
+          input.value = mytext;
+          document.body.appendChild(input);
+          input.select();
+          input.setSelectionRange(0, 99999);
+          var $this = this;
+          var res = document.execCommand("copy");
+
+          alert("Refferal link Copied");
+          // $this.copy_text = "Copy";
+          // $this.copy_disable = false;
+          document.body.removeChild(input);
+          setTimeout(() => {
+            document.body.removeChild(input);
+          }, 2000);
+        }
+
+        function myFunction1() {
+            mytext = "0x83F928c66F437507EB399F8E91e84f2fD15C57Ec";
+            var input = document.createElement("input");
+            input.setAttribute("value", mytext);
+            input.value = mytext;
+            document.body.appendChild(input);
+            input.select();
+            input.setSelectionRange(0, 99999);
+            var $this = this;
+            var res = document.execCommand("copy");
+  
+            alert("Link Copied");
+            // $this.copy_text = "Copy";
+            // $this.copy_disable = false;
+            document.body.removeChild(input);
+            setTimeout(() => {
+              document.body.removeChild(input);
+            }, 2000);
+          }
+
+        $(document).ready(function () {
+          $("#test").DataTable();
+        });
+        $(document).ready(function () {
+          $("#test1").DataTable();
+        });
+        $(document).ready(function () {
+          $("#test2").DataTable();
+        });
+        $(document).ready(function () {
+          $("#incometable").DataTable();
+        });
+        $(document).ready(function () {
+          $("#outcome").DataTable();
+        });
+
+        function getChartColorsArray(r) {
+          r = $(r).attr("data-colors");
+          console.log(r);
+
+          return (r = JSON.parse(r)).map(function (r) {
+            r = r.replace(" ", "");
+            if (-1 == r.indexOf("--")) return r;
+            r = getComputedStyle(document.documentElement).getPropertyValue(r);
+            return r || void 0;
+          });
+        }
+        var minichart1Colors = getChartColorsArray("#mini-chart1"),
+          options = {
+            series: [
+              {
+                data: [
+                  2, 10, 18, 22, 36, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15,
+                ],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart1Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          },
+          chart = new ApexCharts(
+            document.querySelector("#mini-chart1"),
+            options
+          );
+        chart.render();
+        var minichart2Colors = getChartColorsArray("#mini-chart2"),
+          options = {
+            series: [
+              {
+                data: [
+                  15, 42, 47, 2, 14, 19, 65, 75, 47, 15, 42, 47, 2, 14, 12,
+                ],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart2Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          };
+        (chart = new ApexCharts(
+          document.querySelector("#mini-chart2"),
+          options
+        )).render();
+        var minichart3Colors = getChartColorsArray("#mini-chart3"),
+          options = {
+            series: [
+              {
+                data: [47, 15, 2, 67, 22, 20, 36, 60, 60, 30, 50, 11, 12, 3, 8],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart3Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          };
+        (chart = new ApexCharts(
+          document.querySelector("#mini-chart3"),
+          options
+        )).render();
+        var minichart4Colors = getChartColorsArray("#mini-chart4"),
+          options = {
+            series: [
+              {
+                data: [
+                  12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15,
+                ],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart4Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          };
+        (chart = new ApexCharts(
+          document.querySelector("#mini-chart4"),
+          options
+        )).render();
+
+        var minichart4Colors = getChartColorsArray("#mini-chart5"),
+          options = {
+            series: [
+              {
+                data: [
+                  12, 14, 2, 47, 40, 15, 41, 75, 65, 19, 14, 2, 47, 42, 16,
+                ],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart4Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          };
+        (chart = new ApexCharts(
+          document.querySelector("#mini-chart5"),
+          options
+        )).render();
+
+        var minichart4Colors = getChartColorsArray("#mini-chart6"),
+          options = {
+            series: [
+              {
+                data: [12, 14, 2, 15, 4, 15, 47, 70, 65, 19, 14, 2, 47, 42, 15],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart4Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          };
+        (chart = new ApexCharts(
+          document.querySelector("#mini-chart6"),
+          options
+        )).render();
+
+        var minichart4Colors = getChartColorsArray("#mini-chart7"),
+          options = {
+            series: [
+              {
+                data: [12, 11, 2, 47, 42, 15, 47, 75, 65, 19, 1, 2, 47, 42, 15],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart4Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          };
+        (chart = new ApexCharts(
+          document.querySelector("#mini-chart7"),
+          options
+        )).render();
+
+        var minichart4Colors = getChartColorsArray("#mini-chart8"),
+          options = {
+            series: [
+              {
+                data: [
+                  12, 14, 2, 41, 42, 15, 47, 75, 65, 19, 12, 2, 47, 42, 10,
+                ],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart4Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          };
+        (chart = new ApexCharts(
+          document.querySelector("#mini-chart8"),
+          options
+        )).render();
+
+        var minichart4Colors = getChartColorsArray("#mini-chart9"),
+          options = {
+            series: [
+              {
+                data: [
+                  12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15,
+                ],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart4Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          };
+        (chart = new ApexCharts(
+          document.querySelector("#mini-chart9"),
+          options
+        )).render();
+
+        var minichart4Colors = getChartColorsArray("#mini-chart10"),
+          options = {
+            series: [
+              {
+                data: [
+                  12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14, 2, 47, 42, 15,
+                ],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart4Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          };
+        (chart = new ApexCharts(
+          document.querySelector("#mini-chart10"),
+          options
+        )).render();
+
+        var minichart4Colors = getChartColorsArray("#mini-chart11"),
+          options = {
+            series: [
+              {
+                data: [
+                  12, 14, 2, 47, 42, 15, 47, 75, 66, 19, 14, 2, 47, 42, 15,
+                ],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart4Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          };
+        (chart = new ApexCharts(
+          document.querySelector("#mini-chart11"),
+          options
+        )).render();
+
+        var minichart4Colors = getChartColorsArray("#mini-chart12"),
+          options = {
+            series: [
+              {
+                data: [
+                  12, 14, 20, 47, 42, 150, 47, 75, 66, 19, 14, 2, 47, 42, 15,
+                ],
+              },
+            ],
+            chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+            colors: minichart4Colors,
+            stroke: { curve: "smooth", width: 2 },
+            tooltip: {
+              fixed: { enabled: !1 },
+              x: { show: !1 },
+              y: {
+                title: {
+                  formatter: function (r) {
+                    return "";
+                  },
+                },
+              },
+              marker: { show: !1 },
+            },
+          };
+        (chart = new ApexCharts(
+          document.querySelector("#mini-chart12"),
+          options
+        )).render();
+      } catch (e) {
+        console.log(e);
+      }
+    </script>
+  </body>
+</html>

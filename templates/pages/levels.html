@@ -1,0 +1,135 @@
+{% extends 'pages/sidebar.html' %}
+
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Levels</h4>
+        <p class="card-title-desc">Total Levels
+        </p>
+    </div>
+        <div class="card-body">
+            <div class='d-flex justify-content-between align-items-center'>
+       
+          <button class='btn btn-primary w-md'  data-bs-toggle="modal" data-bs-target="#exampleModal">Create Level</button>
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Create Level</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body row mb-3">
+          
+                  <form action='../../../admin/levels' method='POST'>
+                    {% csrf_token %}
+                    
+
+                    <div class="mb-3">
+                      <label class="form-label" for="formrow-firstname-input">Level Number</label>
+                      <input type="text" class="form-control" id="formrow-firstname-input"  name='id'>
+                  </div>
+                   
+                    <div class="mb-3">
+                        <label class="form-label" for="formrow-firstname-input">Level Income (%)</label>
+                        <input type="number" class="form-control" id="formrow-firstname-input"  name='standard'>
+                    </div>
+             
+              
+         
+          
+  
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary w-md" name='create'>Submit</button>
+                    </div>
+                </form>
+
+                </div>
+          
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+            </div>
+            
+       
+
+
+          <div class='card'>
+            <div class='card-body'>
+          <div class='table-responsive'>
+          <table id='test' class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap">
+            <thead>
+              <tr >               
+                <th scope="col">Level</th>
+                <th scope="col">Level Income</th> 
+                
+                <th scope='col'>action</th>
+                   
+              </tr>
+            </thead>
+            <tbody>
+                {% for i in levels %}
+                <tr >
+                  <td class="level-id">{{ i.id }}</td>
+                  <td>{{i.points}} %</td>
+                 
+                  <td>
+                    <i class="fas fa-arrow-alt-circle-right h4 text-primary" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center{{i.id}}"></i>
+
+                <div class="modal fade bs-example-modal-center{{i.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Edit Level Income</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-wrap">
+                                <form action='../../../admin/levels' method='POST'>
+                                    {% csrf_token %}
+                                    <input type='text' name='id' hidden value='{{i.id}}'>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label" for="formrow-firstname-input">Level Income (%)</label>
+                                        <input type="number" class="form-control" id="formrow-firstname-input"  name='standard' value="{{i.points}}">
+                                    </div>
+                               
+
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary w-md" name='update'>Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+       
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+       
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

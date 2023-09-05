@@ -1,0 +1,116 @@
+{% extends 'pages/sidebar.html' %} {% block content %}
+
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+    
+      
+
+      <div
+        class="card   border-opacity-25 mt-4 rounded-4"
+      >
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xl-4 border">
+              <div
+                class="card bg-opacity-25 border border-white  border-opacity-25 rounded-4"
+              >
+                <div class="card-header align-items-center d-flex rounded-4">
+                  <h4 class="card-title mb-0 flex-grow-1">Manage Funds</h4>
+                  <div class="flex-shrink-0">
+                    <ul
+                      class="nav nav-tabs-custom card-header-tabs"
+                      role="tablist"
+                    >
+                      <li class="nav-item">
+                        <a
+                          class="nav-link active"
+                          data-bs-toggle="tab"
+                          href="#buy-tab"
+                          role="tab"
+                        >
+                          <p class="text-white mb-0 text-opacity-75">
+                            Add / Freeze Funds
+                          </p></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- end card header -->
+
+                <div class="card-body">
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="buy-tab" role="tabpanel">
+                      <div class="float-end ms-2">
+                        <h5 class="font-size-14">
+                            <i
+                              class="bx bx-wallet text-primary font-size-16 align-middle me-1"
+                            ></i>
+                            <a
+                              href="#!"
+                              class="text-reset text-decoration-underline"
+                              >${{usr_wallet.avaliable_balance|floatformat:"2"}}</a
+                            >
+                          </h5>
+                      </div>
+                      <h5 class="font-size-14 mb-4">Add / Freeze Funds</h5>
+
+                      <div>
+                        <form method="post" action="../../../admin/addfund">
+                          {% csrf_token %}
+
+                         
+
+                          <div>
+                            <label>Enter Amount :</label>
+                            <div class="input-group mb-3">
+                              <label class="input-group-text  bg-opacity-25 border border-white shadow-lg border-opacity-25">Amount</label>
+                                <input name='id' value="{{id}}" type='text' hidden>
+                              <input
+                                type="number"
+                                class="form-control  bg-opacity-25 border  shadow-lg border-opacity-25"
+                                name="amount"
+                                
+                              />
+                            </div>
+                          </div>
+
+                          <div class="text-center">
+                            <button
+                              type="submit"
+                              class="btn btn-outline-success w-md"
+                              name="addfund"
+                            >
+                              Add Fund
+                            </button>
+
+                            <button
+                            type="submit"
+                            class="btn btn-outline-danger w-md"
+                            name="freeze"
+                          >
+                            Freeze Fund
+                          </button>
+                          </div>
+                        </form>
+                      </div>
+                      <!-- end tab pane -->
+                    </div>
+                    <!-- end tab content -->
+                  </div>
+                  <!-- end card body -->
+                </div>
+                <!-- end card -->
+              </div>
+              <!-- end col -->
+            </div>
+
+       
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

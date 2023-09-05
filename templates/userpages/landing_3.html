@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no" />
+  <title>Document</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <style>
+    body {
+      font-family: "Outfit", sans-serif;
+      background: linear-gradient(83deg, #10252a -2.16%, #000100 101.5%);
+      overflow-x: hidden;
+    }
+
+    .hero_img {
+      filter: drop-shadow(10px 5px 20px #0f1920);
+    }
+
+    .heading {
+      color: #01a5ac;
+    }
+
+    .moving-image {
+
+      position: relative;
+      animation: moveImage 5s linear infinite;
+      transition: all 0.3s ease-in-out;
+
+    }
+
+    .roi {
+      background-color: #0c1d20;
+    }
+
+    .moving-image:hover {
+      transition: all 0.3s ease-in-out;
+      scale: 1.03;
+
+    }
+
+    @keyframes moveImage {
+      0% {
+        left: 0;
+      }
+
+      50% {
+        left: 50px;
+      }
+
+      100% {
+        left: 0;
+      }
+    }
+
+    .button {
+      --color: #3587c1;
+      padding: 0.8em 1.7em;
+      background-color: transparent;
+      border-radius: 0.3em;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: 0.5s;
+      font-weight: 400;
+      font-size: 17px;
+      border: 1px solid;
+      font-family: inherit;
+      text-transform: uppercase;
+      color: var(--color);
+      z-index: 1;
+    }
+
+    #hero_heading {
+      font-size: 5rem !important;
+      font-weight: 900 !important;
+    }
+
+    .button::before,
+    .button::after {
+      content: "";
+      display: block;
+      width: 50px;
+      height: 50px;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      border-radius: 50%;
+      z-index: -1;
+      background-color: var(--color);
+      transition: 1s ease;
+    }
+
+    #alp_data {
+      color: white;
+      background: rgb(2, 0, 36);
+      background: linear-gradient(304deg, rgb(25 41 43) 0%, rgb(14 36 36) 36%, rgb(38 53 57) 100%) !important
+    }
+
+    .button::before {
+      top: -1em;
+      left: -1em;
+    }
+
+    .button::after {
+      left: calc(100% + 1em);
+      top: calc(100% + 1em);
+    }
+
+    .button:hover::before,
+    .button:hover::after {
+      height: 410px;
+      width: 410px;
+    }
+
+    .button:hover {
+      color: white;
+    }
+
+    .button:active {
+      filter: brightness(0.8);
+    }
+
+    .crypto_card {
+      background-color: #01a5ac;
+    }
+
+    .crypto_card img {
+      width: 80px;
+    }
+
+    .crypto_card_body i {
+      padding: 5px 30px;
+      color: rgb(43, 43, 43);
+      background-color: #6d6d6d;
+    }
+
+    .work_card {
+      background-color: #ffffffb7;
+    }
+
+    .work_card i {
+      background-color: #33406d;
+      padding: 18px 26px;
+      border: 5px dotted rgb(173, 173, 173);
+    }
+
+    .work {
+      background: url("../images/contact/bg.svg");
+    }
+
+    .about_col_2 {
+      background: url("../images/contact/bg.svg");
+    }
+
+    .about_col_1 {
+      filter: drop-shadow(10px 10px 70px rgba(0, 0, 0, 0.582));
+    }
+
+    #footer {
+      background-color: #dee8ed;
+    }
+
+    .join_card img {
+      transition: all 500ms ease;
+    }
+
+    .join_card .card:hover img {
+      transform: scale(1.1);
+    }
+
+    .join_card .card p {
+      transition: all 300ms ease;
+    }
+
+    .join_card .card:hover p {
+      color: rgb(34, 70, 83) !important;
+      font-weight: bolder !important;
+    }
+
+    .company_card img {
+
+      transition: all 500ms ease;
+    }
+
+    .company_card .card:hover img {
+      transform: scale(1.03);
+    }
+
+    .company_card .card p {
+      transition: all 300ms ease;
+    }
+
+    .company_card .card h3 {
+      color: white !important;
+    }
+
+    .company_card .card {
+      background: rgb(2, 0, 36);
+      background: linear-gradient(304deg, rgb(0 17 28) 0%, rgb(11 27 27) 36%, rgb(78 92 96) 100%) !important;
+    }
+
+    .contact img {
+      filter: drop-shadow(10px 10px 10px grey);
+    }
+
+    .icon {
+      padding: 20px 22px;
+    }
+
+    .package {
+      background: linear-gradient(304deg, rgb(25 41 43) 0%, rgb(14 36 36) 36%, rgb(38 53 57) 100%) !important
+    }
+
+    .table {
+      background: linear-gradient(rgb(227 0 0 / 8%), #0032d72d);
+    }
+
+    .gallery_card {
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+
+    .color-blue {
+      color: #5bb4f1 !important;
+    }
+
+    @media only screen and (min-width: 52px) and (max-width: 992px) {
+      .navbar_body {
+        background-color: #142136;
+      }
+    }
+
+    .tmln {
+      --bdc: #3587c1;
+      --bdc-a: hsl(200, 40%, 40%);
+      --bdc-h: hsl(200, 30%, 90%);
+      --bdrs: 0.25rem;
+      --bdw: 2px;
+      --bullet-bdrs: 50%;
+      --bullet-sz: 1.5em;
+      --bullet-sz-a: 6px;
+      --c: hsl(200, 40%, 1%);
+      --box-item-bdrs: 1.25rem;
+      --box-item-bgc: rgba(255, 255, 255, 0.15);
+      --box-item-dark-bgc: ;
+      --box-item-dark-c: hsl(200, 40%, 95%);
+      --box-item-lght-bgc: hsl(200, 30%, 90%);
+      --gap: 1rem;
+      --scroll-bgc: hsl(200, 40%, 85%);
+      --scroll-tmb-bgc: hsl(200, 40%, 70%);
+      --scroll-w: 10px;
+      --trsdu: 0.3s;
+      --trstf: ease-out;
+
+      /* Modifier-specific properties */
+      --sl-mbe: 2em;
+      --bi-miw: 85%;
+      --bi-miw-tablet: 30%;
+
+      background-color: var(--bgc, transparent);
+      border-radius: var(--bdrs, 0);
+      color: var(--c, currentColor);
+      padding-block: var(--gap) 0;
+      padding-bottom: var(--gap);
+      /* Safari */
+      padding-top: var(--gap);
+      /* Safari */
+      width: var(--w, 100%);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .tmln:not(.tmln--hr) {
+      padding-inline-start: var(--gap);
+    }
+
+    .tmln__header {
+      margin-block-start: 0;
+    }
+
+    .tmln__item {
+      color: inherit;
+      display: block;
+      margin-block-end: var(--mbe, var(--gap));
+      padding-inline-start: calc(var(--gap) + var(--bullet-sz));
+      position: relative;
+      text-decoration: none;
+    }
+
+    /* Circle */
+    .tmln__item::after {
+      border: var(--bdw) dotted var(--bdc);
+      border-radius: var(--bullet-bdrs);
+      box-sizing: border-box;
+      content: "";
+      block-size: var(--bullet-sz);
+      inline-size: var(--bullet-sz);
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      position: absolute;
+      transition: all var(--trsdu) var(--trstf);
+    }
+
+    /* Line */
+    .tmln__item::before {
+      /* background-color: var(--bdc); */
+      border: 2px dotted var(--bdc);
+      content: "";
+      block-size: calc(100% + var(--mbe, var(--gap)) - var(--bullet-sz));
+      inline-size: var(--bdw);
+      inset-block-start: var(--bullet-sz);
+      inset-inline-start: calc((var(--bullet-sz) - var(--bdw)) / 2);
+      position: absolute;
+    }
+
+    .Swiper button {
+      background: linear-gradient(304deg, rgb(57 97 102) 0%, rgb(38 65 65) 36%, rgb(73 92 97) 100%) !important;
+      border: 0px !important;
+
+    }
+
+    .Swiper button a {
+      color: white;
+
+    }
+
+    /* Hide last line */
+    .tmln:not(.tmln--hr) .tmln__item:last-child::before {
+      display: none;
+    }
+
+    .tmln__item-headline {
+      margin-block: 0;
+    }
+
+    .tmln__list {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding-block: 0 var(--gap);
+      padding-inline: 0;
+    }
+
+    /* 
+====================
+Modifiers and States
+====================
+*/
+
+    /* Active Circle */
+    .tmln__item--active::after {
+      --bdc: var(--bdc-a);
+      box-shadow: 0 0 0 calc(var(--bullet-sz-a) - var(--bdw)) var(--bgc, #fff),
+        0 0 0 var(--bullet-sz-a) var(--bdc-a);
+      background-color: var(--bdc-a);
+    }
+
+    /* :focus, :focus-within, :focus-visible */
+    .tmln__item--active:focus-visible::after,
+    .tmln__item--active:focus-within::after {
+      box-shadow: 0 0 0 calc(var(--bullet-sz-a) - var(--bdw)) var(--bdc-h, #fff),
+        0 0 0 var(--bullet-sz-a) var(--bdc);
+    }
+
+    .tmln__item--active [data-title],
+    .tmln__item:focus-visible [data-title] {
+      text-shadow: 0.75px 0px 0px currentColor;
+    }
+
+    .tmln__item:not(.tmln__item--active):focus-visible::after,
+    .tmln__item:not(.tmln__item--active):focus-within::after {
+      background-color: var(--bdc-h);
+      box-shadow: 0 0 0 calc(var(--bullet-sz-a) - var(--bdw)) var(--bgc, #fff),
+        0 0 0 var(--bullet-sz-a) var(--bdc);
+    }
+
+    .tmln--box .tmln__item:focus-within {
+      box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0px 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .tmln__item:focus-visible {
+      outline: none;
+    }
+
+    .tmln__item:focus-visible [data-title],
+    .tmln__item:focus-within a {
+      outline: 1px dotted currentColor;
+      outline-offset: 6px;
+    }
+
+    /* Horizontal */
+    .tmln--hr .tmln__header {
+      margin-inline-start: var(--gap);
+    }
+
+    .tmln--hr .tmln__list {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-block-start: var(--bullet-sz-a);
+      /* Add room for box-shadow transition in horizontal mode */
+      padding-inline-start: var(--gap);
+      scrollbar-width: none;
+      scroll-snap-type: x mandatory;
+    }
+
+    .tmln--hr .tmln__list::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .tmln--hr .tmln__list {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    .tmln--hr .tmln__item {
+      align-self: flex-start;
+      margin-block-end: 0;
+      min-width: var(--miw, 6rem);
+      padding-block-start: calc(var(--bullet-sz) + var(--gap));
+      padding-inline-end: var(--gap);
+      padding-inline-start: 0;
+      scroll-snap-align: start;
+      scroll-margin-inline-start: var(--gap);
+      scroll-margin-left: var(--gap);
+      /* Safari */
+    }
+
+    .tmln--hr .tmln__item::before {
+      block-size: var(--bdw);
+      inline-size: calc(100% - var(--bullet-sz));
+      inset-block-start: calc((var(--bullet-sz) - var(--bdw)) / 2);
+      inset-inline-start: calc(0% + var(--bullet-sz));
+    }
+
+    /* Item Box */
+    .tmln--box .tmln__item {
+      /* background-color: var(--box-item-bgc); */
+      border-radius: var(--box-item-bdrs);
+      margin-block-end: 0;
+      margin-inline-start: calc(var(--bullet-sz) + var(--gap));
+      padding: var(--gap);
+      transition: box-shadow var(--trsdu) var(--trstf);
+    }
+
+    .tmln--box .tmln__item [data-title] {
+      display: block;
+      font-size: small;
+      text-transform: uppercase;
+    }
+
+    .tmln--box:not(.tmln--hr) .tmln__item::after {
+      inset-inline-start: calc(0px - var(--bullet-sz) - var(--gap));
+    }
+
+    .tmln--box:not(.tmln--hr) .tmln__item::before {
+      inset-inline-start: calc(0px - var(--gap) - ((var(--bullet-sz) + var(--bdw)) / 2));
+    }
+
+    .tmln--box .tmln__item--bg-dark {
+      /* background-color: var(--box-item-dark-bgc); */
+      /* background: linear-gradient(360deg, #3583b5, #141414); */
+      color: var(--box-item-dark-c);
+    }
+
+    .tmln--box:not(.tmln--hr) .tmln__item--bg-dark a {
+      outline-color: var(--box-item-dark-bgc);
+    }
+
+
+
+    .tmln--box .tmln__list {
+      gap: var(--gap);
+      padding-inline-end: var(--gap);
+    }
+
+
+
+    /* Item Box AND Horizontal */
+    .tmln--box.tmln--hr .tmln__item {
+      --miw: var(--bi-miw);
+      margin-block-end: 0;
+      margin-block-start: calc(var(--bullet-sz) + var(--gap));
+      margin-inline-start: 0;
+    }
+
+    .tmln--box.tmln--hr .tmln__item::after {
+      inset-block-start: calc(0px - var(--bullet-sz) - var(--gap));
+    }
+
+    .tmln--box.tmln--hr .tmln__item::before {
+      inset-block-start: calc(0px - var(--gap) - ((var(--bullet-sz) + var(--bdw)) / 2));
+      inline-size: calc(100% - var(--bullet-sz) + var(--gap));
+    }
+
+    /* Single Line, center text to bullet */
+    .tmln--sl .tmln__item {
+      --mbe: var(--sl-mbe, var(--gap));
+      line-height: var(--bullet-sz);
+    }
+
+    /* Media Queries */
+
+    /* :hover */
+    @media (hover: hover) {
+      .tmln__item--active:hover::after {
+        box-shadow: 0 0 0 calc(var(--bullet-sz-a) - var(--bdw)) var(--bdc-h, #fff),
+          0 0 0 var(--bullet-sz-a) var(--bdc);
+      }
+
+      .tmln__item:hover [data-title] {
+        text-shadow: 0.75px 0px 0px currentColor;
+      }
+
+      .tmln__item:not(.tmln__item--active):hover::after {
+        background-color: var(--bdc-h);
+        box-shadow: 0 0 0 calc(var(--bullet-sz-a) - var(--bdw)) var(--bgc, #fff),
+          0 0 0 var(--bullet-sz-a) var(--bdc);
+      }
+
+      .tmln--box .tmln__item:hover {
+        box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0px 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+    }
+
+    @media (min-width: 768px) {
+      .tmln--box.tmln--hr .tmln__item {
+        --miw: var(--bi-miw-tablet);
+      }
+    }
+
+    /* Show scrollbars on devices without touch  */
+    @media (pointer: fine) {
+      .tmln--hr {
+        /* Add space between scrollbar and bottom of container */
+        padding-block-end: var(--gap);
+      }
+
+      .tmln--hr .tmln__list {
+        scrollbar-width: var(--scroll-w);
+      }
+
+      .tmln--hr .tmln__list {
+        scrollbar-color: var(--scroll-tmb-bgc) var(--scroll-bgc);
+        scrollbar-width: thin;
+      }
+
+      .tmln--hr .tmln__list::-webkit-scrollbar {
+        background: var(--scroll-bgc);
+        height: var(--scroll-w);
+        width: var(--scroll-w);
+      }
+
+      .tmln--hr .tmln__list::-webkit-scrollbar-button {
+        background: var(--bgc);
+      }
+
+      .tmln--hr .tmln__list::-webkit-scrollbar-thumb {
+        /* Hide scrollbar-button-area, so scrollbar appears smaller than container */
+        background-color: var(--scroll-tmb-bgc);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid px-0">
+    <div class="row g-5 mx-0 px-lg-0 px-md-3 px-0 pb-5">
+      {% include 'userpages/landingnav.html' %}
+      <div id="home" class="container-fluid mx-0 px-0 ">
+        <div class="container-xxl" style="height: 100vh;">
+          <div class="row mx-0 " style="margin-top: 3rem;">
+            <div class="col-lg-6 " data-aos="fade-right" data-aos-duration="1500">
+              <div class="d-flex align-items-lg-start">
+                <h1 id="hero_heading"
+                  class="fw-bold   mb-2 text-white text-lg-start text-md-start text-center ">
+                  ALP Token
+                </h1>
+              </div>
+              <h1 class="fw-bold text-white mb-4 pb-2 text-lg-start text-md-start text-center">
+                Safe & Future Payment System
+              </h1>
+              <h4 class="fw-bold color-blue text-lg-start text-md-start text-center mb-4">
+                Blockchain - Based Staking - Farming Plateform for Smartphones
+              </h4>
+              <p class="lead text-white-50 text-lg-start text-md-start text-center">
+                we've spent more than ten years assisting our clients in meeting
+                their financial needs. We provide you with the entire range of
+                international financial services.
+              </p>
+              <div class="d-lg-flex d-md-flex d-grid mt-5 gap-4">
+                <a href="/register" class="btn btn-lg py-2 px-5 rounded-3 py-3 button text-decoration-none">
+                  Join us
+                </a>
+                <button class="btn text-white justify-content-center icon-link icon-link-hover px-5 py-2" type="button">
+                  Learn More
+                  <i class="fa-solid fa-arrow-right ms-1 bi" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="col-lg d-none d-lg-flex align-items-center justify-content-center mt-5">
+              <img src="{% static 'assets/images/hero_bg/hero.png' %}" class="img-fluid moving-image" width="300"
+                alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div id="roadMap" class="container-fluid px-0">
+      <div class="container-xxl mx-auto p-lg-5 p-md-4 p-3 my-5">
+        <div class="row mx-0">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-7">
+              <p class="text-center color-blue mb-3 fw-semibold">Future plan & missions</p>
+              <h2 class="text-white text-center  fw-semibold">
+                Know Our Road Map
+              </h2>
+              <p class="text-secondary ps-0 mt-3 fs-5 text-center">
+                Cryptocurrencies are currently used more frequently and are gaining
+                acceptance as a valid form of payment for transactions.
+              </p>
+            </div>
+
+          </div>
+          <nav class="tmln tmln--box tmln--hr p-0 mt-5 pt-5">
+            <ul class="tmln__list px-0">
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q4</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  Research & Development
+                </h4>
+
+                <p class="text-secondary my-3">Our team of skilled developers and experts are dedicated to pushing the
+                  boundaries of technology to create groundbreaking solutions for the future</p>
+                <p class="mt-3 ">
+                  Oct-Dec 22
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+              <li class="tmln__item tmln__item--bg-lght">
+                <p class=" fs-5 fw-semibold color-blue">Q1</p>
+                <h4 class="tmln__item-headline fw-semibold text-white">Pre sale phase</h4>
+                <p class="text-secondary my-3">Secure your entry into the future of blockchain by participating in APL
+                  Token's Pre-sale phase</p>
+                <p class="mt-3 text-white">
+                  Jan-Mar 23
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q2</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  List on Exchange
+                </h4>
+
+                <p class="text-secondary my-3">Get ready for the next step as we list APL Token on prominent exchanges,
+                  unlocking access to wider markets and increased liquidity.</p>
+                <p class="mt-3">
+                  Apr-June 23
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q3</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  Utility
+                </h4>
+
+                <p class="text-secondary my-3">Unlock the full potential of APL Token as we roll out its utility,
+                  enabling seamless transactions and interactions within our ecosystem.</p>
+                <p class="mt-3">
+                  July-Sept 23
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q4</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  Gaming
+                </h4>
+
+                <p class="text-secondary my-3">Immerse yourself in the exciting world of gaming with APL Token as we
+                  introduce innovative gaming experiences and opportunities within our ecosystem.</p>
+                <p class="mt-3">
+                  Oct-Dec 23
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q1</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  More than Five Exchanges
+                </h4>
+
+                <p class="text-secondary my-3">Expand the reach and accessibility of APL Token as we secure listings on
+                  over five prominent exchanges, enhancing liquidity and exposure.</p>
+                <p class="mt-3">
+                  Jan-March 24
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q2</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  NFT
+                </h4>
+
+                <p class="text-secondary my-3">Dive into the world of digital collectibles with APL Token's NFT
+                  offerings, where unique and valuable assets await in our blockchain-powered marketplace.</p>
+                <p class="mt-3">
+                  Apr-June 24
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+
+              <!-- Q3 -->
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q3</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  Blockchain
+                </h4>
+
+                <p class="text-secondary my-3">Experience the transformative power of blockchain technology with APL
+                  Token, as we unveil innovative solutions that leverage the potential of decentralized systems.</p>
+                <p class="mt-3">
+                  Jul-Dec 24
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+
+              <!-- Q1-Q2 -->
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q1-Q2</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  Self Exchange
+                </h4>
+
+                <p class="text-secondary my-3">Empower our community with a seamless trading experience through APL
+                  Token's self-exchange platform, ensuring control and convenience in every transaction.</p>
+                <p class="mt-3">
+                  Jan-June 25
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+
+              <!-- Q3-Q4 -->
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q3-Q4</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  Decentralize Wallet
+                </h4>
+
+                <p class="text-secondary my-3">Empower users with full control of their assets through APL Token's
+                  decentralized wallet, enhancing security and enabling seamless interactions within the blockchain
+                  ecosystem.</p>
+                <p class="mt-3">
+                  Jul-Dec 25
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+
+              <!-- Q1-Q2 -->
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q1-Q2</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  Metaverse
+                </h4>
+
+                <p class="text-secondary my-3">Step into a new realm of possibilities with APL Token's Metaverse
+                  integration, offering immersive experiences and opportunities within our evolving digital universe.
+                </p>
+                <p class="mt-3">
+                  Jan-June 26
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+
+              <!-- Q1-Q4 -->
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q1-Q4</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  More than 100 Exchanges
+                </h4>
+
+                <p class="text-secondary my-3">Achieve widespread accessibility as APL Token secures listings on over
+                  100 exchanges globally, increasing exposure and liquidity for our growing community.</p>
+                <p class="mt-3">
+                  2027
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+
+              <!-- Q1-Q4 -->
+              <li class="tmln__item tmln__item--bg-dark">
+                <p class="fs-5 fw-semibold color-blue">Q1-Q4</p>
+                <h4 class="tmln__item-headline fw-semibold">
+                  World No. 1 Exchange
+                </h4>
+
+                <p class="text-secondary my-3">Reach new heights with APL Token's listing on the world's number one
+                  exchange, cementing our position as a premier player in the global crypto landscape.</p>
+                <p class="mt-3">
+                  2028
+                  <i class="fa-solid fa-arrow-right ms-2"></i>
+                </p>
+              </li>
+
+            </ul>
+          </nav>
+          <div class="d-flex justify-content-center mt-5">
+            <a href=" " class="text-decoration-none text-white">
+              <button class="btn button px-5 py-3 rounded-3">
+                Download PDF
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="join" data-aos="fade-up" data-aos-duration="1000" class="mx-0  p-lg-5 p-md-4 p-3 work">
+      <!-- <div class="row justify-content-center py-5">
+            <div class="col-12 col-md-10 col-lg-7">
+              <p class="text-center color-blue mb-3 fw-semibold">How Does It Work?</p>
+              <h2 class="text-white text-center  fw-semibold">
+               It's Easy To Join With Us
+              </h2>
+              <p class="text-secondary ps-0 mt-3 fs-5 text-center">
+              We will do this through a seamless digital platform that will bring together the best of technology, intuitive design, ease and safety
+              </p>
+            </div>
+
+          </div> -->
+
+
+
+      <!-- <div class="swiper pb-5 p-3 join_card">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide h-100" data-aos="fade-right" data-aos-duration="1300">
+            <div class="card text-center h-100 work_card p-4 border-0 rounded-5 shadow">
+              <div class="card-body p-0">
+                <img src="{% static 'assets/images/join/image-1.png' %}" class="img-fluid" alt="" />
+                <p class="fs-5 text-white fw-semibold mt-3">
+                  Create an Account
+                </p>
+                <p class="text-white-50 mb-0">
+                  Registraion is totally free.You can create your account
+                  with valid email ,mobile and etc.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide h-100" accordion data-aos="fade-right" data-aos-duration="1000">
+            <div class="card text-center h-100 work_card p-4 border-0 rounded-5 shadow">
+              <div class="card-body p-0">
+                <img src="{% static 'assets/images/join/image-2.png' %}" class="img-fluid" alt="" />
+                <p class="fs-5 text-white fw-semibold mt-3">Make Topup</p>
+                <p class="text-white-50 mb-0">
+                  Topup With Any of Above Package As Per Our Choice
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide h-100" data-aos="fade-right" data-aos-duration="700">
+            <div class="card text-center h-100 work_card p-4 border-0 rounded-5 shadow">
+              <div class="card-body p-0">
+                <img src="{% static 'assets/images/join/image-3.png' %}" class="img-fluid" alt="" />
+                <p class="fs-5 text-white fw-semibold mt-3">Make Retopup</p>
+                <p class="text-white-50 mb-0">
+                  Re-Topup With Any of Above Package As Per Our Choice
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide h-100" data-aos="fade-right" data-aos-duration="300">
+            <div class="card text-center h-100 work_card p-4 border-0 rounded-5 shadow">
+              <div class="card-body p-0">
+                <img src="{% static 'assets/images/join/image-4.png' %}" class="img-fluid" alt="" />
+                <p class="fs-5 text-white fw-semibold mt-3">Get Profit</p>
+                <p class="text-white-50 mb-0">
+                  Get Profit As Per Your Choice.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="row g-4 justify-content-between align-items-center ">
+        <!-- Left side START -->
+        <div class="col-lg-5 position-relative">
+          <!-- Svg Decoration -->
+          <figure class="position-absolute  start-0 translate-middle z-index-1 ms-4">
+            <svg class="fill-warning" fill="#163035" width="77px" height="77px">
+              <path
+                d="M76.997,41.258 L45.173,41.258 L67.676,63.760 L63.763,67.673 L41.261,45.171 L41.261,76.994 L35.728,76.994 L35.728,45.171 L13.226,67.673 L9.313,63.760 L31.816,41.258 L-0.007,41.258 L-0.007,35.725 L31.816,35.725 L9.313,13.223 L13.226,9.311 L35.728,31.813 L35.728,-0.010 L41.261,-0.010 L41.261,31.813 L63.763,9.311 L67.676,13.223 L45.174,35.725 L76.997,35.725 L76.997,41.258 Z">
+              </path>
+            </svg>
+          </figure>
+
+          <!-- Svg decoration -->
+          <figure class="position-absolute end-0 d-none d-md-block mb-n5 me-n4" style="bottom: -10rem;">
+            <svg height="400" class="fill-primary opacity-2" fill="#163035" viewBox="0 0 340 340">
+              <circle cx="194.2" cy="2.2" r="2.2"></circle>
+              <circle cx="2.2" cy="2.2" r="2.2"></circle>
+              <circle cx="218.2" cy="2.2" r="2.2"></circle>
+              <circle cx="26.2" cy="2.2" r="2.2"></circle>
+              <circle cx="242.2" cy="2.2" r="2.2"></circle>
+              <circle cx="50.2" cy="2.2" r="2.2"></circle>
+              <circle cx="266.2" cy="2.2" r="2.2"></circle>
+              <circle cx="74.2" cy="2.2" r="2.2"></circle>
+              <circle cx="290.2" cy="2.2" r="2.2"></circle>
+              <circle cx="98.2" cy="2.2" r="2.2"></circle>
+              <circle cx="314.2" cy="2.2" r="2.2"></circle>
+              <circle cx="122.2" cy="2.2" r="2.2"></circle>
+              <circle cx="338.2" cy="2.2" r="2.2"></circle>
+              <circle cx="146.2" cy="2.2" r="2.2"></circle>
+              <circle cx="170.2" cy="2.2" r="2.2"></circle>
+              <circle cx="194.2" cy="26.2" r="2.2"></circle>
+              <circle cx="2.2" cy="26.2" r="2.2"></circle>
+              <circle cx="218.2" cy="26.2" r="2.2"></circle>
+              <circle cx="26.2" cy="26.2" r="2.2"></circle>
+              <circle cx="242.2" cy="26.2" r="2.2"></circle>
+              <circle cx="50.2" cy="26.2" r="2.2"></circle>
+              <circle cx="266.2" cy="26.2" r="2.2"></circle>
+              <circle cx="74.2" cy="26.2" r="2.2"></circle>
+              <circle cx="290.2" cy="26.2" r="2.2"></circle>
+              <circle cx="98.2" cy="26.2" r="2.2"></circle>
+              <circle cx="314.2" cy="26.2" r="2.2"></circle>
+              <circle cx="122.2" cy="26.2" r="2.2"></circle>
+              <circle cx="338.2" cy="26.2" r="2.2"></circle>
+              <circle cx="146.2" cy="26.2" r="2.2"></circle>
+              <circle cx="170.2" cy="26.2" r="2.2"></circle>
+              <circle cx="194.2" cy="50.2" r="2.2"></circle>
+              <circle cx="2.2" cy="50.2" r="2.2"></circle>
+              <circle cx="218.2" cy="50.2" r="2.2"></circle>
+              <circle cx="26.2" cy="50.2" r="2.2"></circle>
+              <circle cx="242.2" cy="50.2" r="2.2"></circle>
+              <circle cx="50.2" cy="50.2" r="2.2"></circle>
+              <circle cx="266.2" cy="50.2" r="2.2"></circle>
+              <circle cx="74.2" cy="50.2" r="2.2"></circle>
+              <circle cx="290.2" cy="50.2" r="2.2"></circle>
+              <circle cx="98.2" cy="50.2" r="2.2"></circle>
+              <circle cx="314.2" cy="50.2" r="2.2"></circle>
+              <circle cx="122.2" cy="50.2" r="2.2"></circle>
+              <circle cx="338.2" cy="50.2" r="2.2"></circle>
+              <circle cx="146.2" cy="50.2" r="2.2"></circle>
+              <circle cx="170.2" cy="50.2" r="2.2"></circle>
+              <circle cx="194.2" cy="74.2" r="2.2"></circle>
+              <circle cx="2.2" cy="74.2" r="2.2"></circle>
+              <circle cx="218.2" cy="74.2" r="2.2"></circle>
+              <circle cx="26.2" cy="74.2" r="2.2"></circle>
+              <circle cx="242.2" cy="74.2" r="2.2"></circle>
+              <circle cx="50.2" cy="74.2" r="2.2"></circle>
+              <circle cx="266.2" cy="74.2" r="2.2"></circle>
+              <circle cx="74.2" cy="74.2" r="2.2"></circle>
+              <circle cx="290.2" cy="74.2" r="2.2"></circle>
+              <circle cx="98.2" cy="74.2" r="2.2"></circle>
+              <circle cx="314.2" cy="74.2" r="2.2"></circle>
+              <circle cx="122.2" cy="74.2" r="2.2"></circle>
+              <circle cx="338.2" cy="74.2" r="2.2"></circle>
+              <circle cx="146.2" cy="74.2" r="2.2"></circle>
+              <circle cx="170.2" cy="74.2" r="2.2"></circle>
+              <circle cx="194.2" cy="98.2" r="2.2"></circle>
+              <circle cx="2.2" cy="98.2" r="2.2"></circle>
+              <circle cx="218.2" cy="98.2" r="2.2"></circle>
+              <circle cx="26.2" cy="98.2" r="2.2"></circle>
+              <circle cx="242.2" cy="98.2" r="2.2"></circle>
+              <circle cx="50.2" cy="98.2" r="2.2"></circle>
+              <circle cx="266.2" cy="98.2" r="2.2"></circle>
+              <circle cx="74.2" cy="98.2" r="2.2"></circle>
+              <circle cx="290.2" cy="98.2" r="2.2"></circle>
+              <circle cx="98.2" cy="98.2" r="2.2"></circle>
+              <circle cx="314.2" cy="98.2" r="2.2"></circle>
+              <circle cx="122.2" cy="98.2" r="2.2"></circle>
+              <circle cx="338.2" cy="98.2" r="2.2"></circle>
+              <circle cx="146.2" cy="98.2" r="2.2"></circle>
+              <circle cx="170.2" cy="98.2" r="2.2"></circle>
+              <circle cx="194.2" cy="122.2" r="2.2"></circle>
+              <circle cx="2.2" cy="122.2" r="2.2"></circle>
+              <circle cx="218.2" cy="122.2" r="2.2"></circle>
+              <circle cx="26.2" cy="122.2" r="2.2"></circle>
+              <circle cx="242.2" cy="122.2" r="2.2"></circle>
+              <circle cx="50.2" cy="122.2" r="2.2"></circle>
+              <circle cx="266.2" cy="122.2" r="2.2"></circle>
+              <circle cx="74.2" cy="122.2" r="2.2"></circle>
+              <circle cx="290.2" cy="122.2" r="2.2"></circle>
+              <circle cx="98.2" cy="122.2" r="2.2"></circle>
+              <circle cx="314.2" cy="122.2" r="2.2"></circle>
+              <circle cx="122.2" cy="122.2" r="2.2"></circle>
+              <circle cx="338.2" cy="122.2" r="2.2"></circle>
+              <circle cx="146.2" cy="122.2" r="2.2"></circle>
+              <circle cx="170.2" cy="122.2" r="2.2"></circle>
+              <circle cx="194.2" cy="146.2" r="2.2"></circle>
+              <circle cx="2.2" cy="146.2" r="2.2"></circle>
+              <circle cx="218.2" cy="146.2" r="2.2"></circle>
+              <circle cx="26.2" cy="146.2" r="2.2"></circle>
+              <circle cx="242.2" cy="146.2" r="2.2"></circle>
+              <circle cx="50.2" cy="146.2" r="2.2"></circle>
+              <circle cx="266.2" cy="146.2" r="2.2"></circle>
+              <circle cx="74.2" cy="146.2" r="2.2"></circle>
+              <circle cx="290.2" cy="146.2" r="2.2"></circle>
+              <circle cx="98.2" cy="146.2" r="2.2"></circle>
+              <circle cx="314.2" cy="146.2" r="2.2"></circle>
+              <circle cx="122.2" cy="146.2" r="2.2"></circle>
+              <circle cx="338.2" cy="146.2" r="2.2"></circle>
+              <circle cx="146.2" cy="146.2" r="2.2"></circle>
+              <circle cx="170.2" cy="146.2" r="2.2"></circle>
+              <circle cx="194.2" cy="170.2" r="2.2"></circle>
+              <circle cx="2.2" cy="170.2" r="2.2"></circle>
+              <circle cx="218.2" cy="170.2" r="2.2"></circle>
+              <circle cx="26.2" cy="170.2" r="2.2"></circle>
+              <circle cx="242.2" cy="170.2" r="2.2"></circle>
+              <circle cx="50.2" cy="170.2" r="2.2"></circle>
+              <circle cx="266.2" cy="170.2" r="2.2"></circle>
+              <circle cx="74.2" cy="170.2" r="2.2"></circle>
+              <circle cx="290.2" cy="170.2" r="2.2"></circle>
+              <circle cx="98.2" cy="170.2" r="2.2"></circle>
+              <circle cx="314.2" cy="170.2" r="2.2"></circle>
+              <circle cx="122.2" cy="170.2" r="2.2"></circle>
+              <circle cx="338.2" cy="170.2" r="2.2"></circle>
+              <circle cx="146.2" cy="170.2" r="2.2"></circle>
+              <circle cx="170.2" cy="170.2" r="2.2"></circle>
+              <circle cx="194.2" cy="194.2" r="2.2"></circle>
+              <circle cx="2.2" cy="194.2" r="2.2"></circle>
+              <circle cx="218.2" cy="194.2" r="2.2"></circle>
+              <circle cx="26.2" cy="194.2" r="2.2"></circle>
+              <circle cx="242.2" cy="194.2" r="2.2"></circle>
+              <circle cx="50.2" cy="194.2" r="2.2"></circle>
+              <circle cx="266.2" cy="194.2" r="2.2"></circle>
+              <circle cx="74.2" cy="194.2" r="2.2"></circle>
+              <circle cx="290.2" cy="194.2" r="2.2"></circle>
+              <circle cx="98.2" cy="194.2" r="2.2"></circle>
+              <circle cx="314.2" cy="194.2" r="2.2"></circle>
+              <circle cx="122.2" cy="194.2" r="2.2"></circle>
+              <circle cx="338.2" cy="194.2" r="2.2"></circle>
+              <circle cx="146.2" cy="194.2" r="2.2"></circle>
+              <circle cx="170.2" cy="194.2" r="2.2"></circle>
+              <circle cx="194.2" cy="218.2" r="2.2"></circle>
+              <circle cx="2.2" cy="218.2" r="2.2"></circle>
+              <circle cx="218.2" cy="218.2" r="2.2"></circle>
+              <circle cx="26.2" cy="218.2" r="2.2"></circle>
+              <circle cx="242.2" cy="218.2" r="2.2"></circle>
+              <circle cx="50.2" cy="218.2" r="2.2"></circle>
+              <circle cx="266.2" cy="218.2" r="2.2"></circle>
+              <circle cx="74.2" cy="218.2" r="2.2"></circle>
+              <circle cx="290.2" cy="218.2" r="2.2"></circle>
+              <circle cx="98.2" cy="218.2" r="2.2"></circle>
+              <circle cx="314.2" cy="218.2" r="2.2"></circle>
+              <circle cx="122.2" cy="218.2" r="2.2"></circle>
+              <circle cx="338.2" cy="218.2" r="2.2"></circle>
+              <circle cx="146.2" cy="218.2" r="2.2"></circle>
+              <circle cx="170.2" cy="218.2" r="2.2"></circle>
+              <circle cx="194.2" cy="242.2" r="2.2"></circle>
+              <circle cx="2.2" cy="242.2" r="2.2"></circle>
+              <circle cx="218.2" cy="242.2" r="2.2"></circle>
+              <circle cx="26.2" cy="242.2" r="2.2"></circle>
+              <circle cx="242.2" cy="242.2" r="2.2"></circle>
+              <circle cx="50.2" cy="242.2" r="2.2"></circle>
+              <circle cx="266.2" cy="242.2" r="2.2"></circle>
+              <circle cx="74.2" cy="242.2" r="2.2"></circle>
+              <circle cx="290.2" cy="242.2" r="2.2"></circle>
+              <circle cx="98.2" cy="242.2" r="2.2"></circle>
+              <circle cx="314.2" cy="242.2" r="2.2"></circle>
+              <circle cx="122.2" cy="242.2" r="2.2"></circle>
+              <circle cx="338.2" cy="242.2" r="2.2"></circle>
+              <circle cx="146.2" cy="242.2" r="2.2"></circle>
+              <circle cx="170.2" cy="242.2" r="2.2"></circle>
+              <circle cx="194.2" cy="266.2" r="2.2"></circle>
+              <circle cx="2.2" cy="266.2" r="2.2"></circle>
+              <circle cx="218.2" cy="266.2" r="2.2"></circle>
+              <circle cx="26.2" cy="266.2" r="2.2"></circle>
+              <circle cx="242.2" cy="266.2" r="2.2"></circle>
+              <circle cx="50.2" cy="266.2" r="2.2"></circle>
+              <circle cx="266.2" cy="266.2" r="2.2"></circle>
+              <circle cx="74.2" cy="266.2" r="2.2"></circle>
+              <circle cx="290.2" cy="266.2" r="2.2"></circle>
+              <circle cx="98.2" cy="266.2" r="2.2"></circle>
+              <circle cx="314.2" cy="266.2" r="2.2"></circle>
+              <circle cx="122.2" cy="266.2" r="2.2"></circle>
+              <circle cx="338.2" cy="266.2" r="2.2"></circle>
+              <circle cx="146.2" cy="266.2" r="2.2"></circle>
+              <circle cx="170.2" cy="266.2" r="2.2"></circle>
+              <circle cx="194.2" cy="290.2" r="2.2"></circle>
+              <circle cx="2.2" cy="290.2" r="2.2"></circle>
+              <circle cx="218.2" cy="290.2" r="2.2"></circle>
+              <circle cx="26.2" cy="290.2" r="2.2"></circle>
+              <circle cx="242.2" cy="290.2" r="2.2"></circle>
+              <circle cx="50.2" cy="290.2" r="2.2"></circle>
+              <circle cx="266.2" cy="290.2" r="2.2"></circle>
+              <circle cx="74.2" cy="290.2" r="2.2"></circle>
+              <circle cx="290.2" cy="290.2" r="2.2"></circle>
+              <circle cx="98.2" cy="290.2" r="2.2"></circle>
+              <circle cx="314.2" cy="290.2" r="2.2"></circle>
+              <circle cx="122.2" cy="290.2" r="2.2"></circle>
+              <circle cx="338.2" cy="290.2" r="2.2"></circle>
+              <circle cx="146.2" cy="290.2" r="2.2"></circle>
+              <circle cx="170.2" cy="290.2" r="2.2"></circle>
+              <circle cx="194.2" cy="314.2" r="2.2"></circle>
+              <circle cx="2.2" cy="314.2" r="2.2"></circle>
+              <circle cx="218.2" cy="314.2" r="2.2"></circle>
+              <circle cx="26.2" cy="314.2" r="2.2"></circle>
+              <circle cx="242.2" cy="314.2" r="2.2"></circle>
+              <circle cx="50.2" cy="314.2" r="2.2"></circle>
+              <circle cx="266.2" cy="314.2" r="2.2"></circle>
+              <circle cx="74.2" cy="314.2" r="2.2"></circle>
+              <circle cx="290.2" cy="314.2" r="2.2"></circle>
+              <circle cx="98.2" cy="314.2" r="2.2"></circle>
+              <circle cx="314.2" cy="314.2" r="2.2"></circle>
+              <circle cx="122.2" cy="314.2" r="2.2"></circle>
+              <circle cx="338.2" cy="314.2" r="2.2"></circle>
+              <circle cx="146.2" cy="314.2" r="2.2"></circle>
+              <circle cx="170.2" cy="314.2" r="2.2"></circle>
+              <circle cx="194.2" cy="338.2" r="2.2"></circle>
+              <circle cx="2.2" cy="338.2" r="2.2"></circle>
+              <circle cx="218.2" cy="338.2" r="2.2"></circle>
+              <circle cx="26.2" cy="338.2" r="2.2"></circle>
+              <circle cx="242.2" cy="338.2" r="2.2"></circle>
+              <circle cx="50.2" cy="338.2" r="2.2"></circle>
+              <circle cx="266.2" cy="338.2" r="2.2"></circle>
+              <circle cx="74.2" cy="338.2" r="2.2"></circle>
+              <circle cx="290.2" cy="338.2" r="2.2"></circle>
+              <circle cx="98.2" cy="338.2" r="2.2"></circle>
+              <circle cx="314.2" cy="338.2" r="2.2"></circle>
+              <circle cx="122.2" cy="338.2" r="2.2"></circle>
+              <circle cx="338.2" cy="338.2" r="2.2"></circle>
+              <circle cx="146.2" cy="338.2" r="2.2"></circle>
+              <circle cx="170.2" cy="338.2" r="2.2"></circle>
+            </svg>
+          </figure>
+
+          <!-- Image -->
+          <img src="{% static 'assets/images/hero_bg/man.png' %}" class=" img-fluid position-relative mt-5" width="550"
+            alt="">
+
+
+        </div>
+        <!-- Left side END -->
+
+        <!-- Right side START -->
+        <div class="col-lg-6">
+          <div class="row  py-5 text-start">
+            <div class="col-12 col-md-10 col-lg-10">
+              <p class=" color-blue mb-3 fw-semibold">How Does It Work?</p>
+              <h2 class="text-white  fw-semibold">
+                It's Easy To Join With Us
+              </h2>
+              <p class="text-secondary ps-0 mt-3 fs-5 ">
+                We will do this through a seamless digital platform that will bring together the best of technology,
+                intuitive design, ease and safety
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Features START -->
+          <div class="row g-4">
+            <!-- Item -->
+            <div class="col-sm-6">
+              <div class="fs-4 text-success">01</div>
+              <h5 class="mt-2 text-white">Create An Account</h5>
+              <p class="mb-0 text-secondary">
+                Registraion is totally free.You can create your account
+                with valid email ,mobile and etc.
+              </p>
+            </div>
+            <!-- Item -->
+            <div class="col-sm-6">
+              <div class="fs-4 text-success">02</div>
+              <h5 class="mt-2 text-white">Make Topup</h5>
+              <p class="mb-0 text-secondary">
+
+                Topup With Any of Above Package As Per Our Choice
+
+              </p>
+            </div>
+            <!-- Item -->
+            <div class="col-sm-6">
+              <div class="fs-4 text-success">03</div>
+              <h5 class="mt-2 text-white">Make Retopup</h5>
+              <p class="mb-0 text-secondary">
+
+
+                Re-Topup With Any of Above Package As Per Our Choice
+
+
+              </p>
+            </div>
+            <!-- Item -->
+            <div class="col-sm-6">
+              <div class="fs-4 text-success">04</div>
+              <h5 class="mt-2 text-white">Get Profit</h5>
+              <p class="mb-0 text-secondary">
+
+
+
+                Get Profit As Per Your Choice.
+
+
+
+              </p>
+            </div>
+          </div>
+          <!-- Features END -->
+
+        </div>
+        <!-- Right side END -->
+      </div>
+    </div>
+
+
+
+
+    <div id="gallery" data-aos="fade-up" data-aos-duration="1000" class="p-lg-5 p-md-4 p-3 my-5 py-5">
+
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-7 text-center">
+          <p class=" color-blue mb-3 fw-semibold">Our Memories</p>
+          <h2 class="text-white  fw-semibold">
+            Our Gallary
+          </h2>
+          <p class="text-secondary ps-0 mt-3 fs-5 ">
+            A captivating showcase of our finest creations, encapsulating design innovation and artistic expression.
+          </p>
+
+        </div>
+      </div>
+
+      <div class="swiper mt-5 p-3">
+        <div class="swiper-wrapper">
+
+          {% for i in gallerydata %}
+          <div class="swiper-slide h-100">
+            <div class="card p-2 rounded-4 shadow-sm border-0 h-100 package">
+              <div class="card-body d-flex flex-column p-0">
+                <img src="/media/{{i.imgpath}}" class="img-fluid rounded-4 gallery_card"
+                  alt="" />
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+       
+    
+      
+        
+      </div>
+    </div>
+  </div>
+
+
+
+    <div data-aos="fade-up" data-aos-duration="1000" class="mx-0 p-lg-5 p-md-4 p-3 mt-0">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-7">
+          <p class="text-center color-blue mb-3 fw-semibold">Welcome To Alprose Token</p>
+          <h2 class="text-white text-center  fw-semibold">
+            Our Group Of Companines
+          </h2>
+          <p class="text-secondary ps-0 mt-3 fs-5 text-center">
+            Join us on a journey of technological advancement and financial growth in the world of blockchain.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="swiper p-3 company_card my-5 ">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide h-100">
+            <div class="card p-2  h-100 border-0 rounded-4 shadow-lg">
+              <div class="card-body p-0">
+                <img src="{% static 'assets/images/company/real.avif' %}" class="img-fluid rounded-4" alt="" />
+                <div class="p-2">
+                  <div class="d-flex align-items-center gap-2">
+
+                    <h3 class="fs-5 text-white fw-semibold mt-3">
+                      Real Estate
+                    </h3>
+                  </div>
+                  <p class="text-secondary">
+                    Our company is dedicated to helping you find the perfect
+                    real estate solution, whether it's your forever home or a
+                    strategic investment.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide h-100">
+            <div class="card p-2 h-100 border-0 rounded-4 shadow-lg">
+              <div class="card-body p-0">
+                <img src="{% static 'assets/images/company/pay.avif' %}" class="img-fluid rounded-4" alt="" />
+                <div class="p-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <h3 class="fs-5 text-white fw-semibold mt-3">
+                      Pay2Fast
+                    </h3>
+                  </div>
+                  <p class="text-secondary">
+                    At PAY2FAST, we pride ourselves on delivering fast and seamless payment processes, ensuring your
+                    transactions are completed promptly and hassle-free.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide h-100">
+            <div class="card p-2 h-100 border-0 rounded-4 shadow-lg">
+              <div class="card-body p-0">
+                <img src="{% static 'assets/images/company/ins.avif' %}" class="img-fluid rounded-4" alt="" />
+                <div class="p-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <h3 class="fs-5 text-white fw-semibold mt-3">
+                      Insurance
+                    </h3>
+                  </div>
+                  <p class="text-secondary">
+                    Our company's insurance services provide peace of mind and security for what matters most to you.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide h-100">
+            <div class="card p-2 h-100 border-0 rounded-4 shadow-lg">
+              <div class="card-body p-0">
+                <img src="{% static 'assets/images/company/forex.avif' %}" class="img-fluid rounded-4" alt="" />
+                <div class="p-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <h3 class="fs-5 text-white fw-semibold mt-3">
+                      Forex
+                    </h3>
+                  </div>
+                  <p class="text-secondary">
+                    Our company empowers you to conquer the dynamic world of forex trading, with expert guidance and
+                    innovative tools to seize global market opportunities.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide h-100">
+            <div class="card p-2 h-100 border-0 rounded-4 shadow-lg">
+              <div class="card-body p-0">
+                <img src="{% static 'assets/images/company/wellness.avif' %}" class="img-fluid rounded-4" alt="" />
+                <div class="p-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <h3 class="fs-5 text-white fw-semibold mt-3">
+                      Wellness
+                    </h3>
+                  </div>
+                  <p class="text-secondary">
+                    Our company is dedicated to nurturing your holistic wellness journey, offering transformative
+                    solutions that prioritize mind, body, and soul.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="swiper-slide h-100">
+            <div class="card p-2 h-100 border-0 rounded-4 shadow-lg">
+              <div class="card-body p-0">
+                <img src="{% static 'assets/images/company/crypto.avif' %}" class="img-fluid rounded-4" alt="" />
+                <div class="p-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <h3 class="fs-5 text-white fw-semibold mt-3">
+                      Crypto
+                    </h3>
+                  </div>
+                  <p class="text-secondary">
+                    Our company is at the forefront of the crypto revolution, unlocking new possibilities in
+                    decentralized digital assets and reshaping the way we perceive and interact with money.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div id="tokenomics" data-aos="fade-up" data-aos-duration="1000"
+      class="row flex-lg-row flex-column mx-0 p-lg-5 p-md-4 g-5 my-5 p-3 work">
+      <div class="row justify-content-center ">
+        <div class="col-12 col-md-10 col-lg-7">
+          <p class="text-center color-blue mb-3 fw-semibold">ALP Token Data</p>
+          <h2 class="text-white text-center  fw-semibold">
+            Tokenomics And Details
+          </h2>
+          <p class="text-secondary ps-0 mt-3 fs-5 text-center">
+            Details provide a comprehensive view, including specifications, features, benefits, and other crucial
+            aspects that help users understand the subject thoroughly.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="col px-lg-4 pt-5 mt-5">
+        <div class="">
+          <h4 class="text-white">Token Details</h4>
+          <p class="text-secondary">
+            This section provides basic information about the distribution
+            and planning of tokens
+          </p>
+        </div>
+        <!-- <table class="table   table-bordered border-black border-opacity-25 mt-4">
+          <tbody>
+            <tr>
+              <th scope="row" class="text-white">
+                Token Name
+              </th>
+              <td class="text-white bg-white bg-opacity-10">
+                Alprose Token
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="text-white bg-white bg-opacity-10">
+                Token Symbol
+              </th>
+              <td class="text-white bg-white bg-opacity-10">ALP</td>
+            </tr>
+            <tr>
+              <th scope="row" class="text-white bg-white bg-opacity-10">
+                Token Supply
+              </th>
+              <td class="text-white bg-white bg-opacity-10">
+                2.1 Million ALP
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="text-white bg-white bg-opacity-10">
+                Blockchain Technology
+              </th>
+              <td class="text-white bg-white bg-opacity-10">
+                Binance Smart Chain (BEP-20)
+              </td>
+            </tr>
+          </tbody>
+        </table> -->
+
+        <div class="card fw-semibold rounded-4 my-4 " id="alp_data">
+          <div class="card-body">
+            <div class="row my-2">
+              <div class="col">
+
+                Token Name :
+              </div>
+              <div class="col">
+
+                Alprose Token
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="col">
+
+                Token Symbol:
+              </div>
+              <div class="col">
+
+                ALP
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="col">
+
+                Token Supply:
+              </div>
+              <div class="col">
+
+                2.1 Million ALP
+              </div>
+            </div>
+            <div class="row my-2">
+              <div class="col">
+
+                Blockchain Technology:
+              </div>
+              <div class="col">
+
+                Binance Smart Chain (BEP-20)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col px-lg-4 pt-5 my-5">
+        <div class="">
+          <h4 class="text-white">ALP Token Allocation</h4>
+          <p class="text-secondary">
+            We have mined 2.1 Million ALP Token and it will be distributed in
+            ALP Token holder
+          </p>
+        </div>
+        <div class="mt-4">
+
+          <div class="d-flex align-items-center my-2 gap-2">
+            <i class="fa-solid fa-circle text-primary"></i>
+            <p class="text-white fw-semibold mb-0">Pre Sale- 5%</p>
+          </div>
+          <div class="d-flex align-items-center my-2 gap-2">
+            <i class="fa-solid fa-circle text-danger-emphasis"></i>
+            <p class="text-white fw-semibold mb-0">Developer Team- 5%</p>
+          </div>
+          <div class="d-flex align-items-center my-2 gap-2">
+            <i class="fa-solid fa-circle text-warning"></i>
+            <p class="text-white fw-semibold mb-0">Team Advisory- 5%</p>
+          </div>
+          <div class="d-flex align-items-center my-2 gap-2">
+            <i class="fa-solid fa-circle text-primary-emphasis"></i>
+            <p class="text-white fw-semibold mb-0">
+              Marketing & Staking Reward- 40%
+            </p>
+          </div>
+          <div class="d-flex align-items-center my-2 gap-2">
+            <i class="fa-solid fa-circle text-info"></i>
+            <p class="text-white fw-semibold mb-0">Ecosystem- 10%</p>
+          </div>
+          <div class="d-flex align-items-center my-2 gap-2">
+            <i class="fa-solid fa-circle text-danger"></i>
+            <p class="text-white fw-semibold mb-0">Public Exchange- 20%</p>
+          </div>
+          <div class="d-flex align-items-center my-2 gap-2">
+            <i class="fa-solid fa-circle text-secondary"></i>
+            <p class="text-white fw-semibold mb-0">Metaverse & NFT- 8%</p>
+          </div>
+          <div class="d-flex align-items-center my-2 gap-2">
+            <i class="fa-solid fa-circle text-dark-emphasis"></i>
+            <p class="text-white fw-semibold mb-0">Hybrid Blockchain- 7%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="package" data-aos="fade-up" data-aos-duration="1000" class="p-lg-5  p-md-4 mt-4 p-3">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-7">
+          <p class="text-center color-blue mb-3 fw-semibold">Choose Investment Amount</p>
+          <h2 class="text-white text-center  fw-semibold">
+            Farming Packages
+          </h2>
+          <p class="text-secondary ps-0 mt-3 fs-5 text-center">
+            Farming packages are investment opportunities within decentralized finance (DeFi) ecosystems where users can
+            lock up their cryptocurrency assets to earn rewards.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="Swiper py-4 px-lg-2 px-2  pt-5">
+        <div class="swiper-wrapper">
+
+          {% for i in farming_package %}
+          <div class="swiper-slide h-100 col-2">
+            <div class="card p-4 rounded-4 shadow-sm border-0  package">
+              <div class="card-body d-flex flex-column p-0">
+                <div class="">
+
+                  <h5 class="text-white heading text-center text-capitalize  fw-semibold">
+                    {{i.name}}
+                  </h5>
+                </div>
+                <hr class="text-white">
+                <div class="d-flex gap-5 justify-content-center gap-4 px-3  align-items-center  my-4">
+                  <div class=" ">
+                    <h4 class="fw-semibold text-white mb-2">${{i.min_amount}}</h4>
+                    <p class="mb-0 text-secondary">
+                      Minimum Investment
+                    </p>
+                  </div>
+
+                  <div class="pb-3 ">
+                    {% if i.max_amount %}
+                      <h4 class="fw-semibold text-white mb-2">${{i.max_amount}}</h4>
+                      {% else %}
+                      <h4 class="fw-semibold text-white mb-2">&Above</h4>
+                      {% endif %}
+                    <p class="mb-0 text-secondary">
+                      Maxmimum Investment
+                    </p>
+                  </div>
+                </div>
+                <div class=" px-4 roi py-3 rounded-4 ">
+                  <div class="d-flex align-items-center gap-3">
+
+                    <div class="return-info">
+                      <p class="mb-0 text-white fs-6 fw-semibold">{{i.roi}}% DAILY</p>
+                      <p class="fw-semibold mb-0  text-secondary">Return On Investment</p>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="d-grid">
+                  <button class="btn btn-light shadow-sm px-4 py-2 rounded-5 mt-4">
+                    <a href="../../../loginpage" class="text-decoration-none ">
+                      Get Started
+                    </a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+   
+
+
+        </div>
+      </div>
+    </div>
+    <div id="package" data-aos="fade-up" data-aos-duration="1000" class="p-lg-5  p-md-4 mt-4 p-3">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-7">
+          <p class="text-center color-blue mb-3 fw-semibold">Explore Staking Packages</p>
+          <h2 class="text-white text-center  fw-semibold">
+            Staking Packages
+          </h2>
+          <p class="text-secondary ps-0 mt-3 fs-5 text-center">
+            Staking packages are investment opportunities within decentralized finance (DeFi) ecosystems where users can
+            lock up their cryptocurrency assets to earn rewards.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="Swiper py-4 px-lg-2 px-2  pt-5">
+        <div class="swiper-wrapper">
+         {% for i in staking_package %}
+          <div class="swiper-slide h-100 col-2">
+            <div class="card p-4 rounded-4 shadow-sm border-0  package">
+              <div class="card-body d-flex flex-column p-0">
+                <div class="">
+
+                  <h5 class="text-white heading text-center  fw-semibold text-capitalize">
+                    {{i.name}}
+                  </h5>
+                </div>
+                <hr class="text-white">
+                <div class="d-flex gap-5 justify-content-center gap-4 px-3  align-items-center  my-4">
+                  <div class=" ">
+                    <h4 class="fw-semibold text-white mb-2">${{i.min_amount}}</h4>
+                    <p class="mb-0 text-secondary">
+                      Minimum Investment
+                    </p>
+                  </div>
+
+                  <div class="pb-3 ">
+                    {% if i.max_amount %}
+                      <h4 class="fw-semibold text-white mb-2">${{i.max_amount}}</h4>
+                      {% else %}
+                      <h4 class="fw-semibold text-white mb-2">&Above</h4>
+                      {% endif %}
+                    <p class="mb-0 text-secondary">
+                      Maxmimum Investment
+                    </p>
+                  </div>
+                </div>
+                <div class=" px-4 roi py-3 rounded-4 ">
+                  <div class="d-flex align-items-center gap-3">
+
+                    <div class="return-info">
+                      <p class="mb-0 text-white fs-5 fw-semibold">{{i.roi}}% DAILY</p>
+                      <p class="fw-semibold mb-0  text-secondary">Return On Investment</p>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="d-grid">
+                  <button class="btn btn-light shadow-sm px-4 py-2 rounded-5 mt-4">
+                    <a href="../../../loginpage" class="text-decoration-none ">
+                      Get Started
+                    </a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+       
+        {% endfor %}
+
+
+        </div>
+      </div>
+    </div>
+
+    <div id="package" data-aos="fade-up" data-aos-duration="1000" class="p-lg-5  p-md-4 mt-4 p-3">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-7">
+          <p class="text-center color-blue mb-3 fw-semibold">Know Our Partners</p>
+          <h2 class="text-white text-center  fw-semibold">
+            Our Partners
+          </h2>
+          <p class="text-secondary ps-0 mt-3 fs-5 text-center">
+            Each partnership represents a unique story of shared goals, innovation, and collective success.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="comp py-4 px-lg-2 px-2  pt-5">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide h-100 col-2">
+            <img src="{% static 'assets/images/company/database/1.svg' %}" alt="">
+          </div>
+          <div class="swiper-slide h-100 col-2">
+            <img src="{% static 'assets/images/company/database/2.svg' %}" alt="">
+          </div>
+          <div class="swiper-slide h-100 col-2">
+            <img src="{% static 'assets/images/company/database/3.svg' %}" alt="">
+          </div>
+          <div class="swiper-slide h-100 col-2">
+            <img src="{% static 'assets/images/company/database/4.svg' %}" alt="">
+          </div>
+          <div class="swiper-slide h-100 col-2">
+            <img src="{% static 'assets/images/company/database5.svg' %}" alt="">
+          </div>
+
+
+
+
+        </div>
+      </div>
+
+
+      <section class="container rounded-4 social__area  my-5  text-white">
+        <div class=" px-2 py-5 p-lg-5 rounded-5 ">
+          <div class="row justify-content-center mb-60">
+            <div class="contract">
+              <h3 class="text-white fw-bold py-5" style="text-align: center; padding-bottom: 66px;">
+                Contract Address
+              </h3>
+            </div>
+            <div
+              class="col-12 col-lg-8 d-flex gap-2 align-items-center justify-content-center flex-wrap flex-lg-nowrap">
+              <div class="input-group rounded-pill address">
+                <span class="input-group-text border-0 fw-semibold p-3" id="basic-addon1"
+                  style="background: #315050; color: white;">BSC
+                  ADDRESS</span>
+                <input type="text" id="copy" readonly value="{{smart_contract.bscaddress}}"
+                  class="form-control" id="myInput">
+              </div>
+              <a href="https://bscscan.com/token/0x83F928c66F437507EB399F8E91e84f2fD15C57Ec" target="_blank"><img
+                  src="{% static 'assets/images/whlfile/link.png' %}" width="60" class="img-fluid" alt="" target="_blank"></a>
+              <button class="bg-transparent border-0" onclick="copy()"><img id="icon"
+                  src="{% static 'assets/images/whlfile/copy.png' %}" width="60" class="img-fluid" alt=""
+                  target="_blank"></button>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-5 pt-4 mb-3">
+            <div class="col-xl-12 col-lg-7 col-md-10">
+              <div class="section__title text-center p-3">
+  
+                <h1 class="title fw-semibold mb-3 ">Stay up-to-date by joining our community</h1>
+                <p class="text-secondary">We invite you to join our Telegram community and follow us on Twitter</p>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center flex-wrap gap-0 gap-lg-5">
+            <div class="social__item">
+              <a href=" https://www.facebook.com/profile.php?id=100090389295134" target="_blank"><img
+                  src="{% static 'assets/images/whlfile/Facebook.png' %}" width="70" alt=""></a>
+            </div>
+            <div class="social__item">
+              <a href=" https://youtube.com/@alprosecoin" target="_blank"><img
+                  src="{% static 'assets/images/whlfile/Youtube.png' %}" width="70" alt=""></a>
+            </div>
+            <div class="social__item">
+              <a href=" https://twitter.com/AlproseCoin" target="_blank"><img
+                  src="{% static 'assets/images/whlfile/Twitter.png' %}" width="70" alt=""></a>
+            </div>
+            <div class="social__item">
+              <a href="https://www.linkedin.com/in/alprose-coin-b56479275/" target="_blank"><img
+                  src="{% static 'assets/images/whlfile/Linkedin.png' %}" width="70" alt=""></a>
+            </div>
+            <div class="social__item">
+              <a href="https://www.instagram.com/alprosecoin/" target="_blank"><img
+                  src="{% static 'assets/images/whlfile/Instagram.png' %}" width="70" alt=""></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+    </div>
+
+    {% include 'userpages/landingfooter.html' %}
+  </div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <!-- <script src="{% static 'assets/js/mlm.js' %}"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+  <script>
+
+
+    function copy(params) {
+      const image = document.getElementById("icon")
+      const element = document.getElementById("copy")
+      navigator.clipboard.writeText(element.value);
+      image.src = "{% static 'assets/images/whlfile/check.png' %}"
+
+      setTimeout(() => {
+        image.src = "{% static 'assets/images/whlfile/copy.png' %}"
+      }, [3000])
+    }
+
+    VANTA.WAVES({
+      el: "#home",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1,
+      zoom: 1.3,
+      scaleMobile: 1.00,
+      color: 0xa1115
+    })
+  </script>
+
+
+  </script>
+
+  <script>
+    const sswiper = new Swiper(".Swiper", {
+      // Optional parameters
+      direction: "horizontal",
+
+      autoplay: {
+        delay: 4000,
+      },
+      autoHeight: true,
+
+      slidesPerView: 5,
+      spaceBetween: 10,
+      // Responsive breakpoints
+      breakpoints: {
+        // when window width is >= 320px
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+        },
+        // when window width is >= 480px
+        480: {
+          slidesPerView: 1,
+          spaceBetween: 30,
+        },
+        // when window width is >= 640px
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 40,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+      },
+    });
+
+    const swiper = new Swiper(".swiper", {
+      // Optional parameters
+      direction: "horizontal",
+      loop: true,
+
+      autoplay: {
+        delay: 4000,
+      },
+      autoHeight: true,
+
+      slidesPerView: 5,
+      spaceBetween: 10,
+      // Responsive breakpoints
+      breakpoints: {
+        // when window width is >= 320px
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+        },
+        // when window width is >= 480px
+        480: {
+          slidesPerView: 1,
+          spaceBetween: 30,
+        },
+        // when window width is >= 640px
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 40,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+      },
+    });
+
+
+    const comp = new Swiper(".comp", {
+      // Optional parameters
+      direction: "horizontal",
+      loop: true,
+
+      autoplay: {
+        delay: 4000,
+      },
+      autoHeight: true,
+
+
+      // Responsive breakpoints
+      breakpoints: {
+        // when window width is >= 320px
+        320: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        // when window width is >= 480px
+        480: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+        // when window width is >= 640px
+        640: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 40,
+        },
+      },
+    });
+  </script>
+
+
+
+
+
+
+</body>
+
+</html>

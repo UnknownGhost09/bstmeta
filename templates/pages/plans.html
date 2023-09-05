@@ -1,0 +1,115 @@
+{% extends 'pages/sidebar.html' %}
+
+{% block content %}
+
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+
+        <div class="card-header">
+          <h4 class="card-title">Plans</h4>
+          <p class="card-title-desc">All mlm plans
+          </p>
+      </div>
+       
+        <div class="card">
+            <div class="card-body">
+              
+                <div class='table-responsive'>
+              <table id ='test' class="table hover  table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrapp">
+                <thead>
+                  <tr>
+                    
+                    <th scope="col">Plan Name</th>
+                    <th scope="col">status</th>
+      
+                    <th scope='col'>View packages</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                  <tr>
+                    
+                    <td>{{i.name}}</td>
+                    <td class='d-flex justify-content-between align-items-center ps-5'>
+              
+                        <div class="form-check form-switch pt-2">
+                          <form action="../../../admin/plans" method="post">
+                            {% if i.status == '1' %}
+                            
+                          <input class="form-check-input h4 "  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked" data-id="{{i.id}}" title='active'  checked>
+                        {% else %}
+                        
+                          {% csrf_token %}
+                        <input class="form-check-input h4 "  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked" data-id="{{i.id}}" title="inactive">
+                      </form>
+                        {% endif %}
+                        
+                        </div>
+                        
+                      </td>  
+                    
+                    
+                   
+                    <td><a href='../../../admin/packages/{{i.id}}' class="h4 text-secondary"><i class="fas fa-arrow-alt-circle-right text-primary"></i></a></td>
+                  </tr>
+                  {% endfor %}
+                
+                </tbody>
+              </table>
+            </div>
+              <!-- End Default Table Example -->
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    <script>
+
+        function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = cookies[i].trim();
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }  
+      
+        $(document.body).on('click','#flexSwitchCheckChecked',function(){
+      
+   
+          var pid = $(this).attr('value');
+          var uid = $(this).attr('data-id');
+          var csrftoken = getCookie('csrftoken');
+          console.log(pid,uid)
+      
+          $.ajax({
+            type: 'POST',      
+            url: '../../../admin/plans',
+            data: {
+              
+              id: uid,
+             
+              csrfmiddlewaretoken: csrftoken,
+          },
+      
+            success: function () {
+              console.log("success");
+            }
+          });
+      
+        });
+        
+      
+      </script>
+
+{% endblock %}

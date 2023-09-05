@@ -1,0 +1,168 @@
+{% extends 'pages/sidebar.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+  
+      <div class='card'>
+        <div class="card-header">
+            <div class='d-flex justify-content-between align-items-center'>
+          <h4 class="card-title">Active Events</h4>
+          <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center">Add Event</button>
+
+          <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title">Create Event</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form action='../../../admin/events' method='POST'>
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label" for="formrow-firstname-input">Event Name</label>
+                                <input type="text" class="form-control" id="formrow-firstname-input" placeholder="Event Name" name='event'>
+                            </div>
+
+                            <div>
+                                <label class="form-label">Date</label>
+                                <input type="text" class="form-control" id="datepicker-range" name='date'>
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-primary w-md" name='create'>Submit</button>
+                            </div>
+                        </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+            </div>
+          <p class="card-title-desc">
+          </p>
+      </div>
+          <div class="card-body">
+            <div class='table-responsive'>
+      <table id= 'test' class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap table-striped-columns text-nowrap">
+          <thead>
+            <tr>
+              
+              <th scope="col">Title</th>
+              <th scope="col">Start Date</th>
+              <th scope="col">End Date</th>
+              <th scope="col">Status</th>
+              <th scope='col'>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for i in data %}
+            <tr >
+              
+              <td>{{i.news}}</td>
+              <td>{{i.date}}</td>
+              <td>{{i.datato}}</td>
+              <td>   <div class="square-switch">
+                <form action="../../../admin/events" method="post">
+                    {% csrf_token %}
+                {% if i.status == 'True' %}
+                <input type="checkbox" id="square-switch3" name='active' switch="bool" data-id="{{i.id}}" checked>             
+                {% else %}
+                <input type="checkbox" id="square-switch3" name='active' switch="bool" data-id="{{i.id}}"> 
+                {% endif %}
+                <label for="square-switch3" data-on-label="Yes" data-off-label="No"></label>
+                </form>
+            </div></td>
+              <td> <i class="fas fa-arrow-alt-circle-right h4 text-primary" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center{{i.id}}"></i>
+
+                <div class="modal fade bs-example-modal-center{{i.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Edit Event</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-wrap">
+                                <form action='../../../admin/events' method='POST'>
+                                    {% csrf_token %}
+                                    <input type='text' name='id' hidden value='{{i.id}}'>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="formrow-firstname-input">Event Name</label>
+                                        <input type="text" class="form-control" id="formrow-firstname-input" placeholder="Event Name" name='event' value="{{i.news}}">
+                                    </div>
+        
+                                    <div>
+                                        <label class="form-label">Date</label>
+                                        <input type="text" class="form-control" id="datepicker-range" name='date' value="{{i.date}} to {{i.datato}}">
+                                    </div>
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary w-md" name='update'>Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+  
+  </div>
+  </div>
+  </div>
+  <script src="{% static 'assets/libs/flatpickr/flatpickr.min.js' %}"></script>
+  <script>
+
+
+    
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}  
+
+  $(document.body).on('click','#square-switch3',function(){
+
+
+    var uid = $(this).attr('data-id');
+    var csrftoken = getCookie('csrftoken');
+    console.log(uid)
+
+    $.ajax({
+      type: 'POST',      
+      url: '../../../admin/events',
+      data: {
+        
+        id: uid,
+       
+        csrfmiddlewaretoken: csrftoken,
+    },
+
+      success: function () {
+   
+      }
+    });
+
+  });
+  
+    
+    flatpickr("#datepicker-range", { mode: "range", defaultDate: new Date() });
+  </script>
+{% endblock %}

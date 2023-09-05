@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Document</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'mlm2.css' %}" />
+    <link rel="stylesheet" href="{% static 'mlm_page_2.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
+
+      body {
+        background-color: #000000;
+        font-family: "Poppins", sans-serif;
+        overflow-x: hidden;
+      }
+      .hero-bg img {
+        filter: drop-shadow(0px 0px 50px #17424b81);
+      }
+      .button {
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s ease-in;
+        z-index: 1;
+        box-shadow: 0px 0px 10px #2a7a8a;
+      }
+
+      .button::before,
+      .button::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 0;
+        height: 100%;
+        transform: skew(15deg);
+        transition: all 0.5s;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .button::before {
+        left: -10px;
+        background: #469cad;
+      }
+
+      .button::after {
+        right: -10px;
+        background: #2a7a8a;
+      }
+
+      .button:hover::before,
+      .button:hover::after {
+        width: 58%;
+      }
+
+      .li {
+        padding: 5px 30px;
+        font-size: 16px;
+        cursor: pointer;
+        color: black;
+        position: relative;
+        transition: transform 0.5s ease;
+        transform-origin: left;
+        z-index: 1;
+      }
+      .li::after {
+        content: "";
+        position: absolute;
+        background-color: #3ca9be;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s ease;
+      }
+      .li:hover::after {
+        transform: scaleX(1);
+        transition: transform 0.5s ease;
+        transform-origin: left;
+      }
+      .hero_col h1 {
+        font-family: "Josefin Sans", sans-serif;
+      }
+      .floating-image {
+        position: relative;
+        animation: floatAnimation 3s ease-in-out infinite;
+      }
+
+      @keyframes floatAnimation {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-25px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      .primary-color {
+        color: #3ca9be;
+      }
+      .metaCard {
+        background: linear-gradient(179deg, #002d36, #0c0c0c);
+        border: none !important;
+        border-radius: 10px !important;
+        transition: all 500ms ease !important;
+      }
+      .metaCard button {
+        background: linear-gradient(233deg, #1f3336, #3131318e);
+      }
+      .metaCard:hover i {
+        transform: scale(1.1);
+        transition: all 500ms ease;
+      }
+      .metaCard:hover {
+        box-shadow: 0px 0px 15px #469cad70 !important;
+        border: none !important;
+      }
+      .metaCard h3 {
+        font-family: "Josefin Sans", sans-serif;
+      }
+      .metaCard-bg {
+        background: url("{% static 'assets/images/bg-asset/image-3.png' %}");
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      .nftCard {
+        background: linear-gradient(233deg, #23555f, #0706069d);
+        border-radius: 15px !important;
+      }
+      .nftCard img {
+        object-fit: cover;
+        width: 100%;
+        height: 250px;
+      }
+      .card_icon {
+        background-color: #29728136;
+        padding: 20px 21px;
+      }
+      .about_col h1 {
+        font-family: "Josefin Sans", sans-serif;
+      }
+      .about_col img {
+        filter: drop-shadow(0px 0px 50px #4798a762);
+      }
+      .social_icon {
+        background: -webkit-linear-gradient(#4799a7, #7c7c7c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .footer_li {
+        color: #5db3c7 !important;
+      }
+      .footer_li:hover {
+        color: #498391 !important;
+      }
+      .package_bg {
+        background: url("{% static 'assets/images/bg-asset/image-6.png' %}");
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+      .package_card {
+        background-color: rgba(78, 78, 78, 0.295);
+        backdrop-filter: blur(100px) !important;
+        border: none !important;
+        border-radius: 25px !important;
+        transition: all 500ms ease !important;
+      }
+      .package_card i {
+        background: -webkit-linear-gradient(#0089c9, #3c2377);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .asset_1 {
+        z-index: 99;
+        top: -200px;
+        left: -100px;
+      }
+      .asset_2 {
+        z-index: 99;
+        bottom: -150px;
+        right: -100px;
+      }
+      .community_adrs {
+        background-color: rgba(65, 65, 65, 0.315);
+      }
+      .tmln__item {
+        border-top: 2px dotted white;
+        padding-top: 30px;
+      }
+      .tmln__item--bg-dark::after,
+      .tmln__item--bg-lght::after {
+        content: "";
+        position: absolute;
+        padding: 10px 10px;
+        border-radius: 20%;
+        border: 3px solid #20b5cf;
+        background-color: #0a4d58;
+        left: 0;
+        top: -14px;
+      }
+      .tmln__item--bg-dark {
+        padding: 15px;
+        margin-left: 26px;
+        background-image: linear-gradient(rgba(45, 83, 119, 0.384) 11.2%, rgb(9, 65, 75) 91.1% );
+        color: white !important;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+      .tmln__item--bg-lght {
+        padding: 15px;
+        margin-left: 26px;
+        background-image: linear-gradient(rgba(183, 220, 255, 0.384) 11.2%, rgb(19, 113, 129) 91.1% );
+        color: rgb(216, 216, 216) !important;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+      #Ecosystem{
+        overflow-x: hidden;
+      }
+
+      @media only screen and (min-width: 52px) and (max-width: 992px) {
+        .navbar_body {
+          background-color: #000000;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid p-0">
+     {% include 'userpages/landingnav.html' %}
+      <div id="home" class="container-fluid">
+        <div class="container-xxl">
+          <div class="row mx-0 px-lg-5 px-0 my-lg-4 mt-md-0 mt-4">
+            <div
+              class="col-lg-6 p-lg-4 px-2 hero mt-lg-4 hero_col"
+              data-aos="fade-right"
+              data-aos-duration="1500"
+            >
+              <h1
+                class="fw-bolder mb-0 primary-color text-lg-start text-md-start display-4"
+              >
+                Welcome to
+              </h1>
+              <h1
+                class="fw-bolder mt-0 mb-4 primary-color text-lg-start text-md-start display-3"
+              >
+                BST Meta
+              </h1>
+              <h3 class="fw-bolder mb-4 text-white text-lg-start text-md-start">
+                Unleash Success in a New Dimension
+              </h3>
+              <h4
+                class="text-white text-opacity-75 text-lg-start text-md-start mb-4 pt-2"
+              >
+                Connecting Ambitions, One Virtual Handshake at a Time
+              </h4>
+              <div
+                class="d-lg-flex align-items-center d-md-flex gap-lg-3 gap-md-3 gap-3 d-grid mt-4 pt-3"
+              >
+                <a
+                  href="/register"
+                  class="btn btn-lg text-decoration-none border rounded-5 px-4 py-2 text-white button"
+                >
+                  Explore more
+                </a>
+                <a
+                  href=" "
+                  class="btn btn-lg text-decoration-none border rounded-5 px-4 py-2 text-white button"
+                >
+                  View in OPENSEA
+                </a>
+              </div>
+            </div>
+            <div
+              class="col-lg mt-lg-4 px-lg-5 mt-4"
+              data-aos="zoom-in"
+              data-aos-duration="1200"
+            >
+              <div class="hero-bg">
+                <img
+                  id="image-121-6051"
+                  alt="headphone-left"
+                  src="{% static 'assets/images/hero_bg/image-18.png' %}"
+                  class="img-fluid floating-image"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="container-xxl">
+          <div class="row mx-0 p-lg-5 p-md-4 px-0 bg-black position-relative">
+            <div class="col-lg col-md-6 col-12 mt-lg-5 mt-3">
+              <div
+                class="card px-2 py-3 rounded-0 border border-info border-opacity-25 shadow-lg metaCard h-100"
+                data-aos="fade-right"
+                data-aos-duration="1000"
+              >
+                <div class="card-body p-3">
+                  <div class="">
+                    <i
+                      class="fa-regular fa-square-plus primary-color card_icon fs-5 shadow rounded-circle"
+                    ></i>
+                    <div class="mt-4">
+                      <h3 class="primary-color fw-semibold">
+                        Create an Account
+                      </h3>
+                      <p class="text-white-50 pt-2 mb-0">
+                        Registraion is totally free.You can create your account
+                        with valid email ,mobile and etc.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg col-md-6 col-12 mt-lg-5 mt-3">
+              <div
+                class="card px-2 py-3 rounded-0 border border-info border-opacity-25 shadow-lg metaCard h-100"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+              >
+                <div class="card-body p-3">
+                  <div class="">
+                    <i
+                      class="fa-solid fa-wallet primary-color card_icon fs-5 shadow rounded-circle"
+                    ></i>
+                    <div class="mt-4">
+                      <h3 class="primary-color fw-semibold">Make Topup</h3>
+                      <p class="text-white-50 pt-2 mb-0">
+                        Topup With Any of Above Package As Per Our Choice
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg col-md-6 col-12 mt-lg-5 mt-3">
+              <div
+                class="card px-2 py-3 rounded-0 border border-info border-opacity-25 shadow-lg metaCard h-100"
+                data-aos="fade-left"
+                data-aos-duration="1000"
+              >
+                <div class="card-body p-3">
+                  <div class="">
+                    <i
+                      class="fa-solid fa-sack-dollar primary-color card_icon fs-5 shadow rounded-circle"
+                    ></i>
+                    <div class="mt-4">
+                      <h3 class="primary-color fw-semibold">Start Earnings</h3>
+                      <p class="text-white-50 pt-2 mb-0">
+                        Get Profit As Per Your Choice.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-lg-block d-md-block d-none">
+              <img
+                src="{% static 'assets/images/bg-asset/image-5.png' %}"
+                class="img-fluid mt-5 position-absolute asset_2 floating-image"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="Ecosystem" class="container-fluid">
+        <div class="container-xxl">
+          <div class="row mx-0 p-lg-5 p-md-4 px-0 mt-lg-0 mt-md-0 mt-5">
+            <div class="text-center">
+              <h1 class="text-white fw-semibold mt-4 display-5">
+                Metaverse Ecosystem
+              </h1>
+            </div>
+            <div
+              class="Swiper p-3 mt-5"
+              data-aos="fade-up"
+              data-aos-duration="1500"
+            >
+              <div class="swiper-wrapper">
+                <div class="swiper-slide h-100">
+                  <div class="card text-center h-100 nftCard p-4 border-0">
+                    <div class="card-body p-0">
+                      <img
+                        src="{% static 'assets/images/NFT/art_01.jpg' %}"
+                        class="img-fluid rounded-4 shadow"
+                        alt=""
+                      />
+                      <h2 class="primary-color fw-semibold my-3 text-uppercase">
+                        Metaverse
+                      </h2>
+                      <p class="text-white-50 mb-0">
+                        Metaverse offers a shared digital space where people can
+                        interact, socialize and engage in various.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide h-100">
+                  <div class="card text-center h-100 nftCard p-4 border-0">
+                    <div class="card-body p-0">
+                      <img
+                        src="{% static 'assets/images/NFT/art_02.jpg' %}"
+                        class="img-fluid rounded-4 shadow"
+                        alt=""
+                      />
+                      <h2 class="primary-color fw-semibold my-3 text-uppercase">
+                        NFT MarketPlace
+                      </h2>
+                      <p class="text-white-50 mb-0">
+                        An NFT marketplace is a digital platform where
+                        individuals can buy, sell, and trade digital assets
+                        known as NFTs.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide h-100">
+                  <div class="card text-center h-100 nftCard p-4 border-0">
+                    <div class="card-body p-0">
+                      <img
+                        src="{% static 'assets/images/NFT/image-1.jpg' %}"
+                        class="img-fluid rounded-4 shadow"
+                        alt=""
+                      />
+                      <h2 class="primary-color fw-semibold my-3 text-uppercase">
+                        Land NFT
+                      </h2>
+                      <p class="text-white-50 mb-0">
+                        Discover unique digital worlds through Land NFTs –
+                        verifiable, representing ownership of virtual land
+                        spaces.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide h-100">
+                  <div class="card text-center h-100 nftCard p-4 border-0">
+                    <div class="card-body p-0">
+                      <img
+                        src="{% static 'assets/images/NFT/art_03.jpg' %}"
+                        class="img-fluid rounded-4 shadow"
+                        alt=""
+                      />
+                      <h2 class="primary-color fw-semibold my-3 text-uppercase">
+                        NFT Art
+                      </h2>
+                      <p class="text-white-50 mb-0">
+                        NFT Art, or Non-Fungible Token Art, represents a
+                        revolutionary fusion of art and blockchain technology.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <a
+                href=" "
+                class="btn btn-lg text-decoration-none border rounded-5 px-4 py-2 text-white button mt-5"
+              >
+                View in OPENSEA
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="container-xxl my-4">
+          <div
+            class="row mx-0 p-lg-5 p-md-4 px-0 position-relative mt-lg-0 mt-md-0 mt-5"
+          >
+            <div class="">
+              <img
+                src="{% static 'assets/images/bg-asset/image-5.png' %}"
+                class="img-fluid mt-5 position-absolute asset_1 floating-image"
+                alt=""
+              />
+              <img
+                src="{% static 'assets/images/bg-asset/image-5.png' %}"
+                class="img-fluid mt-5 position-absolute asset_2 floating-image"
+                alt=""
+              />
+            </div>
+            <div
+              class="col-lg col-md col-12 text-center"
+              data-aos="fade-up"
+              data-aos-duration="500"
+            >
+              <h1 class="primary-color fw-bolder display-3">4,000+</h1>
+              <p class="text-white text-opacity-75 mt-3">Wallets Connected</p>
+            </div>
+            <div
+              class="col-lg col-md col-12 text-center"
+              data-aos="fade-up"
+              data-aos-duration="1000"
+            >
+              <h1 class="primary-color fw-bolder display-3">20,000+</h1>
+              <p class="text-white text-opacity-75 mt-3">
+                Collections Indexed every 5 mins.
+              </p>
+            </div>
+            <div
+              class="col-lg col-md col-12 text-center"
+              data-aos="fade-up"
+              data-aos-duration="1500"
+            >
+              <h1 class="primary-color fw-bolder display-3">2.5x</h1>
+              <p class="text-white text-opacity-75 mt-3">
+                Difference in Floor & Estimated Value
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="container-xxl">
+          <div class="row mx-0 align-items-center p-lg-5 p-md-4 px-0">
+            <div
+              class="col-lg-6 col-md-6 col-12 about_col mt-lg-0 mt-md-0 mt-5"
+            >
+              <img
+                data-aos="fade-right"
+                data-aos-duration="500"
+                src="{% static 'assets/images/about/meta-about-5.png' %}"
+                class="img-fluid"
+                width="500"
+                alt=""
+              />
+            </div>
+            <div
+              class="col-lg-6 col-md-6 col-12 about_col mb-4 mt-lg-0 mt-md-0 mt-5"
+            >
+              <div class="mt-3 pt-2">
+                <p
+                  class="fs-5 primary-color"
+                  data-aos="fade-left"
+                  data-aos-duration="500"
+                >
+                  Welcome to BST Meta
+                </p>
+                <h1
+                  class="text-white fw-semibold mt-3 display-4"
+                  data-aos="fade-left"
+                  data-aos-duration="1000"
+                >
+                  About us
+                </h1>
+                <p
+                  class="text-white-50 fs-5 mt-3"
+                  data-aos="fade-left"
+                  data-aos-duration="1500"
+                >
+                  Step into a revolutionary digital realm where cutting-edge
+                  technology intersects with the dynamic world of multi-level
+                  marketing. Our BST Meta is a groundbreaking platform that
+                  redefines how businesses and individuals engage with network
+                  marketing, leveraging the power of virtual reality,
+                  blockchain, and social interaction.
+                </p>
+                <button
+                  class="btn btn-lg button border border-white rounded-5 px-5 mt-4 text-white"
+                  data-aos="fade-left"
+                  data-aos-duration="1500"
+                >
+                  See More
+                </button>
+              </div>
+            </div>
+            <!-- <div
+              class="col-lg-6 col-12"
+              data-aos="fade-left"
+              data-aos-duration="500"
+            >
+              <div class="card p-4 metaCard shadow h-100">
+                <div class="card-body p-2">
+                  <div class="d-flex gap-2 align-items-center">
+                    <img
+                      src="{% static 'assets/images/about/meta-about-2.png' %}"
+                      class="img-fluid"
+                      width="80"
+                      alt=""
+                    />
+                    <h3 class="primary-color fw-semibold">
+                      Empowering Connections
+                    </h3>
+                  </div>
+                  <p class="text-white-50 text-opacity-75 mb-0 mt-4">
+                    Our metaverse is built on the foundation of fostering
+                    connections. Through immersive virtual spaces, you can
+                    connect with fellow network marketers, mentors, and
+                    prospects from around the globe. Experience real-time
+                    interactions that transcend geographical barriers, enabling
+                    you to build meaningful relationships that drive your BST
+                    Meta journey forward.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-lg-6 col-12 mt-lg-0 mt-md-0 mt-3"
+              data-aos="fade-left"
+              data-aos-duration="1500"
+            >
+              <div class="card p-4 metaCard shadow h-100">
+                <div class="card-body p-2">
+                  <div class="d-flex gap-2 align-items-center">
+                    <img
+                      src="{% static 'assets/images/about/meta-about-3.png' %}"
+                      class="img-fluid"
+                      width="80"
+                      alt=""
+                    />
+                    <h3 class="primary-color fw-semibold">
+                      Recognition and Rewards
+                    </h3>
+                  </div>
+                  <p class="text-white-50 text-opacity-75 mb-0 mt-4">
+                    Celebrate your achievements like never before. In the BST
+                    Meta, your accomplishments are acknowledged in grand virtual
+                    ceremonies attended by peers and mentors. Receive digital
+                    badges, tokens, and exclusive virtual items as rewards, all
+                    securely stored on the blockchain to showcase your journey
+                    towards success.
+                  </p>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div id="roadMap" class="container-fluid">
+        <div class="container-xxl">
+          <div class="row mx-0 p-lg-5 p-md-4 p-3 my-5">
+            <p class="primary-color ps-0">BST Meta</p>
+            <h1 class="text-white ps-0 text-uppercase fw-semibold">Road Map</h1>
+            <p class="ps-0 mt-3 fs-5 text-white text-opacity-75">
+              Cryptocurrencies are currently used more frequently and are
+              gaining acceptance as a valid form of payment for transactions.
+            </p>
+            <div
+              class="swiper py-4 px-lg-2 px-2 mt-4"
+              data-aos="fade-up"
+              data-aos-duration="1000"
+            >
+              <div class="swiper-wrapper">
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-dark">
+                    <p class="fs-5 fw-semibold">Q4</p>
+                    <h3 class="tmln__item-headline text-white">
+                      Research & Development
+                    </h3>
+                    <p class="mt-3 p-2">
+                      Oct-Dec 22
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-lght">
+                    <p class="fs-5 fw-semibold">Q1</p>
+                    <h3 class="tmln__item-headline text-white text-opavity-50">
+                      Pre sale phase
+                    </h3>
+                    <p class="mt-3 p-2">
+                      Jan-Mar 23
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-dark">
+                    <p class="fs-5 fw-semibold">Q2</p>
+                    <h3 class="tmln__item-headline text-white">
+                      List on exchange
+                    </h3>
+                    <p class="mt-3 p-2">
+                      Apr-June 23
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-lght">
+                    <p class="fs-5 fw-semibold">Q3</p>
+                    <h3 class="tmln__item-headline text-white text-opavity-50">Utility</h3>
+                    <p class="mt-3 p-2">
+                      July - Sept 23
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-dark">
+                    <p class="fs-5 fw-semibold">Q4</p>
+                    <h3 class="tmln__item-headline text-white">Gaming</h3>
+                    <p class="mt-3 p-2">
+                      Oct-Dec 23
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-lght">
+                    <p class="fs-5 fw-semibold">Q1</p>
+                    <h3 class="tmln__item-headline text-white text-opavity-50">
+                      More than five exchange
+                    </h3>
+                    <p class="mt-3 p-2">
+                      Jan-March 24
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-dark">
+                    <p class="fs-5 fw-semibold">Q2</p>
+                    <h3 class="tmln__item-headline text-white">NFT</h3>
+                    <p class="mt-3 p-2">
+                      Apr-June 24
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-lght">
+                    <p class="fs-5 fw-semibold">Q3</p>
+                    <h3 class="tmln__item-headline text-white text-opavity-50">Blockchain</h3>
+                    <p class="mt-3 p-2">
+                      Jul-Dec 24
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-dark">
+                    <p class="fs-5 fw-semibold">Q1-Q2</p>
+                    <h3 class="tmln__item-headline text-white">
+                      Self Exchange
+                    </h3>
+                    <p class="mt-3 p-2">
+                      Jan - June 25
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-lght">
+                    <p class="fs-5 fw-semibold">Q3-Q4</p>
+                    <h3 class="tmln__item-headline text-white text-opavity-50">
+                      Decentralize Wallet
+                    </h3>
+                    <p class="mt-3 p-2">
+                      Jul-Dec 25
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-dark">
+                    <p class="fs-5 fw-semibold">Q1-Q2</p>
+                    <h3 class="tmln__item-headline text-white">Metaverse</h3>
+                    <p class="mt-3 p-2">
+                      Jan - June 26
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-lght">
+                    <p class="fs-5 fw-semibold">Q1-Q4</p>
+                    <h3 class="tmln__item-headline text-white text-opavity-50">
+                      More than 100 Exchange
+                    </h3>
+                    <p class="mt-3 p-2">
+                      2027
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+                <div class="swiper-slide tmln__item h-100">
+                  <li class="tmln__item--bg-dark">
+                    <p class="fs-5 fw-semibold">Q1-Q4</p>
+                    <h3 class="tmln__item-headline text-white">
+                      World No. 1 Exchange
+                    </h3>
+                    <p class="mt-3 p-2">
+                      2028
+                      <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </p>
+                  </li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="container-xxl">
+          <div
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            class="px-lg-5 py-lg-4 p-md-4 p-3 mt-5 package_bg"
+          >
+            <div class="row d-flex align-items-center justify-content-between">
+              <div
+                class="col-lg col-md col-12"
+                data-aos="fade-right"
+                data-aos-duration="1000"
+              >
+                <p class="fs-5 mb-2 primary-color">Choose investment amount</p>
+                <h1 class="text-white fw-semibold ps-0 mt-3 mb-4">Packages</h1>
+              </div>
+              <div class="col-lg col-md col-12 d-flex justify-content-lg-end">
+                <button
+                  class="btn button border border-white rounded-5 px-4 text-white"
+                  data-aos="fade-left"
+                  data-aos-duration="1000"
+                >
+                  See More
+                </button>
+              </div>
+            </div>
+            <div class="Swiper py-4 px-lg-2 px-2">
+              <div class="swiper-wrapper">
+                {% for i in packages %}
+                <div class="swiper-slide h-100">
+                  <div
+                    class="card p-4 rounded-4 shadow-sm border-0 h-100 package_card"
+                  >
+                    <div class="card-body d-flex flex-column p-0">
+                      <div
+                        class="d-flex align-items-center justify-content-between gap-3"
+                      >
+                        <h2 class="fw-semibold mb-0 text-white text-opacity-75">
+                          {{i.name|capfirst}}
+                        </h2>
+                        <i class="fa-solid fa-star fs-3"></i>
+                      </div>
+                      <div class="mt-1">
+                        <div
+                          class="d-flex align-items-end border-bottom border-white border-opacity-10 pt-4 pb-3"
+                        >
+                          <h2
+                            class="fw-semibold mb-0 text-white text-opacity-75"
+                          >
+                            ${{i.min_amount}}
+                          </h2>
+                          <p class="ms-2 mb-1 text-white text-opacity-75">
+                            MINIMUM INVESTMENT
+                          </p>
+                        </div>
+                        <div class="d-flex align-items-end pt-3">
+                          <h2
+                            class="fw-semibold mb-0 text-white text-opacity-75"
+                          >
+                            ${{i.max_amount}}
+                          </h2>
+                          <p class="ms-2 mb-1 text-white text-opacity-75">
+                            MAXIMUM INVESTMENT
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="border border-secondary border-opacity-50 px-3 py-4 shadow bg-black bg-opacity-25 rounded-4 mt-4"
+                      >
+                        <div class="d-flex align-items-center mb-3 gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <p class="heading mb-0 text-white text-opacity-50">
+                            RETURN ON INVESTMENT
+                          </p>
+                        </div>
+                        <div class="d-flex align-items-center mb-3 gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <h5 class="mb-0 text-white text-opacity-50">{{i.roi}}%</h5>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                          <i
+                            class="fa-solid fa-circle-check text-white text-opacity-50 fs-5 rounded-circle"
+                          ></i>
+                          <p class="mb-0 text-white text-opacity-50">DAILY</p>
+                        </div>
+                      </div>
+                      <div class="d-grid">
+                        <button
+                          class="btn bg-black bg-opacity-25 shadow border border-white border-opacity-25 py-2 rounded-5 mt-4"
+                        >
+                          <a
+                            href="../../../loginpage"
+                            class="text-decoration-none text-white"
+                          >
+                            Get Started
+                          </a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+             
+       
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="container-xxl mt-5">
+          <div
+            class="row mx-0 align-items-center p-lg-5 p-md-4 p-4 bg-secondary bg-opacity-10 rounded-5"
+          >
+            <div class="col-lg-6 col-md-6 col-12">
+              <h1 class="text-white fw-semibold display-4">BST Meta</h1>
+              <h1 class="text-white fw-semibold pb-2">Community Address.</h1>
+              <p class="fs-5 fw-semibold text-white-50 mt-4 mb-0 pb-3">
+                Join our community and follow us on Social Media platform if
+                you're interested.
+              </p>
+              <div
+                class="d-flex align-items-center flex-row flex-md-row flex-column flex-wrap gap-3 mt-4
+                mb-lg-0 mb-md-0 mb-4 justify-content-between p-lg-3 p-md-3 px-2 py-3 rounded-5 community_adrs"
+              >
+                <p class="text-white text-opacity-75 text-wrap mb-0 ms-2">
+                  uui4g3iug4iu3b4i3u5gi4g5u
+                </p>
+                <button
+                  class="btn btn-lg text-white button rounded-5 py-2 px-4"
+                >
+                  Copy Address
+                </button>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12 d-flex justify-content-end">
+              <div class="hero-bg">
+                <img
+                  width="350"
+                  src="{% static 'assets/images/hero_bg/image-12.png' %}"
+                  class="img-fluid"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       {% include 'userpages/landingfooter.html' %}
+         </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+      const swiper = new Swiper(".swiper", {
+        // Optional parameters
+
+        direction: "horizontal",
+        // loop: true,
+
+        // effect: "coverflow",
+        // coverflowEffect: {
+        //   rotate: 30,
+        //   slideShadows: false,
+        // },
+
+        // autoplay: {
+        //   delay: 4000,
+        // },
+        autoHeight: true,
+
+        // centeredSlides: true,
+        // centeredSlidesBounds: true,
+
+        slidesPerView: 5,
+        spaceBetween: 10,
+        // Responsive breakpoints
+        breakpoints: {
+          // when window width is >= 320px
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 0,
+          },
+          // when window width is >= 480px
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 0,
+          },
+          // when window width is >= 640px
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 0,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 0,
+          },
+        },
+      });
+
+      const sswiper = new Swiper(".Swiper", {
+        // Optional parameters
+        direction: "horizontal",
+
+        autoplay: {
+          delay: 4000,
+        },
+        autoHeight: true,
+
+        slidesPerView: 5,
+        spaceBetween: 10,
+        // Responsive breakpoints
+        breakpoints: {
+          // when window width is >= 320px
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          // when window width is >= 480px
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 30,
+          },
+          // when window width is >= 640px
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 40,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 40,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 70,
+          },
+        },
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+    <script>
+      VANTA.DOTS({
+        el: "#home",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0x2a7a8a,
+        color2: 0x2a7a8a,
+        backgroundColor: 0x0,
+        size: 5.2,
+        spacing: 37.0,
+        showLines: false,
+      });
+    </script>
+  </body>
+</html>

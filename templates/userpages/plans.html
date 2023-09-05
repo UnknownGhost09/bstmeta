@@ -1,0 +1,52 @@
+{% extends 'userpages/sidebar.html' %}
+
+{% block content %}
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+  
+          <div class="card-header">
+            <h4 class="card-title">Plans</h4>
+            <p class="card-title-desc">All mlm plans
+            </p>
+        </div>
+
+          <div class="card">
+              <div class="card-body">
+                
+                  <div class='table-responsive'>
+                <table id ='test' class="table hover table-borderless table-hover dt-responsive nowrap w-100  text-nowrapp">
+                  <thead>
+                    <tr>
+                      
+                      <th scope="col">Plan Name</th>
+                    
+                      
+                      <th scope='col'>View packages</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for i in data %}
+                    <tr>
+                      
+                      <td>{{i.name}}</td>
+                     
+                      <td><a href='../../../package/{{i.id}}' class="h4 text-secondary"><i class="fas fa-arrow-alt-circle-right text-primary"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                  
+                  </tbody>
+                </table>
+              </div>
+                <!-- End Default Table Example -->
+              </div>
+            </div>
+  
+  
+          </div>
+        </div>
+      </div>
+
+{% endblock %}

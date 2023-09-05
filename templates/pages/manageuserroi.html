@@ -1,0 +1,171 @@
+{% extends 'pages/sidebar.html' %}
+
+{% block content %}
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+  
+      <div class='card'>
+        <div class="card-header">
+          <h4 class="card-title">ROI Settings</h4>
+          
+      </div>
+  
+  
+          
+          <div class="card-body">
+            <div class='row'>
+
+                <div class=col>
+                    <h6>Farming ROI</h6>
+                    <div class="form-check form-switch pt-2 m-4">
+                        <form action="../../../admin/manageroi" method="post">
+                          {% csrf_token %}
+                          {% if userdata.farming_roi_status == '1' %}
+                          
+                        <input class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked1" data-id="{{userdata.id}}" title='active' checked>
+                      {% else %}
+                      <input  class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked1" data-id="{{userdata.id}}" title="inactive">
+                      {% endif %}
+                      </form>
+                      </div>
+                </div>
+
+                <div class=col>
+                    <h6>Staking ROI</h6>
+                    <div class="form-check form-switch pt-2 m-4">
+                        <form action="../../../admin/manageroi" method="post">
+                          {% csrf_token %}
+                          {% if userdata.staking_roi_status == '1' %}
+                          
+                        <input class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked2" data-id="{{userdata.id}}" title='active' checked>
+                      {% else %}
+                      <input  class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked2" data-id="{{userdata.id}}" title="inactive">
+                      {% endif %}
+                      </form>
+                      </div>
+                </div>
+                <div class=col>
+                    <h6>Level Income</h6>
+                    <div class="form-check form-switch pt-2 m-4">
+                        <form action="../../../admin/manageroi" method="post">
+                          {% csrf_token %}
+                          {% if userdata.level_income_status == '1' %}
+                          
+                        <input class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked3" data-id="{{userdata.id}}" title='active' checked>
+                      {% else %}
+                      <input  class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked3" data-id="{{userdata.id}}" title="inactive">
+                      {% endif %}
+                      </form>
+                      </div>
+                </div>
+            </div>
+
+          </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<script>
+
+    
+  
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }  
+  
+    $(document.body).on('click','#flexSwitchCheckChecked1',function(){
+  
+      console.log("farming Roi")
+      var pid = $(this).attr('value');
+      var uid = $(this).attr('data-id');
+      var csrftoken = getCookie('csrftoken');
+      console.log(pid,uid)
+  
+      $.ajax({
+        type: 'POST',      
+        url: '../../../admin/manageuserroi',
+        data: {
+          
+          id: uid,
+          name:"farming",
+         
+          csrfmiddlewaretoken: csrftoken,
+      },
+  
+        success: function () {
+          console.log("success");
+        }
+      });
+  
+    });
+
+
+    $(document.body).on('click','#flexSwitchCheckChecked2',function(){
+  
+        console.log("Staking Roi")
+        var pid = $(this).attr('value');
+        var uid = $(this).attr('data-id');
+        var csrftoken = getCookie('csrftoken');
+        console.log(pid,uid)
+    
+        $.ajax({
+          type: 'POST',      
+          url: '../../../admin/manageuserroi',
+          data: {
+            
+            id: uid,
+            name:"staking",
+            csrfmiddlewaretoken: csrftoken,
+        },
+    
+          success: function () {
+            console.log("success");
+          }
+        });
+    
+      });
+
+      $(document.body).on('click','#flexSwitchCheckChecked3',function(){
+  
+        console.log("level Income")
+        var pid = $(this).attr('value');
+        var uid = $(this).attr('data-id');
+        var csrftoken = getCookie('csrftoken');
+        console.log(pid,uid)
+    
+        $.ajax({
+          type: 'POST',      
+          url: '../../../admin/manageuserroi',
+          data: {
+            
+            id: uid,
+            name:"level",
+            csrfmiddlewaretoken: csrftoken,
+        },
+    
+          success: function () {
+            console.log("success");
+          }
+        });
+    
+      });
+    
+</script>
+
+{% endblock %}

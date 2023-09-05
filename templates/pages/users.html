@@ -1,0 +1,135 @@
+{% extends 'pages/sidebar.html' %}
+
+{% block content %}
+
+
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">{{heading}}</h4>
+      <p class="card-title-desc">users detail
+      </p>
+  </div>
+    <div class="card-body">
+      
+      <div class='table-responsive'>
+  <table id="test" class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap">
+    <thead>
+        <tr >
+          <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Referr By</th>
+            <th>Referral Code</th>
+            <th>Created At</th>
+            <th>Package Status</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+     
+      {% for i in userdata %}
+      
+        <tr >
+            <td>{{i.username}}</td></a>
+            <td>{{i.first_name}} {{i.last_name}}</td>
+            <td>{{i.email}}</td>
+            <td>{{i.referal_by}}</td>
+            <td>{{i.referal_code}}</td>
+            <td class='date'>{{i.created_at|slice:"0:19"}}</td>
+            {% if i.paid_members == 'True' %}
+            <td><span class="badge text-bg-success p-2 rounded-pill">active</span></td>
+            {% else %}
+            <td><span class="badge text-bg-danger p-2 rounded-pill">inactive</span></td>
+            {% endif %}
+            <td class='d-flex justify-content-between align-items-center ps-5'>
+              
+              <div class="form-check form-switch pt-2">
+                <form action="../../../admin/users" method="post">
+                  {% csrf_token %}
+                  {% if i.status == '1' %}
+                  
+                <input class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked" data-id="{{i.id}}" title='active' checked>
+              {% else %}
+              <input  class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked" data-id="{{i.id}}" title="inactive">
+              {% endif %}
+              </form>
+              </div>
+              
+            </td>  
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action<i class="mdi mdi-chevron-down"></i></button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="../../../admin/admin_login/{{i.id}}">login</a>
+                    
+                    <a class="dropdown-item" href="../../../admin/addfund/{{i.id}}">Manage Funds</a>
+
+                   <a class="dropdown-item" href="../../../admin/manageroi/{{i.id}}">Manage ROI</a>
+                </div>
+            </div>
+            {% comment %} <a href='../../../admin/users/{{i.id}}' class="h4 text-secondary"><i class="fas fa-arrow-alt-circle-right text-primary"></i></a>  {% endcomment %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+
+
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}  
+
+  $(document.body).on('click','#flexSwitchCheckChecked',function(){
+
+    console.log("hello")
+    var pid = $(this).attr('value');
+    var uid = $(this).attr('data-id');
+    var csrftoken = getCookie('csrftoken');
+    console.log(pid,uid)
+
+    $.ajax({
+      type: 'POST',      
+      url: '../../../admin/users',
+      data: {
+        
+        id: uid,
+       
+        csrfmiddlewaretoken: csrftoken,
+    },
+
+      success: function () {
+        console.log("success");
+      }
+    });
+
+  });
+  
+
+</script>
+
+
+{% endblock %}

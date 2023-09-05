@@ -1,0 +1,124 @@
+{% extends 'pages/sidebar.html' %}
+{% block content %}
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+
+
+<div class='card'>
+  <div class="card-header">
+    <h4 class="card-title">Pending Messages</h4>
+    <p class="card-title-desc">
+    </p>
+</div>
+  <div class='card-body'>
+    <div class='table-responsive'>
+  <table id="test" class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap">
+<thead>
+  <tr>
+<th class='col'>Email</th>
+<th class='col'>Title</th>
+  <th class="col"> action</th>
+  
+
+</thead>
+<tbody>
+{% for i in data %}
+
+<tr >
+  <td>{{i.email}}</td>
+  <td>{{i.title}}</td>
+  <td>
+   
+    <button type="button" class="btn btn-success waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#edit{{i.id}}" title='view'>
+      <i class="mdi mdi-eye d-block font-size-16"></i>
+  </button>
+    <div class="modal fade" id="edit{{i.id}}" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{i.email}}</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body row mb-3">
+            
+                        <form action="../../../admin/ticket" method="post">
+                            {% csrf_token %}
+                            <div class="row mb-3 gap-2">
+                                <div class="col-sm-10 w-100">
+                                    <input type="text" class="form-control " name="id" hidden value="{{i.id}}">
+                                  </div>
+                                <div class="col-sm-10 w-100">
+                                  <strong><label>{{i.question}}</label></strong>
+                                </div>
+                              
+                                  <div class="col-sm-10 w-100">
+                                    <textarea class="form-control" style="height: 100px" name="answer" placeholder='reply here'></textarea>
+                                  </div>
+                            </div>
+                                 <div class="row mb-3">
+            
+                              <div class="col-sm-10">
+                                <button type="submit" class="btn bg-success" name="reply">Submit</button>
+                              </div>
+                            </div>
+                            </form>
+                  </div>
+            
+                </div>
+              </div>
+                
+                  </div>
+                  <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#delete{{i.id}}" title='delete'>
+                    <i class="mdi mdi-trash-can d-block "></i>
+                </button>
+                  
+    <div class="modal fade" id="delete{{i.id}}" tabindex="-1" aria-labelledby="delete" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Are You Sure To delete</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body row mb-3">
+            
+                        <form action="../../../admin/ticket" method="post">
+                            {% csrf_token %}
+                            <div class="row mb-3 gap-1">
+                                <div class="col-sm-10 w-100">
+                                    <input type="text" class="form-control " name="id" hidden value="{{i.id}}">
+                                  </div>
+                                
+                                 <div class="row mb-3">
+            
+                              <div class="col-sm-10">
+                                <button type="submit" class="btn bg-danger" name="delete">Delete</button>
+                                <button type="submit" class="btn bg-primary" name="close" data-bs-dismiss="modal">Cancel</button>
+                              </div>
+                              
+                               
+                              
+                            </div>
+                            </form>
+                  </div>
+            
+                </div>
+              </div>
+                
+                  </div></td>
+
+</tr>
+{% endfor %}
+
+</tbody>
+
+  </table>
+</div>
+</div>
+</div> 
+</div>
+</div>
+</div>
+
+{% endblock %}

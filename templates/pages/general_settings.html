@@ -1,0 +1,103 @@
+{% extends 'pages/sidebar.html' %}
+{% block content %}
+{% load static %}
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+  
+          <div class="card-header pb-3">
+            <h4 class="card-title">App settings</h4>
+            <p class="card-title-desc">
+  
+              Can Change App Logo And Name
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+
+
+                <div class="row">
+                    
+                        <div >
+                            <h5 class="font-size-14 mb-4"><i class="mdi mdi-arrow-right text-primary me-1"></i> Edit settings</h5>
+                            <form action='../../../admin/app' method='post' enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold" for="formrow-firstname-input">App Name</label>
+                                    <input type="text" class="form-control" id="formrow-firstname-input" placeholder="Enter Name" value='{{appdetail.title}}' name="name">
+                                </div>
+                                <div class='row'>
+                                    <div class='col-4'>
+                                <div class="mb-3">
+                                    <label  class="form-label fw-bold" >Logo Light Mode</label>
+                                    <div class='pt-2 pb-2'>
+                                      <img src="/media/{{appdetail.logodart}}/" alt="logo" width='100px'>
+                                    </div>
+                                     
+                                        <input type="file" class='form-control'  name='darklogo'>
+                                    </div>
+                                </div>
+                                <div class='col-4'>
+                                    <div class="mb-3">
+                                        <label  class="form-label fw-bold" >Logo Dark Mode</label>
+                                        <div class='pt-2 pb-2'>
+                                          <img src="/media/{{appdetail.logolight}}/" alt="logo" width='100px'>
+                                        </div>
+                                         
+                                            <input  type="file" class='form-control'  name='lightlogo'>
+                                        </div>
+                                    </div>
+                                    <div class='col-4'>
+                                        <div class="mb-3">
+                                            <label  class="form-label fw-bold" >FavIcon</label>
+                                            <div class='pt-2 pb-2'>
+                                              <img src='/media/{{appdetail.favicon}}/' alt="logo" width='100px'>
+                                            </div>
+                                             
+                                                <input  type="file" class='form-control'  name='favicon'>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="example-url-input fw-bold" class="form-label">Facebook Account</label>
+                                        <input class="form-control" type="url" value="{{appdetail.facebook}}" id="example-url-input" name='fb'>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="example-url-input fw-bold" class="form-label">Instagram Account</label>
+                                        <input class="form-control" type="url" value="{{appdetail.instagram}}" id="example-url-input" name='insta'>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="example-url-input fw-bold" class="form-label">Twitter Account</label>
+                                        <input class="form-control" type="url" value="{{appdetail.twitter}}" id="example-url-input" name='twitter'>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="example-url-input fw-bold" class="form-label">Linkedin Account</label>
+                                        <input class="form-control" type="url" value="{{appdetail.linkedin}}" id="example-url-input" name='li'>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="example-url-input fw-bold" class="form-label">About Us</label>
+                                        <textarea class="form-control" style="height: 100px" name="about" placeholder="About us" >{{appdetail.aboutus}}</textarea>
+                                    </div>
+                                <div class="mt-4">
+                                    <button type="submit" class="btn btn-primary w-md" name='submit'>Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+              
+                
+                
+            </div>
+        </div>    
+    </div>
+</div>
+</div>
+<!-- dropzone js -->
+<script src="{% static 'assets/libs/dropzone/min/dropzone.min.js' %}"></script>
+
+{% endblock %}

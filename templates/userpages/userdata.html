@@ -1,0 +1,305 @@
+{% extends 'userpages/sidebar.html' %}
+
+{% block content %}
+{% load static %}
+
+<main id="main" class="main">
+  
+  <div class="pagetitle">
+    <h1>My Profile</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="../../../dashboard">Home</a></li>
+        <li class="breadcrumb-item active">My profile</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+<section class="section">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ user.username }}</h5>
+
+      <!-- Default Tabs -->
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#userprofile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
+        </li>
+     
+    
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="refer-tab" data-bs-toggle="tab" data-bs-target="#refer" type="button" role="tab" aria-controls="refer" aria-selected="false">Referrals</button>
+        </li>
+    
+      </ul>
+      <div class="tab-content pt-2" id="myTabContent">
+        <div class="tab-pane fade show active" id="userprofile" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="tab-pane fade show active profile-overview" id="profile-overview">
+            <div class="card">
+              <div class="card-body">
+            <h5 class="card-title">Profile Details</h5>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label mb-2 fw-bold ">Full Name</div>
+              <div class="col-lg-9 col-md-8 ">{{user.first_name}} {{user.last_name}}</div>
+            </div>
+
+        
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label mb-2 fw-bold">Email</div>
+              <div class="col-lg-9 col-md-8">{{user.email}}</div>
+            </div>
+       
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label mb-2 fw-bold">Current Rank</div>
+              {% if userRank %}
+              <div class="col-lg-9 col-md-8">{{userRank.rank}}</div>
+              {% else %}
+              <div class="col-lg-9 col-md-8">No rank achived Yet</div>
+
+              {% endif %}
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label mb-2 fw-bold">Rank Points</div>
+              {% if userRank %}
+              <div class="col-lg-9 col-md-8">{{userRank.points}} points</div>
+              {% else %}
+              <div class="col-lg-9 col-md-8">0 points</div>
+
+              {% endif %}
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label mb-2 fw-bold">Level Achived</div>
+              {% if userlevel %}
+              <div class="col-lg-9 col-md-8">{{userlevel.level_id}} level</div>
+              {% else %}
+              <div class="col-lg-9 col-md-8">0 level</div>
+              {% endif %}
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label mb-2 fw-bold">Level Points</div>
+              {% if userlevel %}
+              <div class="col-lg-9 col-md-8">{{userlevel.points}} points</div>
+              {% else %}
+              <div class="col-lg-9 col-md-8">0 points</div>
+              {% endif %}
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label fw-bold">Total Points</div>
+             
+              <div class="col-lg-9 col-md-8"><strong>{{total_points}} points</strong></div>
+            </div>
+          </div>
+        </div>
+          
+          </div>
+        </div>
+    
+        <div class="tab-pane fade " id="refer" role="tabpanel" aria-labelledby="refer-tab">
+          {% comment %} <div class="container">
+            <div class="row">
+              <div id="left" class="span3">
+                <ul id="menu-group-1" class="nav menu">  
+                  <li class="item-1 deeper parent active">
+                    <a class="" href="#">
+                        <span data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-1" class="sign"><i class="icon-plus icon-white"></i></span>
+                        <span class="lbl">Menu Group i</span>                      
+                    </a>
+                    <ul class="children nav-child unstyled small collapse" id="sub-item-1">
+                      <li class="item-2 deeper parent active">
+                          <a class="" href="#">
+                              <span data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-2" class="sign"><i class="icon-plus icon-white"></i></span>
+                              <span class="lbl">Menu 1</span> 
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div> {% endcomment %}
+          
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Referrals</h5>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label mb-2">Referral Code </div>
+                <div class="col-lg-9 col-md-8"><strong>{{user.referal_code}}</strong></div>
+              </div>
+  
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label" >Referral Link </div>
+                <div class="col-lg-9 col-md-8" > <p id="linkToCopy"><a href="{{link}}" id="textToCopy" >Invite Link
+                  
+                </a>
+                <button class="btn  ms-2 p-0" id="copyButton"><i class="bi bi-clipboard"> copy</i></button>
+
+                  <script>
+                    document.getElementById("copyButton").addEventListener("click", function() {
+                      document.getElementById("copyButton").innerHTML =' <i class="bi bi-check-circle"> copied</i>';
+                        // Get the link URL to copy
+                        var linkURL = document.getElementById("linkToCopy").querySelector("a").href;
+                    
+                        // Create a temporary input element
+                        var tempInput = document.createElement("input");
+                        tempInput.value = linkURL;
+                    
+                        // Append the input element to the document
+                        document.body.appendChild(tempInput);
+                    
+                        // Copy the link URL from the input
+                        tempInput.select();
+                        document.execCommand("copy");
+                    
+                        // Remove the input element from the document
+                        document.body.removeChild(tempInput);
+
+                        setTimeout(() => {
+                          document.getElementById("copyButton").innerHTML = '<i class="bi bi-clipboard"> copy</i>';
+                        }, 30000);
+                    });
+                    </script>
+                </div>
+              </div>
+              <h5 class="card-title">Users Referral</h5>
+              <div class="accordion">
+                {% if usr_refferal %}
+                {% for i in usr_refferal %}
+                <div class="accordion-item" id='accordion-{i.id}'>        
+                    <div class="accordion-header childItem " type="button" data-bs-toggle="collapse" data-uid="{{ i.uid }}" data-pid="{{ i.pid }}" data-id="{{ i.id }}" data-bs-target="#collapseOne-{{i.id}}" aria-expanded="true" aria-controls="collapseOne-{{i.id}}">
+                      <div class='d-flex justify-content-between align-items-center'>
+                      <span class='btn text-black'>{{ i.name }}</span>
+                      <span class='btn text-black'>{{ i.points }} Points</span>
+                      {% if i.level == '0' %}
+                      <span class='btn text-black'> {{i.level}} level</span>
+                     {% else %}
+                     <span class='btn text-black'>{{ i.level }} level </span>
+                     {% endif %}
+                      </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+
+    </div>
+  </div>
+
+
+
+  
+</section>
+</main>
+
+
+<script>
+
+
+
+$(document.body).on('click','.childItem',function(){
+
+  var pid = $(this).attr('data-pid');
+  var uid = $(this).attr('data-uid');
+  var id  = $(this).attr('data-id')
+  var ref = $(this);
+  console.log(uid);
+  console.log(pid);
+
+
+
+
+  $.ajax({
+  type: 'GET',      
+  url: '../../../get_refferal/'+`${uid}`,  
+  success: function (data) {
+    var ar = [];
+
+    if(data.status == 1){
+    
+      $.each(data.data, function(key,data){
+        
+        let h=`
+        <div class="accordion-item" id='accordion-${data.id}'>
+          
+          <div class="accordion-header childItem" type="button" data-bs-toggle="collapse" data-uid="${data.uid}" data-pid="${data.pid}" data-bs-target="#collapseOne-${data.id}" aria-expanded="true" aria-controls="collapseOne-${data.id}">
+            <div class='d-flex justify-content-between align-items-center'>
+            <span class='btn text-black'>${data.name}</span>
+            <span class='btn text-black'>${data.points}</span>
+            <span class='btn text-black'>${data.level} level</span>
+            
+            </div>
+          </div>
+      </div>`;
+      ar.push(h);
+      });
+      if ($(`#collapseOne-${id}`).length) {
+        
+        let collapse = ` <div id="collapseOne-${id}" class="accordion-collapse collapse " data-bs-parent="#accordion-${id}">
+          <div class="accordion-body">
+            ${ar.join('')}
+          </div>
+        </div>`;
+        
+        $(`#collapseOne-${id}`).remove();
+        
+        
+    } else {
+      
+      $(`#collapseOne-${id}`).remove();
+      let collapse = ` <div id="collapseOne-${id}" class="accordion-collapse collapse show" data-bs-parent="#accordion-${id}">
+        <div class="accordion-body">
+          ${ar.join('')}
+        </div>
+      </div>`;
+      
+      $(`#collapseOne-${id}`).remove();
+      ref.after(collapse);
+    }
+
+  } else{
+  if ($(`#collapseOne-${id}`).length) {
+  ar.push(`<div>No team Yet</div>`);
+  let collapse = ` <div id="collapseOne-${id}" class="accordion-collapse collapse " data-bs-parent="#accordion-${id}">
+  <div class="accordion-body">
+  ${ar.join('')}
+  </div>
+  </div>`;
+  console.log(ar);
+  $(`#collapseOne-${id}`).remove();
+
+
+  }
+  else{
+  ar.push(`<div>No team Yet</div>`);
+  let collapse = ` <div id="collapseOne-${id}" class="accordion-collapse collapse show" data-bs-parent="#accordion-${id}">
+  <div class="accordion-body">
+  ${ar.join('')}
+  </div>
+  </div>`;
+  console.log(ar);
+  $(`#collapseOne-${id}`).remove();
+  ref.after(collapse);
+  }
+
+
+
+
+  }
+  },
+  error: function () {
+  }
+  });
+
+
+  }) 
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,411 @@
+{% extends 'userpages/sidebar.html' %} {% block content %} {% load static %}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<style>
+  .menu_bg {
+    position: absolute;
+    inset: auto auto 0px 0px;
+    margin: 0px;
+    width: 100%;
+    height: 150px;
+    transform: translate(0px, -75px);
+    overflow-y: scroll;
+  }
+  .dropdown_btn:hover {
+    transform: scale(1) !important;
+  }
+  .dropdown_btn:active {
+    transform: scale(99%) !important;
+  }
+</style>
+
+<div class="main-content">
+    {% load static %}
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-8">
+          <div class="px-3">
+            <div
+              class="d-flex align-items-center justify-content-between pb-3"
+            >
+              <h5 class="mb-0">Deposit</h5>
+              <i
+                class="fa-regular fa-circle-question fs-5 p-2 rounded-circle bg-secondary bg-opacity-25"
+              ></i>
+            </div>
+            <div class="d-flex">
+              <ul
+                class="nav nav-pills mb-2 p-2 border rounded-4"
+                id="pills-tab"
+                role="tablist"
+              >
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link active rounded-4"
+                    id="pills-home-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-home"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-home"
+                    aria-selected="true"
+                  >
+                    Crypto
+                  </button>
+                </li>
+
+              </ul>
+            </div>
+            <div class="tab-content" id="pills-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="pills-home"
+                role="tabpanel"
+                aria-labelledby="pills-home-tab"
+                tabindex="0"
+              >
+                <p class="ms-3 my-3">Coin:</p>
+                <div class="">
+                  <div class="dropdown">
+                    <button
+                      class="btn shadow-none w-100 rounded-4 dropdown-toggle bg-secondary bg-opacity-10 border text-dark dropdown_btn"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <div
+                          class="d-flex p-2 align-items-center rounded-4 bg-white bg-opacity-50 gap-2"
+                        >
+                          <img
+                            src="{% static 'assets/images/icon/usdt.png' %}"
+                            class="img-fluid"
+                            width="35"
+                            alt=""
+                          />
+                          <p class="mb-0 fw-semibold text-dark">USDT</p>
+                        </div>
+                        <p
+                          class="mb-0 me-auto ms-3 text-secondary small fw-semibold"
+                        >
+                          USDT
+                        </p>
+                        <div class="p-3 rounded-4 bg-white bg-opacity-50">
+                          <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                      </div>
+                    </button>
+                    <ul class="dropdown-menu menu_bg rounded-4">
+                      <li><a class="dropdown-item" href="#">USDT</a></li>
+                      
+                    </ul>
+                  </div>
+
+                  <div class="d-flex my-4 ms-4 fw-semibold">
+                    <p class="mb-0">Total Balance:</p>
+                    <p class="mb-0">{{walletdata.avaliable_balance|floatformat:"2"}} USDT</p>
+                  </div>
+                  <div class="my-2">
+                    <p class="ms-3">USDT Address:</p>
+                    <div
+                      class="d-flex align-items-center justify-content-between px-3 py-2 rounded-4 bg-secondary bg-opacity-10 border"
+                    >
+                      <p class="mb-0 fw-semibold">dasfsdf1asdf19a8sd1f89asdf</p>
+                      <button class="btn btn-primary rounded-4">
+                        Copy<i class="fa-regular fa-copy ms-2"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="pills-profile"
+                role="tabpanel"
+                aria-labelledby="pills-profile-tab"
+                tabindex="0"
+              >
+                <p class="ms-3 my-3">Coin:</p>
+                <div class="">
+                  <div class="dropdown">
+                    <button
+                      class="btn shadow-none w-100 rounded-4 dropdown-toggle bg-secondary bg-opacity-10 border text-dark dropdown_btn"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <div
+                          class="d-flex p-2 align-items-center rounded-4 bg-white bg-opacity-50 gap-2"
+                        >
+                          <img
+                            src="{% static 'assets/images/icon/usdt.png' %}"
+                            class="img-fluid"
+                            width="35"
+                            alt=""
+                          />
+                          <p class="mb-0 fw-semibold text-dark">USDT</p>
+                        </div>
+                        <p
+                          class="mb-0 me-auto ms-3 text-secondary small fw-semibold"
+                        >
+                          USDT
+                        </p>
+                        <div class="p-3 rounded-4 bg-white bg-opacity-50">
+                          <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                      </div>
+                    </button>
+                    <ul class="dropdown-menu menu_bg rounded-4">
+                      <li><a class="dropdown-item" href="#">USDT</a></li>
+                     
+                    </ul>
+                  </div>
+
+                  <div class="d-flex gap-4 m-4 fw-semibold">
+                    <p class="mb-0">Total Balance:</p>
+                    <p class="mb-0">0.0 USDT</p>
+                  </div>
+                  <div class="my-2">
+                    <p class="ms-3">USDT Address:</p>
+                    <div
+                      class="d-flex align-items-center justify-content-between px-3 py-2 rounded-4 bg-secondary bg-opacity-10 border"
+                    >
+                      <p class="mb-0 fw-semibold">dasfsdf1asdf19a8sd1f89asdf</p>
+                      <button class="btn btn-primary rounded-4">
+                        Copy<i class="fa-regular fa-copy ms-2"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-secondary bg-opacity-10 border rounded-4 p-3 mt-5">
+            <p class="fw-semibold">Tips</p>
+            <ul class="px-4 mb-0">
+              <li class="my-2">
+                If you deposited please pay attention to the text messagesm site
+                letter and emails we send to you. Your assets will be
+                temporarily unavailable for withdrawals.
+              </li>
+              <li class="my-2">
+                Coins will be deposited after 1 newtwork confirmations.
+              </li>
+              <li class="my-2">
+                Until 2 confirmations are mafe.an equivalent amount of your
+                assets will be temporarily unavailable for withdrawals.
+              </li>
+              <li class="my-2">
+                You could check the blockchain records and deposit status of
+                Deposit Records.
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="px-4">
+            <div class="d-flex align-items-center pt-2 pb-3">
+              <h4 class="card-title mb-0">Deposit Network</h4>
+              <i
+                class="fa-solid fa-circle-exclamation fs-5 p-2 rounded-circle"
+              ></i>
+            </div>
+            <div class="d-flex">
+              <ul
+                class="nav nav-pills mb-2 p-2 border rounded-4"
+                id="pills-tab"
+                role="tablist"
+              >
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link active rounded-4"
+                    id="pills-1-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-1"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-1"
+                    aria-selected="true"
+                  >
+                    <p class="small mb-0 py-1">USDT</p>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link rounded-4"
+                    id="pills-2-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-2"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-2"
+                    aria-selected="false"
+                  >
+                    <p class="small mb-0 py-1">BEP2</p>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link rounded-4"
+                    id="pills-3-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-3"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-3"
+                    aria-selected="false"
+                  >
+                    <p class="small mb-0 py-1">BEP20 (BSC)</p>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link rounded-4"
+                    id="pills-4-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-4"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-4"
+                    aria-selected="false"
+                  >
+                    <p class="small mb-0 py-1">RRC20</p>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div class="tab-content" id="pills-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="pills-1"
+                role="tabpanel"
+                aria-labelledby="pills-1-tab"
+                tabindex="0"
+              >
+                <div class="">
+                  <div
+                    class="d-flex align-items-center justify-content-center mt-2"
+                  >
+                    <i class="fa-regular fa-clock me-2"></i>
+                    <p class="mb-0 me-1">Average Arrival Time :</p>
+                    <p class="mb-0 text-dark">3 Minutes</p>
+                  </div>
+                  <div class="text-center mt-4">
+                    <p class="fw-semibold">USDT Address</p>
+                    <img
+                      src="{% static 'assets/images/Qr.png' %}"
+                      class="img-fluid mt-1"
+                      width="200"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="pills-2"
+                role="tabpanel"
+                aria-labelledby="pills-2-tab"
+                tabindex="0"
+              >
+                <div class="">
+                  <div
+                    class="d-flex align-items-center justify-content-center mt-2"
+                  >
+                    <i class="fa-regular fa-clock me-2"></i>
+                    <p class="mb-0 me-1">Average Arrival Time :</p>
+                    <p class="mb-0 text-dark">3 Minutes</p>
+                  </div>
+                  <div class="text-center mt-4">
+                    <p class="fw-semibold">USDT Address</p>
+                    <img
+                      src="{% static 'assets/images/Qr.png' %}"
+                      class="img-fluid mt-1"
+                      width="200"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="pills-3"
+                role="tabpanel"
+                aria-labelledby="pills-3-tab"
+                tabindex="0"
+              >
+                <div class="">
+                  <div
+                    class="d-flex align-items-center justify-content-center mt-2"
+                  >
+                    <i class="fa-regular fa-clock me-2"></i>
+                    <p class="mb-0 me-1">Average Arrival Time :</p>
+                    <p class="mb-0 text-dark">3 Minutes</p>
+                  </div>
+                  <div class="text-center mt-4">
+                    <p class="fw-semibold">USDT Address</p>
+                    <img
+                      src="{% static 'assets/images/Qr.png' %}"
+                      class="img-fluid mt-1"
+                      width="200"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="pills-4"
+                role="tabpanel"
+                aria-labelledby="pills-4-tab"
+                tabindex="0"
+              >
+                <div class="">
+                  <div
+                    class="d-flex align-items-center justify-content-center mt-2"
+                  >
+                    <i class="fa-regular fa-clock me-2"></i>
+                    <p class="mb-0 me-1">Average Arrival Time :</p>
+                    <p class="mb-0 text-dark">3 Minutes</p>
+                  </div>
+                  <div class="text-center mt-4">
+                    <p class="fw-semibold">USDT Address</p>
+                    <img
+                      src="{% static 'assets/images/Qr.png' %}"
+                      class="img-fluid mt-1"
+                      width="200"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5">
+            <i
+              class="fa-solid fa-circle-exclamation fs-5 p-2 text-secondary text-opacity-50 fs-2 rounded-circle"
+            ></i>
+            <p class="fw-bold ps-2 mb-1">Send Only USDT to this Address!</p>
+            <p class="ps-2">
+              Sending coin or token other than USDT to this Address may result
+              in the loss of your deposit.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

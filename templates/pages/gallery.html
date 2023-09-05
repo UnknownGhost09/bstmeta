@@ -1,0 +1,208 @@
+{% extends 'pages/sidebar.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+
+    <div class='card'>
+      <div class="card-header">
+        <div class='d-flex justify-content-between align-items-center'>
+            <div>
+        <h4 class="card-title">Gallery</h4>
+        <p class="card-title-desc">Gallery 
+        </p>
+    </div>
+    <div>
+         <!-- center modal -->
+         <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center">Add Image</button>
+
+         <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-hidden="true">
+             <div class="modal-dialog modal-dialog-centered">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h5 class="modal-title">Add Gallery Images</h5>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                      <form action="../../../admin/gallery" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                         
+                        
+
+                        <div class="mb-3">
+                          <label class="form-label" for="formrow-firstname-input">upload image</label>
+                          <input type="file" class="form-control" id="formrow-firstname-input"  name='img'>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="formrow-firstname-input">Title</label>
+                        <textarea class='form-control' name="title" rows="4" cols="50" placeholder='image title'>
+        
+                          </textarea>
+                    </div>
+           
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary w-md" name='submit'>Submit</button>
+                        </div>
+                        </form>
+
+                        
+                     </div>
+                 </div><!-- /.modal-content -->
+             </div><!-- /.modal-dialog -->
+         </div><!-- /.modal -->
+
+
+    </div>
+    </div>
+    </div>
+
+        <div class="card-body">
+          <div class='table-responsive'>
+    <table id= 'test' class="table hover table-borderless dt-responsive  w-100 table-striped-columns ">
+        <thead>
+          <tr >
+            <th scope="col">Gallery Image</th>
+            <th scope='col'>Title</th>
+            <th scope='col'>Action</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+          <tr>
+            
+            <td><img src="/media/{{i.imgpath}}" alt="Gallery" class='rounded-3' width='100px'></td>
+            <td>{{i.title}}</td>
+            <td>
+              
+              <div class="form-check form-switch pt-2">
+                <form action="../../../admin/users" method="post">
+                  {% csrf_token %}
+                  {% if i.status == '1' %}
+                  
+                  <div class="square-switch">
+                    <input type="checkbox" id="square-switch3{{i.id}}" switch="bool" name='inactive' role="switch"  data-id="{{i.id}}" title="active" checked=''>
+                    <label for="square-switch3{{i.id}}" data-on-label="Yes" data-off-label="No"></label>
+                </div>
+                <script>
+
+                  function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = cookies[i].trim();
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }  
+                
+                  $(document.body).on('click','#square-switch3{{i.id}}',function(){
+                
+                    console.log("hello")
+                    var pid = $(this).attr('value');
+                    var uid = $(this).attr('data-id');
+                    var csrftoken = getCookie('csrftoken');
+                    console.log(pid,uid)
+                
+                    $.ajax({
+                      type: 'POST',      
+                      url: '../../../admin/gallery',
+                      data: {
+                        
+                        id: uid,
+                       
+                        csrfmiddlewaretoken: csrftoken,
+                    },
+                
+                      success: function () {
+                        console.log("success");
+                      }
+                    });
+                
+                  });
+                  
+                
+                </script>
+                
+              {% else %}
+              <div class="square-switch">
+                <input type="checkbox" id="square-switch3{{i.id}}" switch="bool" name='inactive' role="switch"  data-id="{{i.id}}" title="inactive">
+                <label for="square-switch3{{i.id}}" data-on-label="Yes" data-off-label="No"></label>
+            </div>
+            <script>
+
+              function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }  
+            
+              $(document.body).on('click','#square-switch3{{i.id}}',function(){
+            
+                console.log("hello")
+                var pid = $(this).attr('value');
+                var uid = $(this).attr('data-id');
+                var csrftoken = getCookie('csrftoken');
+                console.log(pid,uid)
+            
+                $.ajax({
+                  type: 'POST',      
+                  url: '../../../admin/gallery',
+                  data: {
+                    
+                    id: uid,
+                   
+                    csrfmiddlewaretoken: csrftoken,
+                },
+            
+                  success: function () {
+                    console.log("success");
+                  }
+                });
+            
+              });
+              
+            
+            </script>
+            
+              {% endif %}
+              </form>
+              </div>
+
+
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+{% endblock %}

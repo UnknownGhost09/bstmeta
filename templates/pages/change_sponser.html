@@ -1,0 +1,53 @@
+{% extends 'pages/sidebar.html' %}
+{% block content %}
+
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+          
+  
+      <div class='card'>
+        <div class="card-header">
+          <h4 class="card-title">Change Sponser</h4>
+         
+      </div>
+      <div class='card-body'>
+        
+        <form action='../../../admin/change_sponser' method='post'>
+            {% csrf_token %}
+            <div class="row mb-3">
+                
+                
+              </div>
+              <div class="mb-4 col-4">
+                <label class="form-label" for="form-sm-input">From Sponser</label>
+                <input class="form-control form-control" type="text" id="form-sm-input" name="from" placeholder='Enter Username'>
+            </div>
+
+            <div class="mb-4 col-4">
+                <label class="form-label" for="form-sm-input">To New Sponser</label>
+                <input class="form-control form-control" type="text" id="form-sm-input" name="to" placeholder='Enter Current Username'>
+            </div>
+        
+        
+       
+            <div class="row mb-3">
+              
+              <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary" name='save'>Save</button>
+              </div>
+            </div>
+
+          </form><!-- End General Form Elements -->
+
+      </div>
+
+    </div>
+</div>
+</div>
+</div>
+
+{% endblock %}

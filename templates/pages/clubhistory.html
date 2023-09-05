@@ -1,0 +1,61 @@
+{% extends 'pages/sidebar.html' %}
+{% block content %}
+
+{% load static %}
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+
+    <div class='card'>
+      <div class="card-header">
+        <h4 class="card-title">Co-Founder Club</h4>
+        <p class="card-title-desc">All Co-Founders
+        </p>
+    </div>
+        <div class="card-body">
+          <div class='table-responsive'>
+    <table id= 'test' class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap">
+        <thead>
+          <tr >
+            <th scope="col">Username</th>
+            <th scope="col">Club</th>
+            <th scope='col'>Reward</th>
+            <th scope="col">Overall Business</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope='col'>Profile</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in clubdata %}
+          <tr>         
+            <td class='fw-bold'>{{i.user_id.username}}</td>
+            <td>{{ i.club_id.club }}</td>
+            <td>{{i.reward_recieved|floatformat:"2" }}</td>
+            <td>{{ i.club_id.business|floatformat:"2" }}</td>
+            <td>{{i.date|slice:"0:19"}}</td>
+           
+            {% if i.status == '0' %}
+            <td>Pending</td>
+            {% elif i.status == '1' %}
+            <td>Completed</td>
+            {% else %}
+            <td> Canceled</td>
+            {% endif %}
+            <td>{{i.date}}</td>
+            <td><a href='../../../admin/users/{{i.user_id.id}}' class="h4 text-secondary"><i class="fas fa-arrow-alt text-primary"></i></a> </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,198 @@
+{% extends 'userpages/form_component.html' %} 
+{% block content %} 
+{% load static %}
+
+<div class="col-12 p-3">
+  
+  {% if message %}
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script type="application/javascript">
+        Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '{{message}}',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    </script>
+
+      {% endif %} {% if message1 %}
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script type="application/javascript">
+        Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: '{{message1}}',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    </script>
+      {% endif %}
+      
+</div>
+<div class="row mx-0 justify-content-around">
+  <div class="col-lg-5 d-flex justify-content-center py-5 position-relative">
+    <div class="position-absolute z-3 top-0">
+      <img
+        src="{% static 'assets/images/bg-asset/eclipse-2.jpg' %}"
+        class="img-fluid"
+        alt=""
+      />
+    </div>
+    <div class="mt-5 text-center">
+      <a href="/metaverse_3" class="d-block auth-logo mt-4">
+        <img
+          src="{% static 'assets/images/logo/meta-logo.png' %}"
+          class="img-fluid"
+          alt=""
+        />
+      </a>
+      <h1 class="text-white text-opacity-75 my-3">Welcome Back</h1>
+      <p class="text-white-50 mt-4">
+        Experience the future of social interaction – Sign up on BST Meta and redefine your online presence.
+      </p>
+    </div>
+  </div>
+  <div class="col-lg-7 col-md-9 col-12 px-5 pt-4">
+    <div class="form_bg px-lg-5 px-4 shadow-lg py-4 rounded-5">
+      <form
+        class="needs-validation mt-2"
+        method="post"
+        novalidate
+        action="../../../register"
+      >
+        {% csrf_token %}
+        <h1 class="text-white mt-4 fw-semibold">Register</h1>
+
+        <div class="row justify-content-between gap-lg-0">
+          <div class="col-lg-6 col-md-6 col-12 mt-3">
+            <label for="firstname" class="form-label mb-1 text-white"
+              >First Name</label
+            >
+            <input
+              type="text"
+              class="form-control rounded-3 input shadow-sm border-0 py-2"
+              name="firstname"
+              required
+              placeholder="Firstname"
+              aria-label="First name"
+            />
+            <div class="invalid-feedback">Please Enter First Name</div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-12 mt-3">
+            <label for="lastname" class="form-label mb-1 text-white"
+              >Last Name</label
+            >
+            <input
+              type="text"
+              class="form-control rounded-3 input shadow-sm border-0 py-2"
+              name="lastname"
+              required
+              placeholder="Lastname"
+              aria-label="Last name"
+            />
+            <div class="invalid-feedback">Please Enter Last Name</div>
+          </div>
+        </div>
+        <div class="mt-3">
+          <label for="email" class="form-label mb-1 text-white">Email</label>
+          <input
+            type="email"
+            class="form-control rounded-3 input shadow-sm border-0 py-2"
+            name="email"
+            required
+            placeholder="Email"
+          />
+          <div class="invalid-feedback">Please Enter Email</div>
+        </div>
+        <div class="row justify-content-between gap-lg-0">
+          <div class="col-lg-6 col-md-6 col-12 mt-3">
+            <label for="password" class="form-label mb-1 text-white"
+              >Password</label
+            >
+            <input
+              type="password"
+              class="form-control rounded-3 input shadow-sm border-0 py-2"
+              name="password"
+              required
+              placeholder="Password"
+              aria-label="password"
+              pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}"
+              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+            />
+            <div class="invalid-feedback">
+              Must contain at least one number and one uppercase and lowercase
+              letter, and at least 8 or more characters
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-12 mt-3">
+            <label for="password" class="form-label mb-1 text-white"
+              >Confirm Password</label
+            >
+  
+            <input
+              type="password"
+              class="form-control rounded-3 input shadow-sm border-0 py-2"
+              name="confirmpassword"
+              required
+              id="userpassword"
+              placeholder="Confirm Password"
+              aria-label="confirm password"
+              pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}"
+              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+            />
+            <div class="invalid-feedback">
+              Must contain at least one number and one uppercase and lowercase
+              letter, and at least 8 or more characters
+            </div>
+          </div>
+        </div>
+        <div class="mt-3">
+          <label for="referral" class="form-label mb-1 text-white"
+            >Referral code(optional)</label
+          >
+          <input
+            type="text"
+            class="form-control rounded-3 input shadow-sm border-0 py-2"
+            name="referral"
+            value="{{userdata}}"
+            placeholder="Enter referral code"
+          />
+          <div class="invalid-feedback">Please Enter Referral code</div>
+        </div>
+        <div class="mt-3">
+          <p class="mb-1 text-white text-opacity-75">
+            By registering you agree to the BST
+            <a href="" class="text-decoration-none text-white"> Terms of Use</a>
+          </p>
+        </div>
+  
+        <div class="mt-4 pt-2">
+          <button
+            class="btn btn-primary w-100 py-2 border-0 shadow rounded-3"
+            type="submit"
+          >
+            Register
+          </button>
+        </div>
+        <p class="text-white text-opacity-75 mt-3">
+          Already have an account ?
+          <a href="../../../loginpage" class="text-decoration-none text-white">
+            Login
+          </a>
+        </p>
+        <div class="mt-4 mt-md-5">
+          <p class="mb-0 text-white text-opacity-75">
+            ©
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            BST Meta
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

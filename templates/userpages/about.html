@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Document</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'mlm2.css' %}" />
+    <link rel="stylesheet" href="{% static 'mlm_page_2.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
+
+      body {
+        background-color: #000000;
+        font-family: "Poppins", sans-serif;
+        overflow-x: hidden;
+      }
+      .hero-bg img {
+        filter: drop-shadow(0px 0px 50px #17424b81);
+      }
+      .button {
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s ease-in;
+        z-index: 1;
+        box-shadow: 0px 0px 10px #2a7a8a;
+      }
+
+      .button::before,
+      .button::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 0;
+        height: 100%;
+        transform: skew(15deg);
+        transition: all 0.5s;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .button::before {
+        left: -10px;
+        background: #469cad;
+      }
+
+      .button::after {
+        right: -10px;
+        background: #2a7a8a;
+      }
+
+      .button:hover::before,
+      .button:hover::after {
+        width: 58%;
+      }
+
+      .li {
+        padding: 5px 30px;
+        font-size: 16px;
+        cursor: pointer;
+        color: black;
+        position: relative;
+        transition: transform 0.5s ease;
+        transform-origin: left;
+        z-index: 1;
+      }
+      .li::after {
+        content: "";
+        position: absolute;
+        background-color: #3ca9be;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s ease;
+      }
+      .li:hover::after {
+        transform: scaleX(1);
+        transition: transform 0.5s ease;
+        transform-origin: left;
+      }
+      .hero_col h1 {
+        font-family: "Josefin Sans", sans-serif;
+      }
+      .floating-image {
+        position: relative;
+        animation: floatAnimation 3s ease-in-out infinite;
+      }
+      .asset_1 {
+        z-index: 99;
+        top: -200px;
+        left: -100px;
+      }
+      .asset_2 {
+        z-index: 99;
+        bottom: -150px;
+        right: -100px;
+      }
+
+      @keyframes floatAnimation {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-25px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      .primary-color {
+        color: #3ca9be;
+      }
+      .nftCard {
+        box-shadow: 0px 0px 15px rgba(182, 182, 182, 0.178);
+        border-radius: 15px !important;
+        background-color: black !important;
+      }
+      .card_icon {
+        background-color: #29728136;
+        padding: 20px 21px;
+      }
+      .about_col h1 {
+        font-family: "Josefin Sans", sans-serif;
+      }
+      .about_col img {
+        filter: drop-shadow(0px 0px 50px #4798a762);
+      }
+      .social_icon {
+        background: -webkit-linear-gradient(#4799a7, #7c7c7c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .footer_li {
+        color: #5db3c7 !important;
+      }
+      .footer_li:hover {
+        color: #498391 !important;
+      }
+
+      @media only screen and (min-width: 52px) and (max-width: 992px) {
+        .navbar_body {
+          background-color: #000000;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid p-0">
+{% include 'userpages/landingnav.html' %}
+      <div id="home" class="container-fluid">
+        <div class="container-xxl">
+          <div class="row mx-0 px-lg-5 px-0 my-lg-4 mt-md-0 mt-4">
+            <div
+              class="col-lg-6 p-lg-4 px-2 hero mt-lg-4 hero_col"
+              data-aos="fade-right"
+              data-aos-duration="1500"
+            >
+              <h1 class="fw-bolder mb-0 text-white display-3">About Us</h1>
+              <h3 class="mb-4 primary-color">Innovation's New Horizon</h3>
+              <p class="text-white text-opacity-75 mb-4">
+                We are dedicated to crafting immersive digital experiences that
+                transcend the boundaries of reality. As pioneers in the
+                metaverse landscape, our mission is to create a seamless
+                convergence between the virtual and physical worlds, redefining
+                the way we live, work, and play.
+              </p>
+              <div
+                class="d-lg-flex d-md-flex gap-lg-3 gap-md-3 gap-3 d-grid mt-4 pt-3"
+              >
+                <a
+                  href=" "
+                  class="btn btn-lg text-decoration-none border rounded-5 px-4 py-2 text-white button"
+                >
+                  View in OPENSEA
+                </a>
+              </div>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+              <div class="about_col">
+                <img
+                  data-aos="fade-left"
+                  data-aos-duration="1000"
+                  src="{% static 'assets/images/about/meta-about-9.png' %}"
+                  class="img-fluid"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="container-xxl my-4">
+          <div
+            class="row mx-0 py-lg-5 px-lg-3 p-md-4 px-0 my-lg-5 my-5 position-relative"
+          >
+            <div class="">
+              <img
+                src="{% static 'assets/images/bg-asset/image-5.png' %}"
+                class="img-fluid mt-5 position-absolute asset_1 floating-image"
+                alt=""
+              />
+              <img
+                src="{% static 'assets/images/bg-asset/image-5.png' %}"
+                class="img-fluid mt-5 position-absolute asset_2 floating-image"
+                alt=""
+              />
+            </div>
+            <div
+              class="col-lg col-md col-12 text-center"
+              data-aos="fade-up"
+              data-aos-duration="500"
+            >
+              <h1 class="primary-color fw-bolder display-3">10+</h1>
+              <p class="text-white text-opacity-75 mt-3">Years Experience</p>
+            </div>
+            <div
+              class="col-lg col-md col-12 text-center"
+              data-aos="fade-up"
+              data-aos-duration="500"
+            >
+              <h1 class="primary-color fw-bolder display-3">4,000+</h1>
+              <p class="text-white text-opacity-75 mt-3">Wallets Connected</p>
+            </div>
+            <div
+              class="col-lg col-md col-12 text-center"
+              data-aos="fade-up"
+              data-aos-duration="1000"
+            >
+              <h1 class="primary-color fw-bolder display-3">20,000+</h1>
+              <p class="text-white text-opacity-75 mt-3">
+                Collections Indexed every 5 mins.
+              </p>
+            </div>
+            <div
+              class="col-lg col-md col-12 text-center"
+              data-aos="fade-up"
+              data-aos-duration="1500"
+            >
+              <h1 class="primary-color fw-bolder display-3">2.5x</h1>
+              <p class="text-white text-opacity-75 mt-3">
+                Difference in Floor & Estimated Value
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="container-xxl">
+          <div
+            class="row mx-0 p-lg-5 p-md-4 px-0 flex-row-reverse justify-content-center align-items-center"
+          >
+          <div class="col-lg-6 col-md-6 col-12 d-flex align-items-center justify-content-end">
+            <div class="about_col">
+              <img
+                data-aos="fade-left"
+                data-aos-duration="1000"
+                src="{% static 'assets/images/about/meta-about-7.png' %}"
+                class="img-fluid"
+                width="500"
+                alt=""
+              />
+            </div>
+          </div>
+            <div class="col-lg-6 col-md-6 col-12">
+              <h1
+                class="text-white fw-semibold"
+                data-aos="fade-right"
+                data-aos-duration="500"
+              >
+                What We Do
+              </h1>
+              <p
+                class="text-white-50 mt-4"
+                data-aos="fade-right"
+                data-aos-duration="1000"
+              >
+                Through cutting-edge technologies and creative ingenuity, we are
+                shaping a metaverse that offers a spectrum of experiences. From
+                sprawling virtual landscapes to intricate digital marketplaces,
+                we are at the forefront of designing environments that cater to
+                diverse interests and passions. Our commitment to user-centric
+                design drives us to create intuitive interfaces, seamless
+                interactions, and awe-inspiring visuals that captivate and
+                engage.
+              </p>
+              <a
+                data-aos="fade-right"
+                data-aos-duration="1000"
+                href=" "
+                class="btn btn-lg text-decoration-none border rounded-5 px-4 py-2 text-white button mt-4"
+              >
+                See More
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid">
+        <div class="container-xxl">
+          <div class="row mx-0 align-items-center p-lg-5 p-md-4 px-0">
+            <div
+              class="col-lg-6 col-md-6 col-12 about_col mt-lg-0 mt-md-0 mt-5"
+            >
+              <img
+                data-aos="fade-right"
+                data-aos-duration="500"
+                src="{% static 'assets/images/about/meta-about-8.png' %}"
+                class="img-fluid"
+                width="500"
+                alt=""
+              />
+            </div>
+            <div
+              class="col-lg-6 col-md-6 col-12 about_col mb-4 mt-lg-0 mt-md-0 mt-5"
+            >
+              <div class="mt-3 pt-2">
+                <h1
+                  class="text-white fw-semibold mt-3"
+                  data-aos="fade-left"
+                  data-aos-duration="1000"
+                >
+                  Join Us on this Journey
+                </h1>
+                <p
+                  class="text-white-50 fs-5 mt-3"
+                  data-aos="fade-left"
+                  data-aos-duration="1500"
+                >
+                  We invite you to join us in shaping the metaverse of tomorrow.
+                  Whether you're an artist, a developer, a dreamer, or a
+                  visionary, there's a place for you within our metaverse
+                  community. Together, we will push the boundaries of what's
+                  possible and create a digital tapestry that reflects the
+                  beauty and diversity of the human experience.
+                </p>
+                <button
+                  class="btn btn-lg button border border-white rounded-5 px-5 mt-4 text-white"
+                  data-aos="fade-left"
+                  data-aos-duration="1500"
+                >
+                  See More
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="container-xxl">
+          <div class="row mx-0 p-lg-5 p-md-4 px-0">
+            <div class="col">
+              <p class="primary-color">What Our Client Says</p>
+              <h1 class="text-white fw-semibold">Testimonials</h1>
+            </div>
+            <div
+              class="swiper p-3 mt-5"
+              data-aos="fade-up"
+              data-aos-duration="1500"
+            >
+              <div class="swiper-wrapper">
+                <div class="swiper-slide h-100">
+                  <div class="card h-100 nftCard p-4 border-0">
+                    <div
+                      class="card-body d-flex flex-column justify-content-between p-0"
+                    >
+                      <span
+                        class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4"
+                      >
+                        <i class="fa-solid fa-star"></i>
+                      </span>
+                      <p class="text-white mt-3">
+                        Working with BST Meta has been an absolute game-changer
+                        for our business. Their metaverse solutions opened up
+                        new avenues for engagement and interaction, redefining
+                        our customer experience.
+                      </p>
+                      <div
+                        class="row align-items-center ps-2 pt-4 border-top border-white border-opacity-25"
+                      >
+                        <div class="col-3">
+                          <img
+                            src="{% static 'assets/images/avatar/01.jpg' %}"
+                            class="img-fluid rounded-circle"
+                          />
+                        </div>
+                        <div
+                          class="col ps-1 d-flex flex-column justify-content-center"
+                        >
+                          <h6 class="fs-sm text-white mb-0">Robert Fox</h6>
+                          <p class="small text-white text-opacity-75 mt-2 mb-0">
+                            Client
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide h-100">
+                  <div class="card h-100 nftCard p-4 border-0">
+                    <div
+                      class="card-body d-flex flex-column justify-content-between p-0"
+                    >
+                      <span
+                        class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4"
+                      >
+                        <i class="fa-solid fa-star"></i>
+                      </span>
+                      <p class="text-white mt-3">
+                        Innovation knows no bounds with BST Meta. Their ability
+                        to fuse technology and imagination has elevated our
+                        brand presence in the metaverse, giving our audience an
+                        unforgettable experience.
+                      </p>
+                      <div
+                        class="row align-items-center ps-2 pt-4 border-top border-white border-opacity-25"
+                      >
+                        <div class="col-3">
+                          <img
+                            src="{% static 'assets/images/avatar/02.jpg' %}"
+                            class="img-fluid rounded-circle"
+                          />
+                        </div>
+                        <div
+                          class="col ps-1 d-flex flex-column justify-content-center"
+                        >
+                          <h6 class="fs-sm text-white mb-0">Jerome</h6>
+                          <p class="small text-white text-opacity-75 mt-2 mb-0">
+                            Client
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide h-100">
+                  <div class="card h-100 nftCard p-4 border-0">
+                    <div
+                      class="card-body d-flex flex-column justify-content-between p-0"
+                    >
+                      <span
+                        class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4"
+                      >
+                        <i class="fa-solid fa-star"></i>
+                      </span>
+                      <p class="text-white mt-3">
+                        "Partnering with BST Meta was a visionary decision.
+                        Their metaverse expertise breathed life into our ideas,
+                        and the result was beyond our expectations.
+                      </p>
+                      <div
+                        class="row align-items-center ps-2 pt-4 border-top border-white border-opacity-25"
+                      >
+                        <div class="col-3">
+                          <img
+                            src="{% static 'assets/images/avatar/03.jpg' %}"
+                            class="img-fluid rounded-circle"
+                          />
+                        </div>
+                        <div
+                          class="col ps-1 d-flex flex-column justify-content-center"
+                        >
+                          <h6 class="fs-sm text-white mb-0">Annete</h6>
+                          <p class="small text-white text-opacity-75 mt-2 mb-0">
+                            Client
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide h-100">
+                  <div class="card h-100 nftCard p-4 border-0">
+                    <div
+                      class="card-body d-flex flex-column justify-content-between p-0"
+                    >
+                      <span
+                        class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4"
+                      >
+                        <i class="fa-solid fa-star"></i>
+                      </span>
+                      <p class="text-white mt-3">
+                        Navigating the metaverse landscape was seamless with BST
+                        Meta as our guide. Their team's dedication to creating
+                        immersive digital environments ensured a truly immersive
+                        journey
+                      </p>
+                      <div
+                        class="row align-items-center ps-2 pt-4 border-top border-white border-opacity-25"
+                      >
+                        <div class="col-3">
+                          <img
+                            src="{% static 'assets/images/avatar/04.jpg' %}"
+                            class="img-fluid rounded-circle"
+                          />
+                        </div>
+                        <div
+                          class="col ps-1 d-flex flex-column justify-content-center"
+                        >
+                          <h6 class="fs-sm text-white mb-0">Albert Lynch</h6>
+                          <p class="small text-white text-opacity-75 mt-2 mb-0">
+                            Client
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide h-100">
+                  <div class="card h-100 nftCard p-4 border-0">
+                    <div
+                      class="card-body d-flex flex-column justify-content-between p-0"
+                    >
+                      <span
+                        class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4"
+                      >
+                        <i class="fa-solid fa-star"></i>
+                      </span>
+                      <p class="text-white mt-3">
+                        Collaborating with BST Meta was a journey of innovation
+                        and discovery. Their metaverse solutions not only
+                        engaged our audience but left a lasting impact.
+                      </p>
+                      <div
+                        class="row align-items-center ps-2 pt-4 border-top border-white border-opacity-25"
+                      >
+                        <div class="col-3">
+                          <img
+                            src="{% static 'assets/images/avatar/05.jpg' %}"
+                            class="img-fluid rounded-circle"
+                          />
+                        </div>
+                        <div
+                          class="col ps-1 d-flex flex-column justify-content-center"
+                        >
+                          <h6 class="fs-sm text-white mb-0">Benjamin</h6>
+                          <p class="small text-white text-opacity-75 mt-2 mb-0">
+                            Client
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{% include 'userpages/landingfooter.html' %}
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+      const swiper = new Swiper(".swiper", {
+        // Optional parameters
+
+        direction: "horizontal",
+        // loop: true,
+
+        // effect: "coverflow",
+        // coverflowEffect: {
+        //   rotate: 30,
+        //   slideShadows: false,
+        // },
+
+        // autoplay: {
+        //   delay: 4000,
+        // },
+        autoHeight: true,
+
+        // centeredSlides: true,
+        // centeredSlidesBounds: true,
+
+        slidesPerView: 5,
+        spaceBetween: 10,
+        // Responsive breakpoints
+        breakpoints: {
+          // when window width is >= 320px
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 30,
+          },
+          // when window width is >= 480px
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 30,
+          },
+          // when window width is >= 640px
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 30,
+          },
+        },
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+    <script>
+      VANTA.DOTS({
+        el: "#home",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0x2a7a8a,
+        color2: 0x2a7a8a,
+        backgroundColor: 0x0,
+        size: 5.2,
+        spacing: 37.0,
+        showLines: false,
+      });
+    </script>
+  </body>
+</html>

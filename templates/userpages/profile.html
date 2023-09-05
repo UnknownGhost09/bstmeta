@@ -1,0 +1,431 @@
+{% extends 'userpages/sidebar.html' %}
+
+{% block content %}
+
+{% load static %}
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+   
+  
+          {% if message %}
+          <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+          <script type="application/javascript">
+            Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '{{message}}',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        </script>
+    
+          {% endif %} {% if message1 %}
+          <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+          <script type="application/javascript">
+            Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: '{{message1}}',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        </script>
+          {% endif %}
+        <div class="row pt-4">
+          <div class="col-xl-4">
+
+            <div class="card bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25">
+              <div class="card-body profile-card text-center pt-4">
+
+                  <img src="{% static 'assets/images/users/user.png' %}" alt="Profile" class="rounded-circle shadow mt-2" width='200px'>
+                    <h2 class="mt-3">{{userdata.first_name}} {{userdata.last_name}}</h2>
+                    <h3>{{userdata.role}}</h3>
+  
+              </div>
+            </div>
+  
+          </div>
+  
+          <div class="col-xl-8 pb-5 mb-5">
+  
+            <div class="card bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25">
+              <div class="card-body pt-3">
+                <!-- Bordered Tabs -->
+                <ul class="nav nav-tabs border-bottom bg-black bg-opacity-25 border-white border-opacity-25" id="pills-tab">
+  
+                  <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
+                      <p class="text-white mb-0">
+                        Overview
+                      </p>
+                    </button>
+                  </li>
+  
+                  <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">
+                      <p class="text-white mb-0">
+                        Edit Profile
+                      </p>
+                    </button>
+                  </li>
+  
+                  <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#change-password">
+                      <p class="text-white mb-0">
+                        Change Password
+                      </p>
+                    </button>
+                  </li>
+  
+  
+  
+                </ul>
+                <div class="tab-content pt-2">
+  
+                  <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                    <div class="card mt-3 bg-black bg-opacity-25 shadow-lg border border-white border-opacity-25">
+                      <div class="card-header rounded-4">
+                          <h5 class="card-title mb-0">About</h5>
+                      </div>
+                      <div class="card-body text-nowrap">
+                          
+                              <div class="pb-3">
+                                  <div class="row">
+                                      <div class="col-xl-2">
+                                          <div>
+                                              <h5 class="font-size-15">Full name</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-xl">
+                                          <div >
+                                              <p class="mb-2">{{userdata.first_name}} {{userdata.last_name}}</p>
+                                            
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+        
+                              <div class="pb-3">
+                                  <div class="row">
+                                      <div class="col-xl-2">
+                                          <div>
+                                              <h5 class="font-size-15">Status</h5>
+                                          </div>
+                                      </div>
+                                      <div class="col-xl">
+                                          <div class="text-muted">
+                                            {% if userdata.status == '1'%}
+                                            <p class="mb-2">Active</p>
+                                            {% else %}
+                                            <p class="mb-2">Inactive</p>
+                                           {% endif %}
+        
+                                  
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+        
+                              <div class="pb-3">
+                                <div class="row">
+                                    <div class="col-xl-2">
+                                        <div>
+                                            <h5 class="font-size-15">Email</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl">
+                                        <div >
+                                            <p class="mb-2">{{userdata.email}}</p>
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="pb-3">
+                              <div class="row">
+                                  <div class="col-xl-2">
+                                      <div>
+                                          <h5 class="font-size-15">Role</h5>
+                                      </div>
+                                  </div>
+                                  <div class="col-xl">
+                                      <div >
+                                          <p class="mb-2">{{userdata.role}}</p>
+                                        
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="pb-3">
+                            <div class="row">
+                                <div class="col-xl-2">
+                                    <div>
+                                        <h5 class="font-size-15">Created At</h5>
+                                    </div>
+                                </div>
+                                <div class="col-xl">
+                                    <div >
+                                        <p class="mb-2">{{userdata.created_at|slice:"0:19"}}</p>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                
+                        <div class="pb-3">
+                          <div class="row">
+                              <div class="col-xl-2">
+                                  <div>
+                                      <h5 class="font-size-15">Phone Number</h5>
+                                  </div>
+                              </div>
+                              <div class="col-xl">
+                                  <div >
+                                      <p class="mb-2">{{userdata.phone_no}}</p>
+                                    
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      {% if useraddress %}
+                      <div class="pb-3">
+                        <div class="row">
+                            <div class="col-xl-2">
+                                <div>
+                                    <h5 class="font-size-15">Address</h5>
+                                </div>
+                            </div>
+                            <div class="col-xl">
+                                <div >
+                                    <p class="mb-2">{{useraddress.address}}</p>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pb-3">
+                      <div class="row">
+                          <div class="col-xl-2">
+                              <div>
+                                  <h5 class="font-size-15">Pin Code</h5>
+                              </div>
+                          </div>
+                          <div class="col-xl">
+                              <div >
+                                  <p class="mb-2">{{useraddress.pincode}}</p>
+                                
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+
+                  <div class="pb-3">
+                    <div class="row">
+                        <div class="col-xl-2">
+                            <div>
+                                <h5 class="font-size-15">State</h5>
+                            </div>
+                        </div>
+                        <div class="col-xl">
+                            <div >
+                                <p class="mb-2">{{useraddress.state}}</p>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pb-3">
+                  <div class="row">
+                      <div class="col-xl-2">
+                          <div>
+                              <h5 class="font-size-15">District</h5>
+                          </div>
+                      </div>
+                      <div class="col-xl">
+                          <div >
+                              <p class="mb-2">{{useraddress.district}}</p>
+                            
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="pb-3">
+                <div class="row">
+                    <div class="col-xl-2">
+                        <div>
+                            <h5 class="font-size-15">Country</h5>
+                        </div>
+                    </div>
+                    <div class="col-xl">
+                        <div >
+                            <p class="mb-2">{{useraddress.country}}</p>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+                      {% endif %}
+              
+       
+               
+        
+                
+              </div>
+            </div>
+          </div>
+                  <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                    <div class="card bg-black bg-opacity-25 shadow-lg border border-white border-opacity-25">
+                      <div class="card-header rounded-4">
+                          <h5 class="card-title mb-0">Edit Profile</h5>
+                      </div>
+                      <div class="card-body text-nowrap">
+                    <!-- Profile Edit Form -->
+                    <form action="../../../users" method="post">
+                      {% csrf_token %}
+                
+  
+                      <div class="row mb-3">
+                        <label for="fullName" class="form-label fw-bold">First Name</label>
+                        <div class="col-md-8 col-lg-12">
+                          <input name="first_name" type="text" class="form-control shadow bg-dark bg-opacity-10" id="fullName"  value="{{userdata.first_name}}" >
+                        </div>
+                      </div>
+  
+                      <div class="row mb-3">
+                        <label for="fullName" class="form-label fw-bold">Last Name</label>
+                        <div class="col-md-8 col-lg-12">
+                          <input name="last_name" type="text" class="form-control shadow bg-dark bg-opacity-10" id="Name"  value="{{userdata.last_name}}" >
+                        </div>
+                      </div>
+                 
+
+                      <div class='row'>
+                        <div class='col-6'>
+                      <div class="row mb-3">
+                        <label for="fullName" class="form-label fw-bold">Pin Code</label>
+                        <div class="col-md-8 col-lg-12">
+                          <input name="pincode" type="text" class="form-control shadow bg-dark bg-opacity-10"   value="{{useraddress.pincode}}" >
+                        </div>
+                      </div>
+                    </div>
+                    <div class='col-6'>
+                      <div class="row mb-3">
+                        <label for="fullName" class="form-label fw-bold">State</label>
+                        <div class="col-md-8 col-lg-12">
+                          <input name="state" type="text" class="form-control shadow bg-dark bg-opacity-10"   value="{{useraddress.state}}" >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                      <div class='row'>
+                        <div class='col-6'>
+                      <div class="row mb-3">
+                        <label for="fullName" class="form-label fw-bold">District</label>
+                        <div class="col-md-8 col-lg-12">
+                          <input name="district" type="text" class="form-control shadow bg-dark bg-opacity-10"   value="{{useraddress.district}}" >
+                        </div>
+                      </div>
+                    </div>
+                    <div class='col-6'>
+                      <div class="row mb-3">
+                        <label for="fullName" class="form-label fw-bold">Country</label>
+                        <div class="col-md-8 col-lg-12">
+                          <input name="country" type="text" class="form-control shadow bg-dark bg-opacity-10"   value="{{useraddress.country}}" >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="fullName" class="form-label fw-bold">Address</label>
+                    <div class="col-md-8 col-lg-12">
+                      <textarea name="address" rows='3' type="text" class="form-control shadow bg-dark bg-opacity-10"  value="{{useraddress.address}}" >{{useraddress.address}}</textarea>
+                    </div>
+                  </div>
+  
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-outline-success" name='change'>Save Changes</button>
+                      </div>
+                    </form><!-- End Profile Edit Form -->
+  
+                  </div>
+                </div>
+              </div>
+  
+                  <div class="tab-pane fade change-password pt-3" id="change-password">
+                    <div class="card bg-black bg-opacity-25 shadow-lg border border-white border-opacity-25">
+                      <div class="card-header rounded-4">
+                          <h5 class="card-title mb-0">Change Password</h5>
+                      </div>
+                      <div class="card-body text-nowrap">
+                    <!-- Profile Edit Form -->
+                    <form action="../../../../users" method="post" id="pristine-valid-example" novalidate >
+                      {% csrf_token %}
+                
+  
+                      <div class="row mb-3">
+                        <label for="fullName" class="form-label fw-bold">Current Password</label>
+                        <div class="col-md-8 col-lg-12">
+                          <input name="current_password" type="password" class="form-control  shadow bg-dark bg-opacity-10" id="current_password" placeholder='Enter Current password'   >
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="fullName" class="form-label fw-bold">New Password</label>
+                        <div class="col-md-8 col-lg-12">
+                          <input name="new_password" type="password" class="form-control  shadow bg-dark bg-opacity-10" required  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                          title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" class="form-control" placeholder="Enter New password" >
+                        </div>
+                        <div class="invalid-feedback">
+                          Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters
+                      </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="fullName" class="form-label fw-bold">Confirm Password</label>
+                        <div class="col-md-8 col-lg-12">
+                          <input name="confirm_password" type="password" class="form-control  shadow bg-dark bg-opacity-10" id="confirm_password"  placeholder='Enter Confirm Password' 
+                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" >
+                        </div>
+                        <div class="invalid-feedback">
+                          Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters
+                      </div>
+                      </div>
+  
+                      
+  
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-outline-success" name='changepassword'>Save Changes</button>
+                      </div>
+                    </form><!-- End Profile Edit Form -->
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+                </div><!-- End Bordered Tabs -->
+  
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+{% endblock %}

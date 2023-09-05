@@ -1,0 +1,76 @@
+{% extends 'userpages/sidebar.html' %}
+
+{% block content %}
+
+
+  {% load static %}
+ 
+
+
+  <div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+  <div class="card bg-dark bg-opacity-25 border border-white shadow-lg border-opacity-25 rounded-4 mt-4 mb-5 pb-5">
+    <div class="card-header rounded-4">
+      <div class='d-flex justify-content-between align-items-center'>
+      <h4 class="card-title">Level Income</h4>
+      <h4 class="card-title">$ {{overallincome}}</h4>
+      </div>
+  </div>
+    <div class="card-body">
+   
+      <div class="table-responsive">
+
+      <table id='test' class="table hover table-borderless dt-responsive nowrap w-100 text-nowrap">
+        <thead>
+            <tr>
+                <th scope="col"><p class="text-white text-opacity-75 mb-0">Level</p></th>
+                <th scope="col"><p class="text-white text-opacity-75 mb-0">Income</p></th>
+                <th scope="col"><p class="text-white text-opacity-75 mb-0">Date</p></th>
+                <th scope="col"><p class="text-white text-opacity-75 mb-0">Status</p></th>
+              </tr>
+        </thead>
+
+        <tbody>
+          {% for i in data %}
+        
+          <tr>
+ 
+            <td>{{i.level_id.id}} Level</td>
+            <td>$ {{i.level_income}}</a></td>
+            <td>{{i.date|slice:"0:19"}}</td>
+             {% if i.status == '0' %}
+              <td>
+                <span
+                  class="badge text-white text-bg-warning p-2 rounded-pill"
+                  >Pending</span
+                >
+              </td>
+              {% elif i.status == '1' %}
+              <td>
+                <span
+                  class="badge text-bg-success p-2 rounded-pill"
+                  >Completed</span
+                >
+              </td>
+              {% endif %}
+         
+          </tr>
+      
+          {% endfor %}
+        </tbody>
+     
+      </table>
+      </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}

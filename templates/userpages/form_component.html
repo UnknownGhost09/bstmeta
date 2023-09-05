@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi-level Marketing</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="{% static './assets/css/form.css' %}" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+      body {
+        font-family: "Poppins", sans-serif;
+        overflow-x: hidden;
+        background-color: black;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      button {
+        background: radial-gradient(
+          circle,
+          rgb(14, 39, 44) 0%,
+          rgb(29, 62, 68) 0%,
+          rgba(255, 255, 255, 0.041) 100%
+        ) !important;
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.205) !important;
+      }
+
+      /* Firefox */
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+
+      .form_bg {
+        backdrop-filter: blur(50px) !important;
+        background-color: black;
+        box-shadow: 0px 0px 50px #00050573 !important;
+        border: 1px solid #0c4049;
+      }
+
+      .input {
+        background: radial-gradient(
+          circle,
+          rgb(14, 39, 44) 0%,
+          rgb(29, 62, 68) 0%,
+          rgba(255, 255, 255, 0.041) 100%
+        ) !important;
+        color: #fffefe !important;
+        outline: none;
+        border-radius: 8px;
+      }
+
+      .input::placeholder {
+        color: #c5c5c5;
+        font-size: 0.9rem;
+      }
+      .asset_1 {
+        z-index: -1;
+        top: 0;
+        left: -30px;
+      }
+      .asset_2 {
+        z-index: -1;
+        bottom: 0;
+        right: -30px;
+      }
+      .floating-image {
+        position: relative;
+        animation: floatAnimation 3s ease-in-out infinite;
+      }
+
+      @keyframes floatAnimation {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-25px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="home" class="container-fluid p-0">
+      <div class="container-xxl px-0">
+        <div
+          class="row mx-0 p-lg-3 p-md-5 px-3 py-5 justify-content-center align-items-center background position-relative"
+        >
+          <div class="d-lg-block d-md-block d-none">
+            <img
+              src="{% static 'assets/images/bg-asset/image-5.png' %}"
+              class="img-fluid mt-5 position-absolute asset_1 floating-image"
+              alt=""
+            />
+            <img
+              src="{% static 'assets/images/bg-asset/image-5.png' %}"
+              class="img-fluid mt-5 position-absolute asset_2 floating-image"
+              alt=""
+            />
+          </div>
+          {% block content %} {% endblock %}
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/libs/metismenu/metisMenu.min.js' %}"></script>
+    <script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'assets/libs/node-waves/waves.min.js' %}"></script>
+    <script src="{% static 'assets/libs/feather-icons/feather.min.js' %}"></script>
+    <!-- pace js -->
+    <script src="{% static 'assets/libs/pace-js/pace.min.js' %}"></script>
+    <!-- password addon init -->
+    <script src="{% static 'assets/js/pages/pass-addon.init.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+    <script>
+      VANTA.DOTS({
+        el: "#home",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0x2a7a8a,
+        color2: 0x2a7a8a,
+        backgroundColor: 0x0,
+        size: 3.2,
+        spacing: 27.0,
+        showLines: false,
+      });
+    </script>
+  </body>
+</html>

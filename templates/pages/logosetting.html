@@ -1,0 +1,81 @@
+{% extends 'pages/sidebar.html' %}
+{% block content %}
+{% load static %}
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+  
+          <div class="card-header pb-3">
+            <h4 class="card-title">Logo settings</h4>
+            <p class="card-title-desc">
+  
+              Logo and favicon settings
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+
+
+                <div class="row">
+                    
+                        <div >
+                            <h5 class="font-size-14 mb-4"><i class="mdi mdi-arrow-right text-primary me-1"></i> Edit settings</h5>
+                            <form action='../../../admin/app' method='post' enctype="multipart/form-data">
+                                {% csrf_token %}
+                               
+                         
+                                <div class="mb-3">
+                                    <label  class="form-label fw-bold" >Logo Light Mode</label>
+                                    <div class='pt-2 pb-2'>
+                                      <img src="/media/{{data.logodart}}/" alt="logo" width='100px'>
+                                    </div>
+                                     
+                                        <input type="file" class='form-control'  name='darklogo'>
+                                    </div>
+                         
+                                    <div class="mb-3">
+                                        <label  class="form-label fw-bold" >Logo Dark Mode</label>
+                                        <div class='pt-2 pb-2'>
+                                          <img src="/media/{{data.logolight}}/" alt="logo" width='100px'>
+                                        </div>
+                                         
+                                            <input  type="file" class='form-control'  name='lightlogo'>
+                                        </div>
+                            
+                                        <div class="mb-3">
+                                            <label  class="form-label fw-bold" >FavIcon</label>
+                                            <div class='pt-2 pb-2'>
+                                              <img src='/media/{{data.favicon}}/' alt="logo" width='100px'>
+                                            </div>
+                                             
+                                                <input  type="file" class='form-control'  name='favicon'>
+                                        </div>
+                              
+                                   
+
+                                 
+                           
+                         
+                          
+                                <div class="mt-4">
+                                    <button type="submit" class="btn btn-primary w-md" name='submit'>Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+              
+                
+                
+            </div>
+        </div>    
+    </div>
+</div>
+</div>
+<!-- dropzone js -->
+<script src="{% static 'assets/libs/dropzone/min/dropzone.min.js' %}"></script>
+
+{% endblock %}
