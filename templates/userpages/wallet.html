@@ -65,51 +65,103 @@
                   </ul>
                 </div>
                 <div class="">
-                  <div class="tab-content" id="pills-tabContent">
-                    <div
-                      class="tab-pane fade show active"
-                      id="pills-wallet"
-                      role="tabpanel"
-                      aria-labelledby="pills-wallet-tab"
-                      tabindex="0"
-                    >
-                      <div
-                        class="text-uppercase fw-semibold d-flex justify-content-between px-lg-4"
-                      >
-                        <div class="col-3 text-uppercase">
-                          <p class="mb-0 theading">token</p>
+                  
+                  <div class="p-0  ">
+                    <div class="mt-0">
+                        <div class="d-flex align-items-center">
+                       
+                            <div class="flex-grow-1 ms-3">
+                                <span class="font-size-16 planname ">Available Balance</span>
+                            </div>
+
+                            <div class="flex-shrink-0">
+                                <span class="text-white">$ {{wallet.avaliable_balance|floatformat:"2"}}</span>
+                            </div>
                         </div>
-                        <div class="col-3 text-uppercase text-center">
-                          <p class="mb-0 theading">Avaliable</p>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="d-flex align-items-center">
+                         
+                            <div class="flex-grow-1 ms-3">
+                                <span class="font-size-16 planname ">Top-up Balance</span>
+                            </div>
+
+                            <div class="flex-shrink-0">
+                                <span class="text-white">$ {{wallet.topup_balance|floatformat:"2"}}</span>
+                            </div>
                         </div>
-                        <div class="col-3 text-uppercase text-center">
-                          <p class="mb-0 theading">Reserved</p>
-                        </div>
-                      </div>
-                      <div class="d-flex flex-column mt-3 gap-3">
-                        <div
-                          class="text-uppercase fw-semibold py-lg-3 px-lg-4 p-2 rounded-5 d-flex align-items-center justify-content-between wallet_row"
-                        >
-                          <div class="col-3 d-flex align-items-center gap-2">
-                            <p class="mb-0">USDT</p>
+                    </div>
+
+                    <div class="mt-3">
+                      <div class="d-flex align-items-center">
+                        
+                          <div class="flex-grow-1 ms-3">
+                              <span class="font-size-16 planname ">Deposit Balance</span>
                           </div>
 
-                          <div class="col-3 text-center">
-                            <p class="mb-0 theading">
-                              $ {{wallet.avaliable_balance|floatformat:"2"}}
-                            </p>
+                          <div class="flex-shrink-0">
+                              <span class="text-white">$ {{wallet.deposit_balance|floatformat:"2"}}</span>
                           </div>
-                          <div class="col-3 text-center">
-                            <p class="mb-0 theading">
-                              $ {{wallet.reserved_balance|floatformat:"2"}}
-                            </p>
-                          </div>
-                        </div>
                       </div>
-                    </div>
                   </div>
+
+
+                  <div class="mt-3">
+                    <div class="d-flex align-items-center">
+                       
+                        <div class="flex-grow-1 ms-3">
+                            <span class="font-size-16 planname ">ROI</span>
+                        </div>
+
+                        <div class="flex-shrink-0">
+                            <span class="text-white">$ {{wallet.roi_balance|floatformat:"2"}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                  <div class="d-flex align-items-center">
+                
+                      <div class="flex-grow-1 ms-3">
+                          <span class="font-size-16 planname ">Level Income</span>
+                      </div>
+
+                      <div class="flex-shrink-0">
+                          <span class="text-white">$ {{wallet.level_balance|floatformat:"2"}}</span>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="mt-3">
+                <div class="d-flex align-items-center">
+               
+                    <div class="flex-grow-1 ms-3">
+                        <span class="font-size-16 planname ">Bonus</span>
+                    </div>
+
+                    <div class="flex-shrink-0">
+                        <span class="">$ {{wallet.bonus_balance|floatformat:"2"}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+              <div class="d-flex align-items-center">
+             
+                  <div class="flex-grow-1 ms-3">
+                      <span class="font-size-16 planname ">Transfer Balance</span>
+                  </div>
+
+                  <div class="flex-shrink-0">
+                      <span class="">$ {{wallet.reserved_balance|floatformat:"2"}}</span>
+                  </div>
+              </div>
+          </div>
+                  
                 </div>
               </div>
+            </div>
               <div
                 class="border mt-3 p-lg-4 p-3 rounded shadow-lg border-white border-opacity-25 rounded-4 bg-dark bg-opacity-25"
               >
@@ -314,7 +366,7 @@
                     <div class="card-body">
                       <div
                         id="pie_chart1"
-                        data-colors='["#2ab57d", "#5156be"]'
+                        data-colors='["#2ab57d", "#5156be","#A0A3DE","#51BE61","#BE5173","#8A8BA3","#BE7551"]'
                         class="apex-charts"
                         dir="ltr"
                       ></div>
@@ -363,8 +415,8 @@
     var pieColors = getChartColorsArray("#pie_chart1"),
                 options = {
                   chart: { height: 320, type: "pie" },
-                  series: [{{wallet.reserved_balance}}, {{wallet.avaliable_balance}}],
-                  labels: ["Reserved Amount", "Available balance"],
+                  series: [{{wallet.reserved_balance}}, {{wallet.avaliable_balance}},{{wallet.topup_balance}},{{wallet.deposit_balance}},{{wallet.roi_balance}},{{wallet.level_balance}},{{wallet.bonus_balance}},{{wallet.ref}}],
+                  labels: ["Transfer Balance", "Available Balance","Top-Up Balance","Deposit Balance","ROI","Level Income","Bonus","Direct Balance"],
                   colors: pieColors,
                   legend: {
                     show: !0,

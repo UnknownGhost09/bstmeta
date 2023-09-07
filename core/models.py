@@ -264,6 +264,8 @@ class wallet(models.Model):
     roi_balance=models.CharField(max_length=200,default='0')
     level_balance=models.CharField(max_length=200,default='0')
     bonus_balance=models.CharField(max_length=250,default='0')
+    deposit_balance=models.CharField(max_length=250,default='0')
+    topup_balance=models.CharField(max_length=250,default='0')
     referral_balance=models.CharField(max_length=200,default='0')
     freezed_balance=models.CharField(max_length=200,default='0')
     reserved_balance=models.CharField(max_length=200,default='0')
