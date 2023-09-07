@@ -10,7 +10,7 @@
               <div class="card-body">
                   <h3 class="card-title">You are not a premium member</h3>
                   <p class="card-text">Kindly buy our plan to become a premium member.</p>
-                  <a href="../../../allplans" class="btn btn-primary waves-effect waves-light w-100">Buy Plan</a>
+                  <a href="../../../package" class="btn btn-primary waves-effect waves-light w-100">Buy Plan</a>
               </div>
           </div>
       </div>
@@ -280,7 +280,7 @@
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col-6">
-                    <span class="mb-1 lh-1 d-block">Membership Amount</span>
+                    <span class="mb-1 lh-1 d-block">Total Deposit</span>
                     <h4 class="mb-1">
                       <span class="text-success">$ </span>
                       <span
@@ -388,49 +388,7 @@
 
       <div class="row">
        
-        <!-- end col -->
-
-     
-        <!-- end col-->
-
-        <div class="col-xl-3 col-md-6">
-          <!-- card -->
-          <div
-            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
-          >
-            <!-- card body -->
-            <a href="../../../user_referal">
-              <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col-6">
-                    <span class="mb-1 lh-1 d-block">Total Deposit</span>
-                    <h4 class="mb-1">
-                      <span class="text-success" id="total_withdraw">$</span>
-                      <span
-                        class="counter-value text-success"
-                        id="total_withdraw"
-                        data-target="{{total_deposit|floatformat:'2'}}"
-                      ></span>
-                    </h4>
-                  </div>
-                  <div class="col-6">
-                    <div
-                      id="mini-chart9"
-                      data-colors='["#5156be"]'
-                      class="apex-charts mb-2"
-                    ></div>
-                  </div>
-                </div>
-                <div class="text-nowrap">
-                  <span class="ms-1 text-muted font-size-13">USDT</span>
-                </div>
-              </div>
-              <!-- end card body -->
-            </a>
-          </div>
-          <!-- end card -->
-        </div>
-        <!-- end col -->
+  
 
 
         <div class="col-xl-3 col-md-6">
@@ -449,13 +407,52 @@
                       <span
                         class="counter-value text-success"
                         id="total_withdraw"
-                        data-target="{{user.business|floatformat:'2'}}"
+                        data-target="{{userdata.business|floatformat:'2'}}"
                       ></span>
                     </h4>
                   </div>
                   <div class="col-6">
                     <div
                       id="mini-chart10"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="ms-1 text-muted font-size-13">USDT</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
+
+
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+            <a href="../../../user_referal">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">Level Income</span>
+                    <h4 class="mb-1">
+                      <span class="text-success" id="total_withdraw">$</span>
+                      <span
+                        class="counter-value text-success"
+                        id="total_withdraw"
+                        data-target="{{level_income|floatformat:'2'}}"
+                      ></span>
+                    </h4>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      id="mini-chart11"
                       data-colors='["#5156be"]'
                       class="apex-charts mb-2"
                     ></div>
@@ -515,7 +512,7 @@
                           <td>
                             <div>
                               <h5 class="font-size-14 mb-1">
-                                {{i.plan_id.name}}
+                                {{i.plan_id.plan_id.name}}
                               </h5>
                               <p id="date" class="text-muted mb-0 font-size-12">
                                 {{i.date|slice:"0:19"}}
@@ -525,7 +522,7 @@
 
                           <td>
                             <div class="text-end">
-                              <h5 class="font-size-14 mb-0">$ {{i.roi}}</h5>
+                              <h5 class="font-size-14 mb-0">$ {{i.roi|floatformat:'2'}}</h5>
                               <p class="text-muted mb-0 font-size-12">Amount</p>
                             </div>
                           </td>
@@ -545,71 +542,6 @@
           <!-- end card -->
         </div>
 
-        <div class="col-xl-4">
-          <div
-            class="card bg-black bg-opacity-50 shadow-lg border border-white border-opacity-25 rounded-4"
-          >
-            <div class="card-header align-items-center d-flex rounded-4">
-              <h4 class="card-title mb-0 ">TOP ACHIVERS</h4>
-           
-            </div>
-            <!-- end card header -->
-
-            <div class="card-body px-0">
-       
-                  <div
-                    class="table-responsive px-3"
-                    data-simplebar
-                    style="max-height: 352px"
-                  >
-                  {% if farming_roi %}
-                    <table
-                      class="table table-hover align-middle table-nowrap table-borderless"
-                    >
-                      <tbody>
-                   
-                        <tr>
-                          {% for i in farming_roi %}
-
-                          <td style="width: 50px">
-                            <div class="font-size-22 text-success">
-                              <i class="bx bx-down-arrow-circle d-block"></i>
-                            </div>
-                          </td>
-
-                          <td>
-                            <div>
-                              <h5 class="font-size-14 mb-1">
-                                {{i.plan_id.name}}
-                              </h5>
-                              <p id="date" class="text-muted mb-0 font-size-12">
-                                {{i.date|slice:"0:19"}}
-                              </p>
-                            </div>
-                          </td>
-
-                          <td>
-                            <div class="text-end">
-                              <h5 class="font-size-14 mb-0">$ {{i.roi}}</h5>
-                              <p class="text-muted mb-0 font-size-12">Amount</p>
-                            </div>
-                          </td>
-                        </tr>
-
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                    {% else %}
-                    No data Found
-                    {% endif %}
-                  </div>
-              
-             
-            </div>
-            <!-- end card body -->
-          </div>
-          <!-- end card -->
-        </div>
 
         <div class="col-xl-4">
           <div
@@ -628,14 +560,80 @@
                     data-simplebar
                     style="max-height: 352px"
                   >
-                  {% if farming_roi %}
+                  
                     <table
                       class="table table-hover align-middle table-nowrap table-borderless"
                     >
                       <tbody>
                    
                         <tr>
-                          {% for i in farming_roi %}
+                          {% for i in level_income_logs %}
+
+                          <td style="width: 50px">
+                            <div class="font-size-22 text-success">
+                              <i class="bx bx-down-arrow-circle d-block"></i>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div>
+                              <h5 class="font-size-14 mb-1">
+                                {{i.level_id.id}} {{i.child_id.username}}
+                              </h5>
+                              <p id="date" class="text-muted mb-0 font-size-12">
+                                {{i.date|slice:"0:19"}}
+                              </p>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div class="text-end">
+                              <h5 class="font-size-14 mb-0">$ {{i.level_income|floatformat:'2'}}</h5>
+                              <p class="text-muted mb-0 font-size-12">Amount</p>
+                            </div>
+                          </td>
+                        </tr>
+
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                 
+                  </div>
+                </div>
+             
+              
+            <!-- end card body -->
+          </div>
+          <!-- end card -->
+        </div>
+        
+        <div class="col-xl-4">
+          <div
+            class="card bg-black bg-opacity-50 shadow-lg border border-white border-opacity-25 rounded-4"
+          >
+            <div class="card-header align-items-center d-flex rounded-4">
+              <h4 class="card-title mb-0 ">TOP ACHIVERS</h4>
+           
+            </div>
+            <!-- end card header -->
+
+            <div class="card-body px-0">
+       
+                  <div
+                    class="table-responsive px-3"
+                    data-simplebar
+                    style="height:100%"
+                    
+                  >
+                  {% if top_achivers %}
+             
+                    <table
+                      class="table table-hover align-middle table-nowrap table-borderless"
+                    >
+                      <tbody>
+                   
+                        <tr>
+                          {% for i in top_achivers %}
 
                           <td style="width: 50px">
                             <div class="font-size-22 text-success">
@@ -668,10 +666,11 @@
                     {% else %}
                     No data Found
                     {% endif %}
+                  
                   </div>
-                </div>
-             
               
+             
+            </div>
             <!-- end card body -->
           </div>
           <!-- end card -->

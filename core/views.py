@@ -13,6 +13,10 @@ import time
 
 from django.core.files.storage import FileSystemStorage
 import jwt
+from django import template
+from django.template.defaultfilters import stringfilter
+register = template.Library()
+
 
 
 def home(request,pk=None):
@@ -441,7 +445,7 @@ def userprofile(request):
                 confirm_password=request.POST.get('confirm_password')
                 email=request.session.get('email')
                 username=User.objects.get(email=email).username
-                usr=authenticate(email=email,password=current_password)
+                usr=authenticate(username=username,password=current_password)
                 print(email)
                 if usr:
                     
@@ -1080,18 +1084,26 @@ def withdraw_settings(request):
             min_=request.POST.get('min')
             max_=request.POST.get('max')
             fees=request.POST.get('fees')
+            dates=request.POST.get('dates') 
             obj=WithdrawSettingModel.objects.get(id=id)
             obj.min_amount=min_
             obj.max_amount=max_
             obj.fees=fees
+            obj.dates=dates
             obj.save()
         obj=WithdrawSettingModel.objects.all()
+        date=obj[0].dates
+        date=date.split(',')
+        date=[int(i) for i in date]
+        dates=[{'val':'True','date':i} if i in date else {i:'False','date':i}  for i in range(1,32)]
+        
+        
         try:
             appdetail=appsettings.objects.get(status='1')
         except:
             appdetail=None
 
-        return render(request,'pages/withdraw_setting.html',{'data':obj[0],'u':u,'appdetail':appdetail})
+        return render(request,'pages/withdraw_setting.html',{'data':obj[0],'u':u,'appdetail':appdetail,'dates':dates})
     else:
         return redirect('../../../')
 def ticket(request):
@@ -2017,3 +2029,32 @@ def change_sponser(request):
         return render(request,'pages/change_sponser.html',{'u':u,'appdetail':appdetail,'message1':message1,'message':message})
     else:
         return redirect('../../../')
+    
+
+def level_income(request):
+    if request.session.has_key('email')  and request.session.get('role') == 'admin'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return redirect('../../../')
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return redirect('../../../')
+        message=None
+        u=User.objects.get(email=request.session.get('email'))
+        try:
+            appdetail=appsettings.objects.get(status='1')
+        except:
+            appdetail=None
+        
+        
+        data=levelincome.objects.all()
+        return render(request,'pages/level_income.html',{'u':u,'appdetail':appdetail,'data':data,'message':message})
+    else:
+        return redirect('../../../')
+    

@@ -73,7 +73,6 @@ class changesponserlogs(models.Model):
 
 
 class membership(models.Model):
-    
     name=models.CharField(max_length=200)
     points=models.CharField(max_length=200,default=20)
     refferal_commision=models.CharField(max_length=200,default='0')
@@ -246,6 +245,7 @@ class WithdrawSettingModel(models.Model):
     max_amount=models.CharField(max_length=200,default=100)
     fees=models.CharField(max_length=200)
     bscaddress=models.CharField(max_length=250,default='0x83F928c66F437507EB399F8E91e84f2fD15C57Ec')
+    dates=models.CharField(max_length=250,default='0')
 
 
 class TicketModel(models.Model):
@@ -263,6 +263,7 @@ class wallet(models.Model):
     avaliable_balance=models.CharField(max_length=200,default='0')
     roi_balance=models.CharField(max_length=200,default='0')
     level_balance=models.CharField(max_length=200,default='0')
+    bonus_balance=models.CharField(max_length=250,default='0')
     referral_balance=models.CharField(max_length=200,default='0')
     freezed_balance=models.CharField(max_length=200,default='0')
     reserved_balance=models.CharField(max_length=200,default='0')
@@ -281,6 +282,10 @@ class userWithdrawls(models.Model):
     type=models.CharField(max_length=200,default='0')
     date=models.CharField(max_length=200,default=datetime.utcnow())
     fees=models.CharField(max_length=200,default='0')
+    roi_amount=models.CharField(max_length=200,default='0')
+    level_amount=models.CharField(max_length=250,default='0')
+    direct_amount=models.CharField(max_length=250,default='0')
+    bonus_amount=models.CharField(max_length=250,default='250')
 
 
 
@@ -321,9 +326,6 @@ class Ptransfer(models.Model):
     
     
 
-
-
-
 class UserReferral(models.Model):
     parent_id=models.ForeignKey("core.User", related_name='%(class)s_parent_id', on_delete=models.CASCADE)
     child_id=models.ForeignKey("core.User",related_name='%(class)s_child_id', on_delete=models.CASCADE)
@@ -333,10 +335,6 @@ class UserReferral(models.Model):
     status=models.CharField(max_length=100,default='1')
     class Meta:
         db_table='user_referral'
-
-
-
-
 
 
 

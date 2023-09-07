@@ -65,17 +65,60 @@
               <td>{{i.news}}</td>
               <td>{{i.date}}</td>
               <td>{{i.datato}}</td>
-              <td>   <div class="square-switch">
-                <form action="../../../admin/events" method="post">
-                    {% csrf_token %}
-                {% if i.status == 'True' %}
-                <input type="checkbox" id="square-switch3" name='active' switch="bool" data-id="{{i.id}}" checked>             
-                {% else %}
-                <input type="checkbox" id="square-switch3" name='active' switch="bool" data-id="{{i.id}}"> 
-                {% endif %}
-                <label for="square-switch3" data-on-label="Yes" data-off-label="No"></label>
-                </form>
-            </div></td>
+              <td>   <div class="form-check form-switch pt-2">
+                <form action="../../../admin/users" method="post">
+                  {% csrf_token %}
+                  {% if i.status == 'True' %}
+                  
+                <input class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked{{i.id}}" data-id="{{i.id}}" title='active' checked>
+              {% else %}
+              <input  class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked{{i.id}}" data-id="{{i.id}}" title="inactive">
+              {% endif %}
+              </form>
+              </div>
+            <script>
+                 
+              function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }  
+            
+              $(document.body).on('click','#flexSwitchCheckChecked{{i.id}}',function(){
+                console.log('Hello')
+            
+                var uid = $(this).attr('data-id');
+                var csrftoken = getCookie('csrftoken');
+                console.log(uid)
+            
+                $.ajax({
+                  type: 'POST',      
+                  url: '../../../admin/events',
+                  data: {
+                    
+                    id: uid,
+                   
+                    csrfmiddlewaretoken: csrftoken,
+                },
+            
+                  success: function () {
+               
+                  }
+                });
+            
+              });
+                        </script>
+          </td>
+           
               <td> <i class="fas fa-arrow-alt-circle-right h4 text-primary" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center{{i.id}}"></i>
 
                 <div class="modal fade bs-example-modal-center{{i.id}}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -122,45 +165,7 @@
   <script>
 
 
-    
-  function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}  
-
-  $(document.body).on('click','#square-switch3',function(){
-
-
-    var uid = $(this).attr('data-id');
-    var csrftoken = getCookie('csrftoken');
-    console.log(uid)
-
-    $.ajax({
-      type: 'POST',      
-      url: '../../../admin/events',
-      data: {
-        
-        id: uid,
-       
-        csrfmiddlewaretoken: csrftoken,
-    },
-
-      success: function () {
-   
-      }
-    });
-
-  });
+ 
   
     
     flatpickr("#datepicker-range", { mode: "range", defaultDate: new Date() });

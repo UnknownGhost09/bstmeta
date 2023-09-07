@@ -19,7 +19,7 @@
             <div class='row'>
 
                 <div class=col>
-                    <h6>Farming ROI</h6>
+                    <h6>Membership ROI</h6>
                     <div class="form-check form-switch pt-2 m-4">
                         <form action="../../../admin/manageroi" method="post">
                           {% csrf_token %}
@@ -33,7 +33,7 @@
                       </div>
                 </div>
 
-                <div class=col>
+                {% comment %} <div class=col>
                     <h6>Staking ROI</h6>
                     <div class="form-check form-switch pt-2 m-4">
                         <form action="../../../admin/manageroi" method="post">
@@ -46,7 +46,7 @@
                       {% endif %}
                       </form>
                       </div>
-                </div>
+                </div> {% endcomment %}
                 <div class=col>
                     <h6>Level Income</h6>
                     <div class="form-check form-switch pt-2 m-4">

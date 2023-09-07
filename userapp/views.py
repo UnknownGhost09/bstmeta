@@ -63,16 +63,12 @@ def home(request,pk=None):
                     #tabs        
                 total_withdrawls=sum([float(i.amount) for i in userWithdrawls.objects.filter(user_id=user.id,type='0',status='1')])
 
-                staking_roi=StakingRoiLogs.objects.filter(user_id=user.id,status='1')
 
                 smart_contract=WithdrawSettingModel.objects.get(id=1)
-                total_staking_roi=sum([float(i.roi_recieved) for i in UserStaking.objects.filter(user_id=user.id,status='1')])
-
 
                 farming_roi=FarmingRoiLogs.objects.filter(user_id=user.id)
                 total_farming_roi=sum([float(i.roi_recieved) for i in  UserMembership.objects.filter(user_id=user.id,status='1')])
 
-                staking_balance=sum([float(i.amount) for i in UserStaking.objects.filter(user_id=user.id,status='1')])
                 farming_balance=sum([float(i.amount) for i in UserMembership.objects.filter(user_id=user.id,status='1')])
 
                 userwallet=wallet.objects.get(user_id=user.id) 
@@ -93,13 +89,9 @@ def home(request,pk=None):
                         child_id=[i.referal_code for i in User.objects.filter(referal_by__in=child_id)]
                         if len(child_id)==0:
                             break
-             
                 team=len(team)
-                    
+             
                 
-                
-               
-               
                 currnet_date=str(datetime.utcnow())[:10]
     
                 newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
@@ -108,6 +100,8 @@ def home(request,pk=None):
                 except:
                     appdetail=None
 
+
+                level_income=levelincome.objects.filter(parent_id=user.id)
                 ytv=youtubevideo.objects.filter(type='1',status='1')
                 video_data=youtubevideo.objects.filter(type='2',status='1')
                 print(video_data)
@@ -119,7 +113,7 @@ def home(request,pk=None):
                     alpdata=getdata().get('data').get('last')
                 except:
                     alpdata=None
-                total_income=float(total_farming_roi)+float(total_staking_roi)+float(refferal_income)
+                total_income=float(total_farming_roi)+float(refferal_income)
 
                 # print(total_income)
                 
@@ -127,7 +121,6 @@ def home(request,pk=None):
                 return render(request,'userpages/home.html',{'total_income':total_income,
                                                              'userwallet':userwallet,
                                                              'user_refferals':user_refferals,
-                                                            'total_staking_roi':total_staking_roi,
                                                             'total_farming_roi':total_farming_roi,
                                                              'total_user_refferals':total_user_refferals,
                                                              'total_withdrawls':total_withdrawls,
@@ -139,15 +132,15 @@ def home(request,pk=None):
                                                             'appdetail':appdetail,
                                                             'ytv':ytv,
                                                             'farming_balance':farming_balance,
-                                                            'staking_balance':staking_balance,
                                                             'refferal_income':refferal_income,
                                                             'team':team,
-                                                            'staking_roi':staking_roi,
                                                             'farming_roi':farming_roi,
                                                             'userdata':user,
                                                             'video_data':video_data,
                                                             'm':m,
-                                                            'smart_contract':smart_contract
+                                                            'smart_contract':smart_contract,
+                                                            'level_income_logs':level_income,
+                                                            'level_income':sum([float(i.level_income) for i in level_income])
                                                              })
             else:
                 del request.session['email']
@@ -195,7 +188,7 @@ def register(request,pk=None):
         if password == confirmpassword:
             password=make_password(password)
         else:
-            return render(request,'userpages/register_2.html',{'message4':"Password & confirm passowrd incorrect",'appdetail':appdetail})
+            return render(request,'userpages/register_2.html',{'message1':"Password & confirm passowrd incorrect",'appdetail':appdetail})
 
         try:
             usr=User.objects.get(email=email)
@@ -204,7 +197,7 @@ def register(request,pk=None):
                 if verified=='False':
                     usr.delete()
                 else:
-                    return render(request,'userpages/register_2.html',{'message':'Email already registed','appdetail':appdetail})
+                    return render(request,'userpages/register_2.html',{'message1':'Email already registed','appdetail':appdetail})
         except:
             pass
         payload_ = {'email': email, 'exp': datetime.utcnow() + timedelta(minutes=2)}
@@ -497,7 +490,7 @@ def loginpage(request):
                 username=User.objects.get(email=em).username
             except:
                 return render(request,'userpages/login_2.html',{'message':'Incorrect Email','appdetail':appdetail})
-            usr=authenticate(email=em,password=ps)
+            usr=authenticate(username=username,password=ps)
             if usr is not None:
             
                 if usr.role == 'admin' : 
@@ -806,18 +799,118 @@ def withdrawal(request):
                 currency=request.POST.get('currency')
                 amount=request.POST.get('amount')
                 address=request.POST.get('address')
-                print(currency)
-                fees=WithdrawSettingModel.objects.get(id=1).fees
-                final_fees=(float(fees)*float(amount))/100
-                final_amount=float(amount)-final_fees
-                
-                if float(user_wallet.avaliable_balance)>=float(amount) :
-                    user_wallet.avaliable_balance=float(user_wallet.avaliable_balance)-float(amount)
-                    user_wallet.save()
-                    userWithdrawls.objects.create(user_id=user_id,wallet_id=user_wallet,amount=final_amount,fees=final_fees,address=address,currency=currency,type='0')
-                    message='Request Created Successfully'
-                else:
-                    message1='Insufficient Balance'
+                type=request.POST.get('type')
+                current_date=str(datetime.utcnow().day)
+                all_dates=smart_contract.dates
+                all_dates=all_dates.split(',')
+                if type=='all':
+                    if current_date in all_dates:
+                        fees=WithdrawSettingModel.objects.get(id=1).fees
+                        final_fees=(float(fees)*float(amount))/100
+                        final_amount=float(amount)-final_fees
+                        if float(user_wallet.avaliable_balance)>=float(amount):
+                            user_wallet.avaliable_balance=float(user_wallet.avaliable_balance)-float(amount)
+                            roi_balance=float(user_wallet.roi_balance)
+                            amount_to_deduce=float(amount)
+                            level_balance=float(user_wallet.level_balance)
+                            direct_balance=float(user_wallet.referral_balance)
+                            bonus_balance=float(user_wallet.bonus_balance)
+                            roi_log=0
+                            level_log=0
+                            direct_log=0
+                            bonus_log=0
+                            if roi_balance<amount_to_deduce:
+                                user_wallet.roi_balance=0
+                                amount_to_deduce-=roi_balance
+                                roi_log=roi_balance
+                            else:
+                                roi_log=amount_to_deduce
+                                message='Done'
+                            if level_balance <amount_to_deduce:
+                                user_wallet.level_balance=0
+                                amount_to_deduce-=level_balance
+                                level_log=level_balance
+                            else:
+                                level_log=amount_to_deduce
+                                message='Done'
+                            if direct_balance <amount_to_deduce:
+                                user_wallet.referral_balance=0
+                                amount_to_deduce-=direct_balance
+                                direct_log=direct_balance
+                            else:
+                                direct_log=amount_to_deduce
+                                message='Done'
+                            if bonus_balance<amount_to_deduce:
+                                user_wallet.bonus_balance='0'
+                                amount_to_deduce-=direct_balance
+                                bonus_log=bonus_balance
+                            else:
+                                bonus_log=amount_to_deduce
+                                message='Done'
+                            userWithdrawls.objects.create(user_id=user_id,wallet_id=user_wallet,amount=final_amount,fees=final_fees,address=address,currency=currency,type='0',direct_amount=direct_log,roi_amount=roi_log,level_amount=level_log,bonus_amount=bonus_log)
+                            
+                        else:
+                            message1='Insufficient Fund'
+                            
+                    else:
+                        message1='Please Check Date'
+                elif type=='other':
+                    if current_date in all_dates:
+                        fees=WithdrawSettingModel.objects.get(id=1).fees
+                        final_fees=(float(fees)*float(amount))/100
+                        final_amount=float(amount)-final_fees
+                        if float(user_wallet.roi_balance)+float(user_wallet.level_balance)+float(user_wallet.bonus_balance)>=float(amount):
+
+                            user_wallet.avaliable_balance=float(user_wallet.avaliable_balance)-float(amount)
+                            roi_balance=float(user_wallet.roi_balance)
+                            amount_to_deduce=float(amount)
+                            level_balance=float(user_wallet.level_balance)
+                            bonus_balance=float(user_wallet.bonus_balance)
+                            roi_log=0
+                            level_log=0
+                            bonus_log=0
+                            if roi_balance<amount_to_deduce:
+                                user_wallet.roi_balance=0
+                                amount_to_deduce-=roi_balance
+                                roi_log=roi_balance
+                            else:
+                                roi_log=amount_to_deduce
+                                message='Done'
+                            if level_balance <amount_to_deduce:
+                                user_wallet.level_balance=0
+                                amount_to_deduce-=level_balance
+                                level_log=level_balance
+                            else:
+                                level_log=amount_to_deduce
+                                message='Done'
+                            if bonus_balance<amount_to_deduce:
+                                user_wallet.bonus_balance='0'
+                                amount_to_deduce-=direct_balance
+                                bonus_log=bonus_balance
+                            else:
+                                bonus_log=amount_to_deduce
+                                message='Done'
+                            userWithdrawls.objects.create(user_id=user_id,wallet_id=user_wallet,amount=final_amount,fees=final_fees,address=address,currency=currency,type='0',roi_amount=roi_log,level_amount=level_log,bonus_amount=bonus_log)
+                        else:
+                            message1='Insufficient Fund'
+                            
+                    else:
+                        message1='Please Check Date'    
+
+                elif type=='direct':
+                    fees=WithdrawSettingModel.objects.get(id=1).fees
+                    final_fees=(float(fees)*float(amount))/100
+                    final_amount=float(amount)-final_fees
+                    if float(user_wallet.referral_balance)>=float(amount):
+                        user_wallet.avaliable_balance=float(user_wallet.avaliable_balance)-float(amount)
+                        user_wallet.referral_balance=float(user_wallet.referral_balance)-float(amount)
+                        user_wallet.save()
+                        userWithdrawls.objects.create(user_id=user_id,wallet_id=user_wallet,amount=final_amount,fees=final_fees,address=address,currency=currency,type='0',direct_amount=amount)
+                        message='Request Created Successfully'
+                    else:
+                        message1='Insufficient Balance'
+    
+       
         outcomedata=userWithdrawls.objects.filter(user_id=user_id.id,wallet_id=user_wallet.id,type='0')
         return render(request,'userpages/withdrawal.html',{'appdetail':appdetail,
                                                            'message':message,
@@ -1355,12 +1448,14 @@ def userdata(request,pk=None):
 
 def get_reffer_data(request,pk=None):
     if pk is not None:
+        print('hello')
         user_data=User.objects.get(id=pk)
-        print(user_data.email)
+      
         data=User.objects.filter(referal_by=user_data.referal_code)
-        data=UserSerial(data,many=True)
-        child_data=[{'data':i,'direct_income':
-                     sum([float(j.get('refferal_income')) for j in UserReferral.objects.filter(parent_id=i.get('id'))])} for i in data.data]
+        
+        child_data=[{'data':UserSerial(i).data,'direct_income':
+                     sum([float(j.refferal_income) for j in UserReferral.objects.filter(parent_id=i.id)])} for i in data]
+        
         if len(child_data)>0:
             
             return JsonResponse({'data':child_data,'status':1})
@@ -2287,17 +2382,20 @@ class dailyincome(APIView):
                                 if child_id.referal_by is not None:
                                 
                                     try:
-                                        parent=User.objects.get(referal_code=i.referal_by)
-                                        if parent.verified_at=='True' and parent.paid_members=='True' and parent.level_income_status=='0':
+                                        parent=User.objects.get(referal_code=child_id.referal_by)
+                                        print(parent)
+                                        if parent.verified_at=='True'  and parent.level_income_status=='1':
                                             try:
+                                                print(j)
                                                 level_id=levels.objects.get(id=j)
                                                 level_roi=next_roi/100*float(level_id.points)
-                                                levelincome.objects.create(parent_id=parent,child_id=child_id,level_id=level_id,level_income=level_roi,date=logdate)
-                                                parent_wallet=wallet.objects.get(id=parent.id)
+                                                levelincome.objects.create(parent_id=parent,child_id=i.user_id,level_id=level_id,level_income=level_roi,date=logdate)
+                                                parent_wallet=wallet.objects.get(user_id=parent.id)
                                                 parent_wallet.avaliable_balance=float(parent_wallet.avaliable_balance)+float(next_roi)
                                                 parent_wallet.level_balance=float(parent_wallet.level_balance)+float(next_roi)
                                                 parent_wallet.save()
                                                 child_id=parent
+                                                print('new_parent_id -->',child_id)
                                                 message2='Level Income Saved Successfully'
                                             except:
                                                 pass
@@ -2326,17 +2424,20 @@ class dailyincome(APIView):
                             for j in range(1,levelid+1):
                                 if child_id.referal_by is not None:
                                     try:
-                                        parent=User.objects.get(referal_code=i.referal_by)
-                                        if parent.verified_at=='True' and parent.paid_members=='True' and parent.level_income_status=='0':
+                                        parent=User.objects.get(referal_code=child_id.referal_by)
+                                        print(parent)
+                                        if parent.verified_at=='True'  and parent.level_income_status=='1':
                                             try:
+                                                print(j)
                                                 level_id=levels.objects.get(id=j)
-                                                level_roi=roi_left/100*float(level_id.points)
-                                                levelincome.objects.create(parent_id=parent,child_id=child_id,level_id=level_id,level_income=level_roi,date=logdate)
-                                                parent_wallet=wallet.objects.get(id=parent.id)
+                                                level_roi=next_roi/100*float(level_id.points)
+                                                levelincome.objects.create(parent_id=parent,child_id=i.user_id,level_id=level_id,level_income=level_roi,date=logdate)
+                                                parent_wallet=wallet.objects.get(user_id=parent.id)
                                                 parent_wallet.avaliable_balance=float(parent_wallet.avaliable_balance)+float(roi_left)
                                                 parent_wallet.level_balance=float(parent_wallet.level_balance)+float(roi_left)
                                                 parent_wallet.save()
                                                 child_id=parent
+                                                print('new_parent_id -->',child_id)
                                                 message2='Level Income Saved Successfully'
                                             except:
                                                 pass
@@ -2747,3 +2848,36 @@ def downlineteam(request):
                                                                })
     else:
         return redirect('../../../')
+
+
+def getBalance(request,pk=None):
+
+    if request.session.has_key('email')  and request.session.get('role') == 'user'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return JsonResponse({'status':0})
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return JsonResponse({'status':'0'})
+        if pk is not None:
+            val=pk
+            user_wallet=wallet.objects.get(user_id=User.objects.get(email=request.session.get('email')).id)
+            if val=='direct':
+                return JsonResponse({'status':'1','data':user_wallet.referral_balance})
+            elif val=='all':
+                return JsonResponse({'status':'1','data':user_wallet.avaliable_balance})
+            elif val=='other':
+                return JsonResponse({'status':'1','data':float(user_wallet.bonus_balance)+float(user_wallet.roi_balance)+float(user_wallet.level_balance)})
+            else:
+                return JsonResponse({'status':'0'})
+        else:
+            return JsonResponse({'status':'0'})
+    else:
+        return JsonResponse({'status':'0'})
+            

@@ -5,7 +5,6 @@ from .import views
 urlpatterns = [
     path('',views.index),
     path('dashboard',views.home,name='dashboard'),
- 
     path('forgot',views.forgot),
     path('otp',views.otp),
     path('change',views.change),
@@ -54,10 +53,7 @@ urlpatterns = [
     path('tree',views.tree),
     path('downlineteam',views.downlineteam),
     path('reset_password/<str:pk>/',views.reset_password),
-    path('newpassword',views.newpassword)
-
-    
-
-
+    path('newpassword',views.newpassword),
+    path('getBalance/<str:pk>/',views.getBalance)
 
 ]

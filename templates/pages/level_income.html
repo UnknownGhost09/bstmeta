@@ -1,0 +1,75 @@
+{% extends 'pages/sidebar.html' %}
+
+{% block content %}
+
+
+  {% load static %}
+ 
+
+
+  <div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Level Income History</h4>
+     
+  </div>
+    <div class="card-body">
+   
+      <div class="table-responsive">
+
+      <table id='test' class="table hover table-borderless dt-responsive nowrap w-100  text-nowrap">
+        <thead>
+            <tr>
+                
+                <th scope='col'>Parent Id</th>
+                <th scope='col'>Child Id</th>
+                <th scope="col">Income</th>
+                <th scope="col">Level</th>
+                <th scope='col'>Date</th>
+             
+                <th scope='col'>Status</th>
+                
+              </tr>
+        </thead>
+
+        <tbody>
+          {% for i in data %}
+        
+          <tr>
+            <td class='fw-bold planname'>{{i.parent_id.username}}</td>
+            <td class='fw-bold planname'>{{i.child_id.username}}</td>
+            <td>$ {{i.level_income|floatformat:'3'}}</td>
+          <td>{{i.level_id.id}}</td>
+            <td>{{i.date|slice:"0:19"}}</td>
+          
+
+            <td>
+                {% if i.status == '1' %}
+                  <span class='badge text-white text-bg-success p-2 rounded-pill'>Completed</span>
+                {% elif i.status == '0' %}
+                <span class='badge text-white text-bg-warning p-2 rounded-pill'>Pending</span>
+                {% endif %}
+              </td>
+  
+     
+          </tr>
+      
+          {% endfor %}
+        </tbody>
+     
+      </table>
+      </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}

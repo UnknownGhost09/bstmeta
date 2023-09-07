@@ -25,7 +25,7 @@
         <!-- App Css-->
         <link href="{% static 'assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{% static 'assets/libs/flatpickr/flatpickr.min.css' %}">
-
+        <link href="{% static 'assets/libs/choices.js/public/assets/styles/choices.min.css' %}" rel="stylesheet" type="text/css">
 
 
         <!-- preloader css -->
@@ -364,7 +364,7 @@
                             <ul class="sub-menu">
                                 <li><a href="../../../admin/login_log" data-key="t-starter-page">Login History</a></li>
                                 <li><a href="../../../admin/membership" data-key="t-starter-page">Members</a></li>
-                                
+                                <li><a href="../../../admin/level_income" data-key="t-starter-page">Level Income</a></li>
                                 <li><a href="../../../admin/internal_transfer" data-key="t-maintenance">Transfer History</a></li>
                                 <li><a href="../../../admin/deposite_history" data-key="t-starter-page">Deposit History</a></li>
                                 <li><a href="../../../admin/withdraw_history" data-key="t-starter-page">Withdraw History</a></li>
@@ -412,8 +412,8 @@
                     </a>
                     <ul class="sub-menu">
                         <li><a href="../../../admin/app" data-key="t-starter-page">App Detail</a></li>
-                        <li><a href="../../../admin/gallery" data-key="t-maintenance">Gallery</a></li>
-                        <li><a href="../../../admin/ytvedio" data-key="t-maintenance">Plan video</a></li>
+                        {% comment %} <li><a href="../../../admin/gallery" data-key="t-maintenance">Gallery</a></li>
+                        <li><a href="../../../admin/ytvedio" data-key="t-maintenance">Plan video</a></li> {% endcomment %}
                         <li><a href="../../../admin/manageroi" data-key="t-maintenance">Manage ROI</a></li>
                         <li><a href="../../../admin/withdraw_settings" data-key="t-maintenance">Withdrawal</a></li>
                         <li><a href="../../../admin/smart_contract" data-key="t-maintenance">BSC Smart Contract</a></li>
@@ -626,7 +626,7 @@
         <script src="{% static 'assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js' %}"></script>
         <!-- dashboard init -->
         <script src="{% static 'assets/js/app.js' %}"></script>
-
+       
        
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

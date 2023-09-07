@@ -223,7 +223,7 @@
                             <div class="d-flex gap-2 my-2">
                               <p class="text-white mb-0 fw-semibold">Membership Status</p>
                               <p class="text-white mb-0 text-opacity-75">
-                                {% if user.user.paid_members == 'True' %}
+                                {% if user.paid_members == 'True' %}
                     <span class='badge text-white text-bg-success p-2 rounded-pill'>Active</span>
                    {% else %}
                    <span class='badge text-white text-bg-warning p-2 rounded-pill'>Inactive</span>
