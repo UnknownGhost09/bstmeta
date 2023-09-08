@@ -13,10 +13,10 @@
           >
             <div class="card-header rounded-4">
               <h4 class="card-title">Membership Plans</h4>
-              <p class="card-title-desc pb-2">
+              <p class="card-title-desc pb-2 planname1">
                 Buy any plan to become a verified member.
               </p>
-              <p class="card-title-desc">
+              <p class="card-title-desc planname1">
                 Note : User can only deposite multiple of 50 USDT.
               </p>
             </div>
@@ -60,15 +60,15 @@
                   <tbody>
                     {% for i in data%}
                     <tr>
-                      <td class="fw-bold planname">{{i.name}}</td>
-                      <td>$ {{i.min_amount}}</td>
-                      {% if i.max_amount %}
-                      <td>$ {{i.max_amount}}</td>
+                      <td class="fw-bold planname">{{i.data.name}}</td>
+                      <td>$ {{i.data.min_amount}}</td>
+                      {% if i.data.max_amount %}
+                      <td>$ {{i.data.max_amount}}</td>
                       {% else %}
                       <td>Above</td>
                       {% endif %}
-                      <td>{{i.roi}} %</td>
-                      <td>{{i.overall_roi}} %</td>
+                      <td>{{i.data.roi}} %</td>
+                      <td>{{i.data.overall_roi}} %</td>
 
                       <td>
                         <button
@@ -91,10 +91,10 @@
                             <div class="modal-content">
                               <div class="modal-header">
                                 <h5
-                                  class="modal-title"
+                                  class="modal-title planname1"
                                   id="exampleModalToggleLabel"
                                 >
-                                  Enter Amount
+                                  Buy This Plan
                                 </h5>
                                 <button
                                   type="button"
@@ -111,20 +111,20 @@
                                     type="text"
                                     name="id"
                                     hidden
-                                    value="{{i.id}}"
+                                    value="{{i.data.id}}"
                                   />
                                   <div class="mb-3">
                                     <label
-                                      class="form-label"
+                                      class="font-size-13"
                                       for="formrow-firstname-input"
                                       >Enter Amount</label
                                     >
-                                    {% if i.max_amount %}
+                                    {% if i.data.max_amount %}
                                     <input
                                       type="number"
                                       class="form-control"
                                       id="formrow-firstname-input"
-                                      placeholder="$ {{i.min_amount}}  -  $ {{i.max_amount}}"
+                                      placeholder="$ {{i.data.min_amount}}  -  $ {{i.data.max_amount}}"
                                       name="amount"
                                     />
                                     {% else %}
@@ -133,11 +133,23 @@
                                       type="number"
                                       class="form-control"
                                       id="formrow-firstname-input"
-                                      placeholder="$ {{i.min_amount}}  -  Above"
+                                      placeholder="$ {{i.data.min_amount}}  -  Above"
                                       name="amount"
                                     />
                                     {% endif %}
                                   </div>
+
+                                  <div class="">
+                                                    <div class="mb-3">
+                                                        <label for="choices-single-no-search" class=" font-size-13 ">Category
+                                                          </label>
+                                                        <select class="form-control"  id="choices-single-no-search" name='category'>
+                                                          {% for j in i.category %}
+                                                            <option value="{{j.id}}">{{j.name}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
 
                                   <div class="mt-4">
                                     <button
@@ -148,10 +160,28 @@
                                       BUY
                                     </button>
                                   </div>
-                                  <p class="p-2 fw-bold planname">
+                                  <p class="p-2 fw-bold planname1">
                                     Note* : User can only enter amount multiple
                                     of 50 USDT
                                   </p>
+
+                                  <div class="mt-4">
+                                    <h5 class="font-size-13 mb-2">Categories Price Range</h5>
+                                    <div class=" p-3 text-center">
+                                        <div class="row " >
+                                          {% for j in i.category %}
+                                            <div class="col-sm-4">
+                                                <div class="bg-light bg-opacity-25 rounded-3 p-3">
+                                                    <code class='planname1 font-size-13' >{{j.name}}</code>
+                                                    <p class='pt-2 mb-0'>${{j.min_amount}} - ${{j.max_amount}}</p>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                           
+                                           
+                                        </div>
+                                    </div>
+                                </div>
                                 </form>
                               </div>
                             </div>

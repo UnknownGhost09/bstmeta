@@ -37,11 +37,20 @@
             <td>{{i.currency}}</td>
             <td>{{i.address}}</td>
             {% if i.status == '0' %}
-            <td>Pending</td>
+            <td> <span
+              class="badge text-bg-warning p-2 rounded-3"
+              >Pending</span
+            ></td>
             {% elif i.status == '1' %}
-            <td>Completed</td>
+            <td> <span
+              class="badge text-bg-success p-2 rounded-3"
+              >Completed</span
+            ></td>
             {% else %}
-            <td> Canceled</td>
+            <td> <span
+              class="badge text-bg-danger p-2 rounded-3"
+              >Canceled</span
+            ></td>
             {% endif %}
             <td>{{i.date}}</td>
             <td><a href='../../../admin/users/{{i.user_id.id}}' class="h4 text-secondary"><i class="fas fa-arrow-alt-circle-right text-primary"></i></a> </td>

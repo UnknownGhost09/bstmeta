@@ -16,7 +16,7 @@
       <div class="container-fluid">
 
         <div class="card-header">
-          <h4 class="card-title">Membership Plans</h4>
+          <h4 class="card-title">{{category_name}}</h4>
          
       </div>
       
@@ -24,13 +24,13 @@
             <div class="card-body">
                 <div class='d-flex justify-content-between align-items-center'>
               
-              <button class='btn bg-primary'  data-bs-toggle="modal" data-bs-target="#exampleModal">Add Package</button>
+              <button class='btn bg-primary'  data-bs-toggle="modal" data-bs-target="#exampleModal">Add Category</button>
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
                   <div class='d-flex justify-content-between align-items-center'>
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Add Package</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Add Category</h1>
                  
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   
@@ -38,50 +38,36 @@
               </div>
                 <div class="modal-body row mb-3">
 
-
-                  
+  
 
                       <form action="../../../admin/packages" method="post">
                           {% csrf_token %}
                            
-                          
+                          <input type='text' required hidden name='plan_id' value="{{plan_id}}">
 
                           <div class="mb-3">
-                            <label class="form-label" for="formrow-firstname-input">Package Name</label>
+                            <label class="form-label" for="formrow-firstname-input">Category Name</label>
                             <input type="text" class="form-control" id="formrow-firstname-input"  name='name'>
                         </div>
                           <div class='row'>
                             <div class='col-6'>
                           <div class="mb-3">
-                              <label class="form-label" for="formrow-firstname-input">Min Investvemt</label>
+                              <label class="form-label" for="formrow-firstname-input">Min Criteria</label>
                               <input type="number" class="form-control" id="formrow-firstname-input"  name='min'>
                           </div>
                         </div>
                         <div class='col-6'>
                           <div class="mb-3">
-                            <label class="form-label" for="formrow-firstname-input">Max Investment</label>
+                            <label class="form-label" for="formrow-firstname-input">Max Criteria</label>
                             <input type="number" class="form-control" id="formrow-firstname-input"  name='max'>
                         </div>
                       </div>
                     </div>
-                    <div class='row'>
-                      <div class='col-6'>
-                        <div class="mb-3">
-                          <label class="form-label" for="formrow-firstname-input">ROI per day (%)</label>
-                          <input type="number" class="form-control" id="formrow-firstname-input"  name='roi'>
-                      </div>
-                    </div>
-                    <div class='col-6'>
-                      <div class="mb-3">
-                        <label class="form-label" for="formrow-firstname-input">Overall ROI (%)</label>
-                        <input type="number" class="form-control" id="formrow-firstname-input"  name='overall'>
-                    </div>
-                  </div>
-                </div>
+              
    
       
                           <div class="mt-4">
-                              <button type="submit" class="btn btn-primary w-md" name='addpackage'>Submit</button>
+                              <button type="submit" class="btn btn-primary w-md" name='addsubpackage'>Submit</button>
                           </div>
 
 
@@ -108,45 +94,35 @@
                 <thead>
                   <tr>
                     <th scope='col'>Plan Name</th>
-                    
-                    <th scope="col">Minimum Investment</th>
-                    <th scope="col">Maximum Investment</th>
-                    <th scope='col'>ROI per day</th>
-                    <th scope="col">Overall ROI</th>
+                    <th scope="col">Minimum Criteria</th>
+                    <th scope="col">Maximum Criteria</th>
                     <th scope='col'>Action</th>
-                    <th scope='col'>View</th>
                   </tr>
                 </thead>
                 <tbody>
-                    {% for i in memberships %}
+                    {% for i in data %}
                   <tr>
                  
                     <td class='fw-bold planname'>{{i.name}}</td>
                     <td>$ {{i.min_amount}}</td>
-                    {% if i.max_amount %}
                     <td>$ {{i.max_amount}}</td>
-                    {% else %}
-                    <td>Above</td>
-                    {% endif %}
-                    <td>{{i.roi}} %</td>
-                    <td>{{i.overall_roi}} %</td>
                     <td> <button class='btn bg-primary'  data-bs-toggle="modal" data-bs-target="#edit{{i.id}}" title='edit'><i class=' fas fa-pencil'></i></button>
                         <div class="modal fade" id="edit{{i.id}}" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Service</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Category</h1>
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
                                       <div class="modal-body row mb-3">
                                 
                                             <form action="../../../admin/packages" method="post">
                                                 {% csrf_token %}
-                                                <input type="text" class="form-control " name="plan_id" hidden value="{{plan_name.id}}">
+                                                <input type='text' required hidden name='plan_id' value="{{plan_id}}">
                                                 <div class="mb-3">
                                                   <input type='text' hidden name='id' value="{{i.id}}">
 
-                                                  <label class="form-label" for="formrow-firstname-input">Package Name</label>
+                                                  <label class="form-label" for="formrow-firstname-input">Catefory Name</label>
                                                   <input type="text" class="form-control" id="formrow-firstname-input"  value="{{i.name}}" name='name'>
                                               </div>
 
@@ -154,35 +130,22 @@
                                               <div class='row'>
                                                 <div class='col-6'>
                                               <div class="mb-3">
-                                                  <label class="form-label" for="formrow-firstname-input">Min Investvemt</label>
+                                                  <label class="form-label" for="formrow-firstname-input">Min Criteria</label>
                                                   <input type="number" class="form-control" id="formrow-firstname-input" value="{{i.min_amount}}"  name='min'>
                                               </div>
                                             </div>
                                             <div class='col-6'>
                                               <div class="mb-3">
-                                                <label class="form-label" for="formrow-firstname-input">Max Investment (optional)</label>
+                                                <label class="form-label" for="formrow-firstname-input">Max Criteria</label>
                                                 <input type="number" class="form-control" id="formrow-firstname-input" value="{{i.max_amount}}"  name='max'>
                                             </div>
                                           </div>
                                         </div>
 
-                                        <div class='row'>
-                                          <div class='col-6'>
-                                            <div class="mb-3">
-                                              <label class="form-label" for="formrow-firstname-input">ROI per day</label>
-                                              <input type="number" class="form-control" id="formrow-firstname-input" value="{{i.roi}}" name='roi'>
-                                          </div>
-                                        </div>
-                                        <div class='col-6'>
-                                          <div class="mb-3">
-                                            <label class="form-label" for="formrow-firstname-input">Overall ROI</label>
-                                            <input type="number" class="form-control" id="formrow-firstname-input" value="{{i.overall_roi}}" name='overall'>
-                                        </div>
-                                      </div>
-                                    </div>
+        
 
                                     <div class="mt-4">
-                                      <button type="submit" class="btn btn-primary w-md" name='editpackage'>Submit</button>
+                                      <button type="submit" class="btn btn-primary w-md" name='editcategory'>Submit</button>
                                   </div>
 
                                                 </form>
@@ -205,6 +168,8 @@
                                 
                                             <form action="../../../admin/packages" method="post">
                                                 {% csrf_token %}
+
+                                                <input type='text' required hidden name='plan_id' value="{{plan_id}}">
                                                 <div class="row mb-3 gap-1">
                                                     <div class="col-sm-10 w-100">
                                                       <input type="text" class="form-control " name="plan_id" hidden value="{{plan_name.id}}">
@@ -214,7 +179,7 @@
                                                      <div class="row mb-3">
                                 
                                                   <div class="col-sm-10">
-                                                    <button type="submit" class="btn bg-danger" name="deletepackage">Delete</button>
+                                                    <button type="submit" class="btn bg-danger" name="deletecategory">Delete</button>
                                                     <button type="submit" class="btn bg-primary" name="close" data-bs-dismiss="modal">Cancel</button>
                                                   </div>
                                                                                        
@@ -229,7 +194,8 @@
                                       
                                     
                                     </td>
-                                    <td><a href='../../../admin/packages/{{i.id}}'><i class=" fas fa-eye"></i></a></td>
+                   
+      
                   </tr>
                   {% endfor %}
                 

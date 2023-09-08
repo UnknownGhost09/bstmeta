@@ -56,7 +56,8 @@ urlpatterns = [
     path('smart_contract',views.smart_contract),
     path('topup_history',views.topup_history),
     path('change_sponser',views.change_sponser),
-    path('level_income',views.level_income)
+    path('level_income',views.level_income),
+    path('tree/<str:pk>/',views.tree)
    
 
 ]

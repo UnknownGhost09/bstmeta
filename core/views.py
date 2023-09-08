@@ -3,7 +3,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
 User=get_user_model()
 from django.contrib.auth import authenticate
-from .models import levels,Rank,userRank,wallet,Transactions,UserReferral,Current_level,Login_history,status_activity,Emailservice,membership,UserMembership,userWithdrawls,WithdrawSettingModel,TicketModel,plansmodel,newsmodel,appsettings,levelincome,UserAddressDetail,UserStaking,gallaryimages,Ptransfer,youtubevideo,cofounderclub,usercofounderclub,ManageRoi,changesponserlogs
+from .models import levels,Rank,userRank,wallet,Transactions,UserReferral,Current_level,Login_history,status_activity,Emailservice,membership,UserMembership,userWithdrawls,WithdrawSettingModel,TicketModel,plansmodel,newsmodel,appsettings,levelincome,UserAddressDetail,UserStaking,gallaryimages,Ptransfer,youtubevideo,cofounderclub,usercofounderclub,ManageRoi,changesponserlogs,categorymodel
 from django.http import JsonResponse
 from django.conf import settings
 KEYS = getattr(settings, "KEY_", None)
@@ -49,6 +49,8 @@ def home(request,pk=None):
         current_date=str(datetime.utcnow())[:10]
         recent_join=User.objects.filter(status='1',verified_at='True',created_at__contains=current_date)
         recent_withdrawls=userWithdrawls.objects.filter(status='1',date__contains=current_date,type='0')
+        print('recent withdrawls-->',recent_withdrawls)
+        print('current date',current_date)
         recent_deposits=userWithdrawls.objects.filter(status='1',date__contains=current_date,type='1')
         pending_deposit=userWithdrawls.objects.filter(status='0',type='1',date__contains=current_date)
         pending_withdrawls=userWithdrawls.objects.filter(status='0',type='0',date__contains=current_date)
@@ -785,10 +787,25 @@ def packages(request,pk=None):
             return redirect('../../../')
         message=None
         message1=None
+        u=User.objects.get(email=request.session.get('email'))
+
+
         try:
             appdetail=appsettings.objects.get(status='1')
         except:
             appdetail=None
+
+        if pk is not None:
+            
+            data=categorymodel.objects.filter(plan_id=pk)
+            
+            category_name=membership.objects.get(id=pk)
+            return render(request,'pages/packagedetail.html',{'data':data,
+                                                     'message':message,
+                                                     'message1':message1,'u':u,
+                                                     'appdetail':appdetail,
+                                                     'category_name':category_name.name,
+                                                     'plan_id':category_name.id})
         if request.method=='POST':
             
             if 'editpackage' in request.POST:
@@ -826,9 +843,82 @@ def packages(request,pk=None):
                 max=request.POST.get('max')
                 roi=request.POST.get('roi')
                 overall=request.POST.get('overall')
-                obj=membership.objects.create(name=name,min_amount=min,max_amount=max,roi=roi,overall_roi=overall)
+                membership.objects.create(name=name,min_amount=min,max_amount=max,roi=roi,overall_roi=overall)
                 message='data created successfully'
-            u=User.objects.get(email=request.session.get('email'))
+            elif 'addsubpackage' in request.POST:
+                name=request.POST.get('name')
+                min_=request.POST.get('min')
+                max_=request.POST.get('max')
+                plan_id=request.POST.get('plan_id')
+                category_name=membership.objects.get(id=plan_id)
+                if float(min_)>=float(category_name.min_amount) and float(max_)<=float(category_name.max_amount):
+                    categorymodel.objects.create(plan_id=category_name,name=name,min_amount=min_,max_amount=max_)
+                    message='Created Successfully'
+                else:
+                    message1='Mix-Max Criteria is not Correct'
+                data=categorymodel.objects.filter(plan_id=plan_id)
+            
+                
+                return render(request,'pages/packagedetail.html',{'data':data,
+                                                     'message':message,
+                                                     'message1':message1,'u':u,
+                                                     'appdetail':appdetail,
+                                                     'category_name':category_name.name,
+                                                     'message':message,
+                                                     'plan_id':category_name.id})
+            elif 'deletecategory' in request.POST:
+                id=request.POST.get('id')
+                obj=membership.objects.get(id=id)
+                obj.status='0'
+                obj.save()
+                message='data deleted successfully'
+                plan_id=request.POST.get('plan_id')
+                data=categorymodel.objects.filter(plan_id=plan_id)
+            
+                
+                return render(request,'pages/packagedetail.html',{'data':data,
+                                                     'message':message,
+                                                     'message1':message1,'u':u,
+                                                     'appdetail':appdetail,
+                                                     'category_name':category_name.name,
+                                                     'message':message,
+                                                     'plan_id':category_name.id})
+
+            elif 'editcategory' in request.POST:
+                name=request.POST.get('name')
+                min_=request.POST.get('min')
+                max_=request.POST.get('max')
+                id=request.POST.get('id')
+                plan_id=request.POST.get('plan_id')
+                category_name=membership.objects.get(id=plan_id)
+                category=categorymodel.objects.get(id=id)
+                category.name=name
+                print(min_)
+                print(category_name.min_amount)
+                print(max_)
+                print(category_name.max_amount)
+                if float(min_)<float(category_name.min_amount):
+                    message1='Min Criteria is not correct'
+                elif float(max_)>float(category_name.max_amount):
+                    message1='Max Criteria is not correct'
+                else:
+                    category.name=name
+                    category.min_amount=min_
+                    category.max_amount=max_
+                    category.save()
+                data=categorymodel.objects.filter(plan_id=plan_id)
+            
+                
+                return render(request,'pages/packagedetail.html',{'data':data,
+                                                     'message':message,
+                                                     'message1':message1,'u':u,
+                                                     'appdetail':appdetail,
+                                                     'category_name':category_name.name,
+                                                     'message':message,
+                                                     'plan_id':category_name.id})
+
+                
+            
             
             obj=membership.objects.filter(status='1')
       
@@ -864,9 +954,7 @@ def referral_users(request):
             except:
                 pass
             return redirect('../../../')
-        obj=[i.id for i in User.objects.filter(referal_by=None)]
-        usr_refferal=UserReferral.objects.filter(parent_id__in=obj)
-        unique_parent_id=set([i.parent_id for i in usr_refferal])
+       
         u=User.objects.get(email=request.session.get('email')) 
         try:
             appdetail=appsettings.objects.get(status='1')
@@ -874,9 +962,11 @@ def referral_users(request):
             appdetail=None
 
 
-        data=[{'parent_id':i,'level_income':sum([float(i.level_income) for i in levelincome.objects.filter(parent_id=i.id)]),
-              'direct_ref_income':sum([float(i.refferal_income) for i in UserReferral.objects.filter(parent_id=i.id)]) } for i in unique_parent_id]
-
+        
+        data=User.objects.filter(verified_at='True',referal_by=None)
+        data=[{'data':i,'direct_income':
+                     sum([float(j.refferal_income) for j in UserReferral.objects.filter(parent_id=i.id)])} for i in data]
+           
                 
         return render(request,'pages/referral_users.html',{'data':data,'u':u,'appdetail':appdetail})
     else:
@@ -915,6 +1005,13 @@ def withdraw_manage(request):
                 user_id=User.objects.get(id=usr_id)
                 wallet_id=wallet.objects.get(user_id=user_id.id)
                 wallet_id.avaliable_balance=float(obj.amount)+float(wallet_id.avaliable_balance)+float(obj.fees)
+                wallet_id.roi_balance=float(wallet_id.roi_balance)+float(obj.roi_amount)
+                wallet_id.level_balance=float(wallet_id.level_balance)+float(obj.level_amount)
+                wallet_id.bonus_balance=float(wallet_id.bonus_balance)+float(obj.bonus_amount)
+                wallet_id.deposit_balance=float(wallet_id.deposit_balance)+float(obj.deposit_amount)
+                wallet_id.topup_balance=float(wallet_id.topup_balance)+float(obj.topup_amount)
+                wallet_id.reserved_balance=float(wallet_id.reserved_balance)+float(obj.transfer_amount)
+                wallet_id.referral_balance=float(wallet_id.referral_balance)+float(obj.direct_amount)
                 wallet_id.save()
                 
                 obj.save()
@@ -1713,7 +1810,7 @@ def addfund(request,pk=None):
                 amount=request.POST.get('amount')
                 usr_wallet=wallet.objects.get(user_id=id)
                 usr_wallet.avaliable_balance=float(usr_wallet.avaliable_balance)+float(amount)
-
+                usr_wallet.topup_balance=float(usr_wallet.topup_balance)+float(amount)
                 usr_wallet.save()
                 Transactions.objects.create(user_id=User.objects.get(id=id),wallet_id=usr_wallet,amount=amount,type='1',status='1',created_at=datetime.utcnow())
                 message='Fund Added'
@@ -2058,3 +2155,43 @@ def level_income(request):
     else:
         return redirect('../../../')
     
+
+def tree(request,pk=None):
+    if request.session.has_key('email')  and request.session.get('role') == 'admin'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return redirect('../../../')
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return redirect('../../../')
+        if pk is not None:
+            message=None
+            try:
+                u=User.objects.get(email=request.session.get('email'))
+            except:
+                return redirect('../../../admin/dashboard')
+            try:
+                appdetail=appsettings.objects.get(status='1')
+            except:
+                appdetail=None
+        
+            usr=User.objects.get(id=pk)
+            usr_ref_income=   sum([float(i.refferal_income) for i in UserReferral.objects.filter(parent_id=usr.id)])  
+            message=None
+  
+            data=User.objects.filter(referal_by=usr.referal_code)
+            child_data=[{'data':i,'direct_income':
+                     sum([float(j.refferal_income) for j in UserReferral.objects.filter(parent_id=i.id)])} for i in data]
+           
+    
+            return render(request,'pages/tree.html',{'u':u,'appdetail':appdetail,'data':child_data,'usr_ref_income':usr_ref_income,'usr':usr,'message':message})
+        else:
+            return redirect('../../../admin/dashboard')
+    else:
+        return redirect('../../../')

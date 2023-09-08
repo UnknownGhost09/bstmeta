@@ -85,6 +85,16 @@ class membership(models.Model):
     min_amount=models.CharField(max_length=100,default='50')
     max_amount=models.CharField(max_length=100,null=True)
     overall_roi=models.CharField(max_length=200,default='0')
+    
+
+
+
+class categorymodel(models.Model):
+    plan_id=models.ForeignKey("core.membership", db_column='plan_id', on_delete=models.CASCADE)
+    name=models.CharField(max_length=250)
+    min_amount=models.CharField(max_length=250)
+    max_amount=models.CharField(max_length=250)
+    status=models.CharField(max_length=100,default='1')
 
 
 class gallaryimages(models.Model):
@@ -96,6 +106,7 @@ class gallaryimages(models.Model):
 class UserMembership(models.Model):
     user_id=models.ForeignKey("core.User", db_column='user_id', on_delete=models.CASCADE)
     plan_id=models.ForeignKey("core.membership", db_column='plan_id', on_delete=models.CASCADE)
+    c_id=models.ForeignKey("core.categorymodel", db_column='c_id', on_delete=models.CASCADE,default='1')
     amount=models.CharField(max_length=200)
     date=models.CharField(max_length=200,default=datetime.utcnow())
     status=models.CharField(max_length=200,default='0')
@@ -287,7 +298,10 @@ class userWithdrawls(models.Model):
     roi_amount=models.CharField(max_length=200,default='0')
     level_amount=models.CharField(max_length=250,default='0')
     direct_amount=models.CharField(max_length=250,default='0')
-    bonus_amount=models.CharField(max_length=250,default='250')
+    bonus_amount=models.CharField(max_length=250,default='0')
+    transfer_amount=models.CharField(max_length=250,default='0')
+    deposit_amount=models.CharField(max_length=250,default='0')
+    topup_amount=models.CharField(max_length=250,default='0')
 
 
 

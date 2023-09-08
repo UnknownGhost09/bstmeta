@@ -19,23 +19,38 @@
           <tr >
             
             <th>Name</th>
-            <th>Level Income</th>
+            <th>Total Business</th>
             <th>Refferal Income</th>
             <th>Email</th>
             <th>Created At</th>
+            <th>Account Status</th>
+            <th>View</th>
             
           </tr>
       </thead>
   
       <tbody>
         {% for i in data %}
-          <tr data-bs-toggle="collapse" data-bs-target="#demo{{i.parent_id.id}}" class="accordion-toggle childItem"  data-pid="{{ i.parent_id.id }}" data-id="{{ i.parent_id.id }}">
+          <tr >
              
-              <td>{{i.parent_id.username}}</td>
-              <td>$ {{i.level_income}}</td>
-              <td>$ {{i.direct_ref_income}}</td>
-              <td>{{i.parent_id.email}}</td>
-              <td>{{i.parent_id.created_at}}</td>
+              <td>{{i.data.username}}</td>
+              <td>$ {{i.data.business}}</td>
+              <td>$ {{i.direct_income}}</td>
+              <td>{{i.data.email}}</td>
+              <td>{{i.data.created_at}}</td>
+              <td>{% if i.data.status == '1' %}
+                <span
+                class="badge text-bg-success p-2 rounded-3"
+                >Active</span
+              >
+                {%else%}
+                <span
+                class="badge text-bg-warning p-2 rounded-3"
+                >Inactive</span
+              >
+                {%endif %}
+              </td>
+          <td><a href='../../../admin/tree/{{i.data.id}}'><i class='fas fa-eye text-primary'></i></a></td>
 
               
           </tr>
@@ -54,112 +69,6 @@
 </div>
 </div>
 
-    <script>
 
-
-
-      $(document.body).on('click','.childItem',function(){
-    
-            var pid = $(this).attr('data-pid');
-          
-            var id  = $(this).attr('data-id')
-            var ref = $(this);
-           
-            console.log(pid);
-    
-            $.ajax({
-              type: 'GET',      
-              url: '../../../admin/get_refferal/'+`${pid}`,  
-              success: function (data) {
-                var ar = [];
-                var ar1 = [];
-              
-                if(data.status == 1){
-                
-                  $.each(data.data, function(key,data){
-                    let v=`<tr data-bs-toggle="collapse" data-bs-target="#demo${data.parent_id}" class="accordion-toggle childItem" data-uid="${data.parent_id.id}" data-pid="${data.parent_id.id}" data-id="${data.parent_id.id}">
-
-                       <td>${data.parent_id.username}</td>
-                       <td>${data.level_income}</td>
-                       <td>${data.direct_ref_income}</td>
-            
-                       <td>${data.parent_id.email}</td>
-                       <td>${data.parent_id.created_at}</td>
-                       
-                       
-                   </tr>`;
-                    ar.push(v);
-               
-                  });
-                  if ($(`#demo${id}`).length) {
-
-                      
-                 
-                          $(`#collapseOne-${id}`).remove();  
-                    
-                } else {
-                  console.log('hello else part')
-                  $(`#collapseOne-${id}`).remove();
-                  let collapse=`
-                    <tr class="accordian-body collapse show" id="demo${id}">
-                      <td colspan="12" class="hiddenRow">
-                        <div > 
-                        <table  class="table hover table-borderless dt-responsive nowrap w-100  text-nowrap">
-                                <thead>
-                                  <tr class="info">      
-                                  
-            
-                                      <th>Name</th>
-                                      <th>Level Income</th>
-                                      <th>Refferal Income</th>
-                           
-                                      <th>Email</th>
-                                      <th>Created At</th>
-                                      
-                                    
-                                  </tr>
-                                </thead>	
-                                ${ar.join('')}
-                                <tbody>
-                                </tbody>
-                              </table>
-                            </div>
-                          </td>`;
-                  
-                  $(`#collapseOne-${id}`).remove();
-                  ref.after(collapse);
-                }
-    
-      } else{
-        if ($(`#collapseOne-${id}`).length) {
-          ar.push(`<div>No team Yet</div>`);
-          
-          $(`#collapseOne-${id}`).remove();
-          console.log("hello if part 2")
-          
-    
-        }
-        else{
-          console.log("hello else part 2")
-          ar.push(`<div>No team Yet</div>`);
-          let collapse = ` <div id="collapseOne-${id}" class="accordion-collapse collapse show" data-bs-parent="#accordion-${id}">
-            <div class="accordion-body">
-              ${ar.join('')}
-            </div>
-          </div>`;
-          console.log(ar);
-          $(`#collapseOne-${id}`).remove();
-          ref.after(collapse);
-        }
-        
-      }
-    },
-      error: function () {
-      }
-      });
-    
-        
-      }) 
-    </script>
 
 {% endblock %}

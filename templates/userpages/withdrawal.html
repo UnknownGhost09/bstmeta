@@ -6,8 +6,9 @@
     
       <div class="card-header mt-4">
         <h4 class="card-title">Withdraw Fund</h4>
-        <p class='pt-2 fw-bold planname'>Note* : User can only withdraw Refferal Income Daily.</p>
-        <p class='fw-bold planname'>Note* : User can withdraw other incomes only in {{smart_contract.dates}} in Every Month.</p>
+        <p class='pt-2 fw-bold planname1'>Note* : You can only withdraw Refferal Income Daily.</p>
+        <p class='fw-bold planname1'>Note* : You can withdraw other incomes only in {{smart_contract.dates}} in Every Month.</p>
+        <p class='fw-bold planname1'>Note* : You can withdraw  ${{settings.min_amount}} - ${{settings.max_amount}} at a time.</p>
       </div>
       <div class="card bg-black bg-opacity-25 border border-white shadow-lg border-opacity-25 mt-4 rounded-4 pb-5 mb-5">
         <div class="card-body">
@@ -51,7 +52,7 @@
                           <a id='bal'
                             href="#"
                             class="text-reset text-decoration-underline"
-                            >${{walletdata.avaliable_balance|floatformat:"2"}}</a
+                            >${{walletdata.referral_balance|floatformat:"2"}}</a
                           >
                         </h5>
                       </div>
@@ -62,7 +63,7 @@
                           <div class="form-group mb-3">
                             <label>Withdrawal From :</label>
                             <select class="form-select bg-dark bg-opacity-10 border border-white shadow-lg border-opacity-25 rounded-4" id='withdrawlfrom' name='type'>
-                              <option value='all' class='withdrawlfrom'>ALL</option>
+                              
                               <option value='direct' class='withdrawlfrom'>Direct Income</option>
                               <option value='other' class='withdrawlfrom'>Other Incomes</option>
                             </select>
@@ -155,8 +156,8 @@
                       <tbody>
                         {% for i in outcomedata %}
                         <tr>
-                          <td>{{i.amount}}</td>
-                          <td>{{i.fees}}</td>
+                          <td>${{i.amount}}</td>
+                          <td>${{i.fees}}</td>
                           <td>{{i.currency}}</td>
                           <td>{{i.address}}</td>
                           {% if i.status == '0' %}

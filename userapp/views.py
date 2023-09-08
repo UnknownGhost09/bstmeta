@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerial,VerifySerial
 from core.serializer import UserReferral,referserial
-from core.models import Current_level,Rank,userRank,wallet,Transactions,membership,Login_history,UserMembership,userWithdrawls,TicketModel,UserReferral,plansmodel,levels,Emailservice,newsmodel,appsettings,UserAddressDetail,levelincome,userunlockedlevel,UserStaking,Ptransfer,gallaryimages,FarmingRoiLogs,StakingRoiLogs,youtubevideo,businesslogs,usercofounderclub,cofounderclub,ManageRoi,WithdrawSettingModel
+from core.models import Current_level,Rank,userRank,wallet,Transactions,membership,Login_history,UserMembership,userWithdrawls,TicketModel,UserReferral,plansmodel,levels,Emailservice,newsmodel,appsettings,UserAddressDetail,levelincome,userunlockedlevel,UserStaking,Ptransfer,gallaryimages,FarmingRoiLogs,StakingRoiLogs,youtubevideo,businesslogs,usercofounderclub,cofounderclub,ManageRoi,WithdrawSettingModel,categorymodel
 from django.contrib.auth.hashers import make_password
 import jwt
 from datetime import datetime
@@ -535,7 +535,10 @@ def loginpage(request):
                 
                 else:
                     return render(request, 'userpages/login_2.html',
-                            {'message':'Email or password incorrect','appdetail':appdetail})
+                            {'message1':'Email or password incorrect','appdetail':appdetail})
+            else:
+                return render(request, 'userpages/login_2.html',
+                            {'message1':'Email or password incorrect','appdetail':appdetail})
             
         return render(request,'userpages/login_2.html',{'appdetail':appdetail})
 
@@ -794,121 +797,167 @@ def withdrawal(request):
         user_id=User.objects.get(email=request.session.get('email'))
         user_wallet=wallet.objects.get(user_id=user_id.id)
         smart_contract=WithdrawSettingModel.objects.get(id=1)
+        setting=WithdrawSettingModel.objects.all()[0]
         if request.method=='POST':
             if 'withdraw' in request.POST:
                 currency=request.POST.get('currency')
+                if currency is None:
+                    currency='USDT'
                 amount=request.POST.get('amount')
                 address=request.POST.get('address')
-                type=request.POST.get('type')
+                type_=request.POST.get('type')
                 current_date=str(datetime.utcnow().day)
                 all_dates=smart_contract.dates
                 all_dates=all_dates.split(',')
-                if type=='all':
+                
+                if type_=='other':
                     if current_date in all_dates:
                         fees=WithdrawSettingModel.objects.get(id=1).fees
                         final_fees=(float(fees)*float(amount))/100
                         final_amount=float(amount)-final_fees
-                        if float(user_wallet.avaliable_balance)>=float(amount):
-                            user_wallet.avaliable_balance=float(user_wallet.avaliable_balance)-float(amount)
-                            roi_balance=float(user_wallet.roi_balance)
-                            amount_to_deduce=float(amount)
-                            level_balance=float(user_wallet.level_balance)
-                            direct_balance=float(user_wallet.referral_balance)
-                            bonus_balance=float(user_wallet.bonus_balance)
-                            roi_log=0
-                            level_log=0
-                            direct_log=0
-                            bonus_log=0
-                            if roi_balance<amount_to_deduce:
-                                user_wallet.roi_balance=0
-                                amount_to_deduce-=roi_balance
-                                roi_log=roi_balance
-                            else:
-                                roi_log=amount_to_deduce
-                                message='Done'
-                            if level_balance <amount_to_deduce:
-                                user_wallet.level_balance=0
-                                amount_to_deduce-=level_balance
-                                level_log=level_balance
-                            else:
-                                level_log=amount_to_deduce
-                                message='Done'
-                            if direct_balance <amount_to_deduce:
-                                user_wallet.referral_balance=0
-                                amount_to_deduce-=direct_balance
-                                direct_log=direct_balance
-                            else:
-                                direct_log=amount_to_deduce
-                                message='Done'
-                            if bonus_balance<amount_to_deduce:
-                                user_wallet.bonus_balance='0'
-                                amount_to_deduce-=direct_balance
-                                bonus_log=bonus_balance
-                            else:
-                                bonus_log=amount_to_deduce
-                                message='Done'
-                            userWithdrawls.objects.create(user_id=user_id,wallet_id=user_wallet,amount=final_amount,fees=final_fees,address=address,currency=currency,type='0',direct_amount=direct_log,roi_amount=roi_log,level_amount=level_log,bonus_amount=bonus_log)
-                            
-                        else:
-                            message1='Insufficient Fund'
-                            
-                    else:
-                        message1='Please Check Date'
-                elif type=='other':
-                    if current_date in all_dates:
-                        fees=WithdrawSettingModel.objects.get(id=1).fees
-                        final_fees=(float(fees)*float(amount))/100
-                        final_amount=float(amount)-final_fees
-                        if float(user_wallet.roi_balance)+float(user_wallet.level_balance)+float(user_wallet.bonus_balance)>=float(amount):
+                      
+                        if float(setting.min_amount)<=float(amount) and float(setting.max_amount)>=float(amount):
+                        
+                            if float(user_wallet.roi_balance)+float(user_wallet.level_balance)+float(user_wallet.bonus_balance)+float(user_wallet.referral_balance)+float(user_wallet.deposit_balance)+float(user_wallet.reserved_balance)>=float(amount):
+                              
+                                user_wallet.avaliable_balance=float(user_wallet.avaliable_balance)-float(amount)
+                                user_wallet.save()
+                                amount_to_deduce=float(amount)
+                                
+                                roi_balance=float(user_wallet.roi_balance)
+                                level_balance=float(user_wallet.level_balance)
+                                bonus_balance=float(user_wallet.bonus_balance)
+                                direct_balance=float(user_wallet.referral_balance)
+                                deposit_balance=float(user_wallet.deposit_balance)
+                                transfer_balance=float(user_wallet.reserved_balance)
+                                print(roi_balance,type(roi_balance))
 
-                            user_wallet.avaliable_balance=float(user_wallet.avaliable_balance)-float(amount)
-                            roi_balance=float(user_wallet.roi_balance)
-                            amount_to_deduce=float(amount)
-                            level_balance=float(user_wallet.level_balance)
-                            bonus_balance=float(user_wallet.bonus_balance)
-                            roi_log=0
-                            level_log=0
-                            bonus_log=0
-                            if roi_balance<amount_to_deduce:
-                                user_wallet.roi_balance=0
-                                amount_to_deduce-=roi_balance
-                                roi_log=roi_balance
+                                roi_log=0
+                                level_log=0
+                                bonus_log=0
+                                direct_log=0
+                                deposit_log=0
+                                transfer_log=0
+                                # roicutting
+                                print('amount to deduce --> ',amount_to_deduce)
+                                if roi_balance<=amount_to_deduce:
+                                    user_wallet.roi_balance=0
+                                    user_wallet.save()
+                                    amount_to_deduce-=roi_balance
+                                    roi_log=roi_balance
+                                    print('roilog',roi_log)
+                                else:
+                                    user_wallet.roi_balance=float(user_wallet.roi_balance)-float(amount_to_deduce)
+                                    user_wallet.save()
+                                    roi_log=amount_to_deduce
+                                    amount_to_deduce-=amount_to_deduce
+                                    
+                                    print('roi_log',roi_log)
+                                    message='Done'
+
+                                # Direct_income Cutting
+                                if direct_balance<=amount_to_deduce:
+                                    user_wallet.referral_balance=0
+                                    user_wallet.save()
+                                    amount_to_deduce-=direct_balance
+                                    direct_log=direct_balance
+                                    print('directlog',direct_log)
+                                else:
+                                    user_wallet.referral_balance=float(user_wallet.referral_balance)-float(amount_to_deduce)
+                                    user_wallet.save()
+                                    direct_log=amount_to_deduce
+                                    amount_to_deduce-=amount_to_deduce
+                                    
+                                    message='Done'
+                                    print('direct_log',direct_log)
+                                
+                                #level_income Cutting
+                                if level_balance <=amount_to_deduce:
+                                    user_wallet.level_balance=0
+                                    user_wallet.save()
+                                    amount_to_deduce-=level_balance
+                                    level_log=level_balance
+                                    print('levellog',level_log)
+                                else:
+                                    user_wallet.level_balance=float(user_wallet.level_balance)-float(amount_to_deduce)
+                                    user_wallet.save()
+                                    level_log=amount_to_deduce
+                                    amount_to_deduce-=amount_to_deduce
+                                    
+                                    message='Done'
+                                    print('level_log',level_log)
+                                
+                                #Bonus Cutting
+                                if bonus_balance <=amount_to_deduce:
+                                    user_wallet.bonus_balance=0
+                                    user_wallet.save()
+                                    amount_to_deduce-=bonus_balance
+                                    bonus_log=bonus_balance
+                                    print('bonuslog',bonus_log)
+                                else:
+                                    user_wallet.bonus_balance=float(user_wallet.bonus_balance)-float(amount_to_deduce)
+                                    user_wallet.save()
+                                    bonus_log=amount_to_deduce
+                                    amount_to_deduce-=amount_to_deduce
+                                    
+                                    message='Done'
+                                    print('bonus_log',bonus_log)
+                                if deposit_balance <=amount_to_deduce:
+                                    user_wallet.deposit_balance=0
+                                    user_wallet.save()
+                                    amount_to_deduce-=deposit_balance
+                                    deposit_log=deposit_balance
+                                    print('depositlog',deposit_log)
+                                else:
+                                    user_wallet.deposit_balance=float(user_wallet.deposit_balance)-float(amount_to_deduce)
+                                    user_wallet.save()
+                                    deposit_log=amount_to_deduce
+                                    amount_to_deduce-=amount_to_deduce
+                                    
+                                    message='Done'
+                                    print('deposit_log',deposit_log)
+
+                                if transfer_balance <=amount_to_deduce:
+                                    user_wallet.reserved_balance=0
+                                    user_wallet.save()
+                                    amount_to_deduce-=bonus_balance
+                                    transfer_log=transfer_balance
+                                    print('transferlog',transfer_log)
+                                else:
+                                    user_wallet.reserved_balance=float(user_wallet.reserved_balance)-float(amount_to_deduce)
+                                    user_wallet.save()
+                                    transfer_log=amount_to_deduce
+                                    amount_to_deduce-=amount_to_deduce
+                                    
+                                    message='Done'
+                                    print('transfer_log',transfer_log)
+                               
+                                print(roi_log,level_log,bonus_log,direct_log,transfer_log)
+                                
+                                userWithdrawls.objects.create(user_id=user_id,wallet_id=user_wallet,amount=final_amount,fees=final_fees,address=address,currency=currency,type='0',roi_amount=roi_log,level_amount=level_log,bonus_amount=bonus_log,deposit_amount=deposit_log,transfer_amount=transfer_log,direct_amount=direct_log)
                             else:
-                                roi_log=amount_to_deduce
-                                message='Done'
-                            if level_balance <amount_to_deduce:
-                                user_wallet.level_balance=0
-                                amount_to_deduce-=level_balance
-                                level_log=level_balance
-                            else:
-                                level_log=amount_to_deduce
-                                message='Done'
-                            if bonus_balance<amount_to_deduce:
-                                user_wallet.bonus_balance='0'
-                                amount_to_deduce-=direct_balance
-                                bonus_log=bonus_balance
-                            else:
-                                bonus_log=amount_to_deduce
-                                message='Done'
-                            userWithdrawls.objects.create(user_id=user_id,wallet_id=user_wallet,amount=final_amount,fees=final_fees,address=address,currency=currency,type='0',roi_amount=roi_log,level_amount=level_log,bonus_amount=bonus_log)
+                                message1='Insufficient Fund'
                         else:
-                            message1='Insufficient Fund'
+                            message1='Incorrect Amount'
                             
                     else:
                         message1='Please Check Date'    
 
-                elif type=='direct':
+                elif type_=='direct':
                     fees=WithdrawSettingModel.objects.get(id=1).fees
                     final_fees=(float(fees)*float(amount))/100
                     final_amount=float(amount)-final_fees
-                    if float(user_wallet.referral_balance)>=float(amount):
-                        user_wallet.avaliable_balance=float(user_wallet.avaliable_balance)-float(amount)
-                        user_wallet.referral_balance=float(user_wallet.referral_balance)-float(amount)
-                        user_wallet.save()
-                        userWithdrawls.objects.create(user_id=user_id,wallet_id=user_wallet,amount=final_amount,fees=final_fees,address=address,currency=currency,type='0',direct_amount=amount)
-                        message='Request Created Successfully'
+                    if float(setting.min_amount)<=float(amount) and float(setting.max_amount)>=float(amount):
+                        if float(user_wallet.referral_balance)>=float(amount):
+                            user_wallet.avaliable_balance=float(user_wallet.avaliable_balance)-float(amount)
+                            user_wallet.referral_balance=float(user_wallet.referral_balance)-float(amount)
+                            user_wallet.save()
+                            userWithdrawls.objects.create(user_id=user_id,wallet_id=user_wallet,amount=final_amount,fees=final_fees,address=address,currency=currency,type='0',direct_amount=amount,bonus_amount='0')
+                            message='Done'
+                        else:
+                            message1='Insufficient Balance'
                     else:
-                        message1='Insufficient Balance'
+                        message1='Incorrect Amount'
     
        
         outcomedata=userWithdrawls.objects.filter(user_id=user_id.id,wallet_id=user_wallet.id,type='0')
@@ -919,7 +968,8 @@ def withdrawal(request):
                                                            'walletdata':user_wallet,
                                                            'last':alpdata,
                                                            'outcomedata':outcomedata,
-                                                           'smart_contract':smart_contract})
+                                                           'smart_contract':smart_contract
+                                                           ,'settings':setting})
     else:
         return redirect('../../../')
 
@@ -955,9 +1005,10 @@ def memberships(request,pk=None):
         
         currnet_date=str(datetime.utcnow())[:10]
         obj=membership.objects.filter(status='1')
+        data=[{'data':i,'category':categorymodel.objects.filter(plan_id=i.id)} for i in obj]
       
         newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
-        return render(request,'userpages/membership.html',{'data':obj,'message':message,
+        return render(request,'userpages/membership.html',{'data':data,'message':message,
                                                                'ref_link':ref_link,'appdetail':appdetail,
                                                                'u':request.session.get('email'),
                                                                'newsdata':newsdata,
@@ -1772,16 +1823,19 @@ def buyplan(request):
         currnet_date=str(datetime.utcnow())[:10]
         if 'buyplan' in request.POST:   
             id=request.POST.get('id')
+            category=request.POST.get('category')
+            print(category)
             amount=request.POST.get('amount')
             memberplan=membership.objects.get(id=id)
             min_amount=memberplan.min_amount
             max_amount=memberplan.max_amount
             obj=membership.objects.filter(status='1')
+            data_=[{'data':i,'category':categorymodel.objects.filter(plan_id=i.id)} for i in obj]
             newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
             u_wallet=wallet.objects.get(user_id=user_id)
             if float(amount)%50 !=0 or float(amount)<float(min_amount) or float(amount)>float(max_amount):
                 message1='selected amount is incorrect'
-                return render(request,'userpages/membership.html',{'data':obj,'message1':message1,
+                return render(request,'userpages/membership.html',{'data':data_,'message1':message1,
                                                                'ref_link':ref_link,'appdetail':appdetail,
                                                                'u':request.session.get('email'),
                                                                'newsdata':newsdata,
@@ -1789,10 +1843,23 @@ def buyplan(request):
                                                                'size':len(newsdata),
                                                                'smart_contract':smart_contract,
                                                                })
+            
+            c=categorymodel.objects.get(id=category)
+            if float(amount)<float(c.min_amount) or float(amount)>float(c.max_amount):
+                message1='Selected Category is not avaliable'
+                print(message1)
+                return render(request,'userpages/membership.html',{'data':data_,'message1':message1,
+                                                               'ref_link':ref_link,'appdetail':appdetail,
+                                                               'u':request.session.get('email'),
+                                                              'newsdata':newsdata,
+                                                         'smart_contract':smart_contract,
+                                                               'size':len(newsdata),
+                                                               'message1':message1,
+                                                               }) 
 
             if float(amount)>float(u_wallet.avaliable_balance):
                 message1='Insufficient Balance'
-                return render(request,'userpages/membership.html',{'data':obj,'message1':message1,
+                return render(request,'userpages/membership.html',{'data':data_,'message1':message1,
                                                                'ref_link':ref_link,'appdetail':appdetail,
                                                                'u':request.session.get('email'),
                                                               'newsdata':newsdata,
@@ -1810,7 +1877,7 @@ def buyplan(request):
             if float(already)>float(amount):
                 message1='SELECTED PLAN IS UNABALIABLE FOR YOU'
                 print(message1)
-                return render(request,'userpages/membership.html',{'data':obj,'message1':message1,
+                return render(request,'userpages/membership.html',{'data':data_,'message1':message1,
                                                                'ref_link':ref_link,'appdetail':appdetail,
                                                                'u':request.session.get('email'),
                                                               'newsdata':newsdata,
@@ -1818,6 +1885,7 @@ def buyplan(request):
                                                                'size':len(newsdata),
                                                                'message1':message1,
                                                                }) 
+            
            
 
             #creating user membership
@@ -1825,6 +1893,131 @@ def buyplan(request):
             UserMembership.objects.create(user_id=user_id,plan_id=membership.objects.get(id=id),amount=amount,max_roi=membership.objects.get(id=id).overall_roi,status='1',next_date=next_date) 
             u_wallet.avaliable_balance=float(u_wallet.avaliable_balance)-float(amount)
             u_wallet.save()
+            amount_to_deduce=float(amount)
+                                
+            roi_balance=float(u_wallet.roi_balance)
+            level_balance=float(u_wallet.level_balance)
+            bonus_balance=float(u_wallet.bonus_balance)
+            direct_balance=float(u_wallet.referral_balance)
+            deposit_balance=float(u_wallet.deposit_balance)
+            transfer_balance=float(u_wallet.reserved_balance)
+            topup_balance=float(u_wallet.topup_balance)
+            
+
+            roi_log=0
+            level_log=0
+            bonus_log=0
+            direct_log=0
+            deposit_log=0
+            transfer_log=0
+            topup_log=0
+                                # roicutting
+            print('amount to deduce --> ',amount_to_deduce)
+            if roi_balance<=amount_to_deduce:
+                u_wallet.roi_balance=0
+                u_wallet.save()
+                amount_to_deduce-=roi_balance
+                roi_log=roi_balance
+                print('roilog',roi_log)
+            else:
+                u_wallet.roi_balance=float(u_wallet.roi_balance)-float(amount_to_deduce)
+                u_wallet.save()
+                roi_log=amount_to_deduce
+                amount_to_deduce-=amount_to_deduce
+                                    
+                print('roi_log',roi_log)
+                message='Done'
+
+                                # Direct_income Cutting
+            if direct_balance<=amount_to_deduce:
+                u_wallet.referral_balance=0
+                u_wallet.save()
+                amount_to_deduce-=direct_balance
+                direct_log=direct_balance
+                print('directlog',direct_log)
+            else:
+                u_wallet.referral_balance=float(u_wallet.referral_balance)-float(amount_to_deduce)
+                u_wallet.save()
+                direct_log=amount_to_deduce
+                amount_to_deduce-=amount_to_deduce
+                                    
+                message='Done'
+                print('direct_log',direct_log)
+                                
+                                #level_income Cutting
+            if level_balance <=amount_to_deduce:
+                u_wallet.level_balance=0
+                u_wallet.save()
+                amount_to_deduce-=level_balance
+                level_log=level_balance
+                print('levellog',level_log)
+            else:
+                u_wallet.level_balance=float(u_wallet.level_balance)-float(amount_to_deduce)
+                u_wallet.save()
+                level_log=amount_to_deduce
+                amount_to_deduce-=amount_to_deduce
+                                    
+                message='Done'
+                print('level_log',level_log)
+                                
+                                #Bonus Cutting
+            if bonus_balance <=amount_to_deduce:
+                u_wallet.bonus_balance=0
+                u_wallet.save()
+                amount_to_deduce-=bonus_balance
+                bonus_log=bonus_balance
+                print('bonuslog',bonus_log)
+            else:
+                u_wallet.bonus_balance=float(u_wallet.bonus_balance)-float(amount_to_deduce)
+                u_wallet.save()
+                bonus_log=amount_to_deduce
+                amount_to_deduce-=amount_to_deduce
+                                    
+                message='Done'
+                print('bonus_log',bonus_log)
+            if deposit_balance <=amount_to_deduce:
+                u_wallet.deposit_balance=0
+                u_wallet.save()
+                amount_to_deduce-=deposit_balance
+                deposit_log=deposit_balance
+                print('depositlog',deposit_log)
+            else:
+                u_wallet.deposit_balance=float(u_wallet.deposit_balance)-float(amount_to_deduce)
+                u_wallet.save()
+                deposit_log=amount_to_deduce
+                amount_to_deduce-=amount_to_deduce
+                                    
+                message='Done'
+                print('deposit_log',deposit_log)
+
+            if transfer_balance <=amount_to_deduce:
+                u_wallet.reserved_balance=0
+                u_wallet.save()
+                amount_to_deduce-=bonus_balance
+                transfer_log=transfer_balance
+                print('transferlog',transfer_log)
+            else:
+                u_wallet.reserved_balance=float(u_wallet.reserved_balance)-float(amount_to_deduce)
+                u_wallet.save()
+                transfer_log=amount_to_deduce
+                amount_to_deduce-=amount_to_deduce
+                                    
+                message='Done'
+                print('transfer_log',transfer_log)
+            if topup_balance <=amount_to_deduce:
+                u_wallet.topup_balance=0
+                u_wallet.save()
+                amount_to_deduce-=bonus_balance
+                transfer_log=transfer_balance
+                print('transferlog',transfer_log)
+            else:
+                u_wallet.topup_balance=float(u_wallet.topup_balance)-float(amount_to_deduce)
+                u_wallet.save()
+                topup_log=amount_to_deduce
+                amount_to_deduce-=amount_to_deduce
+                                    
+                message='Done'
+                print('transfer_log',transfer_log)
             user_id.paid_members='True'
             user_id.activation_date= str(time.time())     
             user_id.save()
@@ -1875,7 +2068,7 @@ def buyplan(request):
                     try:
                         usr_ref=UserReferral.objects.get(parent_id=parent.id,child_id=user_id.id)
                         message='Package Bought Successfully'
-                        return render(request,'userpages/membership.html',{'data':obj,'message':message,
+                        return render(request,'userpages/membership.html',{'data':data_,'message':message,
                                                                'ref_link':ref_link,'appdetail':appdetail,
                                                                'u':request.session.get('email'),
                                                            'smart_contract':smart_contract,
@@ -1905,7 +2098,7 @@ def buyplan(request):
                         except:
                             pass
                     message='Package Bought Successfully'
-                    return render(request,'userpages/membership.html',{'data':obj,'message':message,
+                    return render(request,'userpages/membership.html',{'data':data_,'message':message,
                                                                'ref_link':ref_link,'appdetail':appdetail,
                                                                'u':request.session.get('email'),
                                                                
@@ -1914,14 +2107,14 @@ def buyplan(request):
 
                 else:
                     message='Package Bought Successfully'
-                    return render(request,'userpages/membership.html',{'data':obj,'message':message,
+                    return render(request,'userpages/membership.html',{'data':data_,'message':message,
                                                                'ref_link':ref_link,'appdetail':appdetail,
                                                                'u':request.session.get('email'),
                                                           
                                                                'newsdata':newsdata})
             else:
                 message='Package Bought Successfully'
-                return render(request,'userpages/membership.html',{'data':obj,'message':message,
+                return render(request,'userpages/membership.html',{'data':data_,'message':message,
                                                                'ref_link':ref_link,'appdetail':appdetail,
                                                                'u':request.session.get('email'),
                                                               
@@ -2035,6 +2228,7 @@ def wallettransfer(request):
         newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
         user_id=User.objects.get(email=request.session.get('email'))
         user_wallet=wallet.objects.get(user_id=user_id.id)
+        bal=float(user_wallet.roi_balance)+float(user_wallet.level_balance)+float(user_wallet.bonus_balance)+float(user_wallet.referral_balance)+float(user_wallet.deposit_balance)+float(user_wallet.reserved_balance)
         if request.method=='POST':
             if 'transfer' in request.POST:
                 currency=request.POST.get('currency')
@@ -2043,7 +2237,7 @@ def wallettransfer(request):
                 try:
                     transfer_user_id=User.objects.get(username=username)
                 except:
-                    message1='Not Sufficient Fund'
+                    message1='User Not Found'
                     data=Ptransfer.objects.filter(user_id=user_id.id)
                     return render(request,'userpages/wallettransfer.html',{
                                                       'u':request.session.get('email'),
@@ -2055,12 +2249,122 @@ def wallettransfer(request):
                                                       'walletdata':user_wallet,
                                                       'data':data,
                                                       'last':alpdata,
-                                                      'smart_contract':smart_contract
+                                                      'smart_contract':smart_contract,
+                                                      'bal':bal
                                                       })
                 transfer_wallet=wallet.objects.get(user_id=transfer_user_id.id)
-                if float(user_wallet.avaliable_balance)>=float(amount):
+                if float(user_wallet.roi_balance)+float(user_wallet.level_balance)+float(user_wallet.bonus_balance)+float(user_wallet.referral_balance)+float(user_wallet.deposit_balance)+float(user_wallet.reserved_balance)>=float(amount):
                     user_wallet.avaliable_balance=float(user_wallet.avaliable_balance)-float(amount)
                     user_wallet.save()
+                    amount_to_deduce=float(amount)
+                                
+                    roi_balance=float(user_wallet.roi_balance)
+                    level_balance=float(user_wallet.level_balance)
+                    bonus_balance=float(user_wallet.bonus_balance)
+                    direct_balance=float(user_wallet.referral_balance)
+                    deposit_balance=float(user_wallet.deposit_balance)
+                    transfer_balance=float(user_wallet.reserved_balance)
+                    print(roi_balance,type(roi_balance))
+
+                    roi_log=0
+                    level_log=0
+                    bonus_log=0
+                    direct_log=0
+                    deposit_log=0
+                    transfer_log=0
+                                # roicutting
+                    print('amount to deduce --> ',amount_to_deduce)
+                    if roi_balance<=amount_to_deduce:
+                        user_wallet.roi_balance=0
+                        user_wallet.save()
+                        amount_to_deduce-=roi_balance
+                        roi_log=roi_balance
+                        print('roilog',roi_log)
+                    else:
+                        user_wallet.roi_balance=float(user_wallet.roi_balance)-float(amount_to_deduce)
+                        user_wallet.save()
+                        roi_log=amount_to_deduce
+                        amount_to_deduce-=amount_to_deduce
+                                    
+                        print('roi_log',roi_log)
+                        message='Done'
+
+                                # Direct_income Cutting
+                    if direct_balance<=amount_to_deduce:
+                        user_wallet.referral_balance=0
+                        user_wallet.save()
+                        amount_to_deduce-=direct_balance
+                        direct_log=direct_balance
+                        print('directlog',direct_log)
+                    else:
+                        user_wallet.referral_balance=float(user_wallet.referral_balance)-float(amount_to_deduce)
+                        user_wallet.save()
+                        direct_log=amount_to_deduce
+                        amount_to_deduce-=amount_to_deduce
+                                    
+                        message='Done'
+                        print('direct_log',direct_log)
+                                
+                                #level_income Cutting
+                    if level_balance <=amount_to_deduce:
+                        user_wallet.level_balance=0
+                        user_wallet.save()
+                        amount_to_deduce-=level_balance
+                        level_log=level_balance
+                        print('levellog',level_log)
+                    else:
+                        user_wallet.level_balance=float(user_wallet.level_balance)-float(amount_to_deduce)
+                        user_wallet.save()
+                        level_log=amount_to_deduce
+                        amount_to_deduce-=amount_to_deduce
+                                    
+                        message='Done'
+                        print('level_log',level_log)
+                                
+                                #Bonus Cutting
+                    if bonus_balance <=amount_to_deduce:
+                        user_wallet.bonus_balance=0
+                        user_wallet.save()
+                        amount_to_deduce-=bonus_balance
+                        bonus_log=bonus_balance
+                        print('bonuslog',bonus_log)
+                    else:
+                        user_wallet.bonus_balance=float(user_wallet.bonus_balance)-float(amount_to_deduce)
+                        user_wallet.save()
+                        bonus_log=amount_to_deduce
+                        amount_to_deduce-=amount_to_deduce
+                                    
+                        message='Done'
+                        print('bonus_log',bonus_log)
+                    if deposit_balance <=amount_to_deduce:
+                        user_wallet.deposit_balance=0
+                        user_wallet.save()
+                        amount_to_deduce-=deposit_balance
+                        deposit_log=deposit_balance
+                        print('depositlog',deposit_log)
+                    else:
+                        user_wallet.deposit_balance=float(user_wallet.deposit_balance)-float(amount_to_deduce)
+                        user_wallet.save()
+                        deposit_log=amount_to_deduce
+                        amount_to_deduce-=amount_to_deduce
+                                    
+                        message='Done'
+                        print('deposit_log',deposit_log)
+
+                    if transfer_balance <=amount_to_deduce:
+                        user_wallet.reserved_balance=0
+                        user_wallet.save()
+                        amount_to_deduce-=bonus_balance
+                        transfer_log=transfer_balance
+                        print('transferlog',transfer_log)
+                    else:
+                        user_wallet.reserved_balance=float(user_wallet.reserved_balance)-float(amount_to_deduce)
+                        user_wallet.save()
+                        transfer_log=amount_to_deduce
+                        amount_to_deduce-=amount_to_deduce
+                                    
+                        message='Done'
+                        print('transfer_log',transfer_log)
 
                     transfer_wallet.avaliable_balance=float(transfer_wallet.avaliable_balance)+float(amount)
                     transfer_wallet.save()
@@ -2080,7 +2384,8 @@ def wallettransfer(request):
                                                       'walletdata':user_wallet,
                                                       'data':data,
                                                       'last':alpdata,
-                                                      'smart_contract':smart_contract
+                                                      'smart_contract':smart_contract,
+                                                      'bal':bal
                                                       })
     else:
         return redirect('../../../')
@@ -2460,15 +2765,14 @@ def packages(request):
     except:
         appdetail=None
     gallerydata=gallaryimages.objects.filter(status='1')
-    plan_id=plansmodel.objects.get(name='Farming Package')
-    staking_id=plansmodel.objects.get(name='Staking')
-    farming_package=membership.objects.filter(plan_id=plan_id.id)
-    staking_package=membership.objects.filter(plan_id=staking_id.id)
+   
+    farming_package=membership.objects.filter(status='1')
+    
     return render(request,'userpages/packages.html',{'data':data,'size':len(data),
                                                               'appdetail':appdetail,
                                                               'gallerydata':gallerydata,
                                                               'farming_package':farming_package,
-                                                              'staking_package':staking_package,
+                                                            
                                                               
                                                               })
 
@@ -2749,7 +3053,7 @@ def tree(request):
         data=User.objects.filter(referal_by=usr.referal_code)
         child_data=[{'data':i,'direct_income':
                      sum([float(j.refferal_income) for j in UserReferral.objects.filter(parent_id=i.id)])} for i in data]
-        print(child_data)        
+           
         return render(request,'userpages/tree.html',{'message':message,
                                                              'data':child_data,
                                                              'user':usr,
@@ -2873,7 +3177,7 @@ def getBalance(request,pk=None):
             elif val=='all':
                 return JsonResponse({'status':'1','data':user_wallet.avaliable_balance})
             elif val=='other':
-                return JsonResponse({'status':'1','data':float(user_wallet.bonus_balance)+float(user_wallet.roi_balance)+float(user_wallet.level_balance)})
+                return JsonResponse({'status':'1','data':float(user_wallet.bonus_balance)+float(user_wallet.roi_balance)+float(user_wallet.level_balance)+float(user_wallet.deposit_balance)+float(user_wallet.reserved_balance)+float(user_wallet.referral_balance)})
             else:
                 return JsonResponse({'status':'0'})
         else:
