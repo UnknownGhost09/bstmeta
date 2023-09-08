@@ -1890,7 +1890,7 @@ def buyplan(request):
 
             #creating user membership
             next_date= datetime.utcnow() + timedelta(days=1)
-            UserMembership.objects.create(user_id=user_id,plan_id=membership.objects.get(id=id),amount=amount,max_roi=membership.objects.get(id=id).overall_roi,status='1',next_date=next_date) 
+            UserMembership.objects.create(user_id=user_id,plan_id=membership.objects.get(id=id),c_id=category,amount=amount,max_roi=membership.objects.get(id=id).overall_roi,status='1',next_date=next_date) 
             u_wallet.avaliable_balance=float(u_wallet.avaliable_balance)-float(amount)
             u_wallet.save()
             amount_to_deduce=float(amount)
