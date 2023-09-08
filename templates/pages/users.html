@@ -35,16 +35,16 @@
       {% for i in userdata %}
       
         <tr >
-            <td>{{i.username}}</td></a>
+            <td class='planname1'>{{i.username}}</td></a>
             <td>{{i.first_name}} {{i.last_name}}</td>
             <td>{{i.email}}</td>
             <td>{{i.referal_by}}</td>
             <td>{{i.referal_code}}</td>
             <td class='date'>{{i.created_at|slice:"0:19"}}</td>
             {% if i.paid_members == 'True' %}
-            <td><span class="badge text-bg-success p-2 rounded-pill">active</span></td>
+            <td><span class="badge text-bg-success  rounded-pill">active</span></td>
             {% else %}
-            <td><span class="badge text-bg-danger p-2 rounded-pill">inactive</span></td>
+            <td><span class="badge text-bg-danger  rounded-pill">inactive</span></td>
             {% endif %}
             <td class='d-flex justify-content-between align-items-center ps-5'>
               
@@ -66,10 +66,9 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action<i class="mdi mdi-chevron-down"></i></button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="../../../admin/admin_login/{{i.id}}">login</a>
-                    
                     <a class="dropdown-item" href="../../../admin/addfund/{{i.id}}">Manage Funds</a>
-
                    <a class="dropdown-item" href="../../../admin/manageroi/{{i.id}}">Manage ROI</a>
+                   <a class="dropdown-item" href="../../../admin/unlock_levels/{{i.id}}">Unlock Levels</a>
                 </div>
             </div>
             {% comment %} <a href='../../../admin/users/{{i.id}}' class="h4 text-secondary"><i class="fas fa-arrow-alt-circle-right text-primary"></i></a>  {% endcomment %}

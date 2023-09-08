@@ -57,7 +57,9 @@ urlpatterns = [
     path('topup_history',views.topup_history),
     path('change_sponser',views.change_sponser),
     path('level_income',views.level_income),
-    path('tree/<str:pk>/',views.tree)
+    path('tree/<str:pk>/',views.tree),
+    path('unlock_levels/<str:pk>',views.unlock_levels),
+    path('rank_requests',views.rank_requests)
    
 
 ]

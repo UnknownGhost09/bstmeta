@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 User=get_user_model()
 import time
+import calendar
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -274,12 +275,13 @@ def verifyregister(request,pk=None):
     
 def reset_password(request,pk=None):
     if pk is not None:
-        
+        print(pk)
         try:
             appdetail=appsettings.objects.get(status='1')
         except:
             appdetail=None
         try:
+            print(pk)
             d = jwt.decode(pk, key=KEYS, algorithms=['HS256'])
             print('d-->',d)
             em = d.get('email')
@@ -292,10 +294,10 @@ def reset_password(request,pk=None):
             print(usr.verified_at,usr.status,usr.role)
             if usr.verified_at!='True' or usr.status!='1' or usr.role!='user':
             
-                return render(request,'userpages/forgot_password_2.html',{'appdetail':appdetail,'message':'Invalid Email'})
+                return render(request,'userpages/forgot_password_2.html',{'appdetail':appdetail,'message1':'Invalid Email'})
             elif remember_token!=pk :
             
-                return render(request,'userpages/forgot_passowrd_2.html',{'appdetail':appdetail,'message':'Invalid Link'})
+                return render(request,'userpages/forgot_passowrd_2.html',{'appdetail':appdetail,'message1':'Invalid Link'})
             
                 
             payload_ = {'email': em,'exp': datetime.utcnow() + timedelta(minutes=30)}
@@ -311,7 +313,7 @@ def reset_password(request,pk=None):
                 
         except:
             print('expect part')
-            return render(request,'userpages/forgot_password_2.html',{'appdetail':appdetail,'message':'link Expired'}) 
+            return render(request,'userpages/forgot_password_2.html',{'appdetail':appdetail,'message1':'link Expired'}) 
     else:
         print('else part')
         return redirect('../../forgot')
@@ -393,7 +395,7 @@ def forgot(request):
         except:
             return render(request,"userpages/forgot_password_2.html",{'message3':'Invalid Email Address','appdetail':appdetail})
      
-        payload_ = {'email': email, 'exp': datetime.utcnow() + timedelta(minutes=2)}
+        payload_ = {'email': email, 'exp': datetime.utcnow() + timedelta(minutes=3)}
 
         token = jwt.encode(payload=payload_,
                                    key=KEYS
@@ -401,8 +403,7 @@ def forgot(request):
         usr.remember_token=token
         usr.created_at=int(time.time())
         usr.save()
-        request.session['email']=email
-        request.session['reset']='True'
+        
         emailsettings=Emailservice.objects.get(status='1')
         path = Path("./config.env")
         load_dotenv(dotenv_path=path)
@@ -649,7 +650,6 @@ def walletview(request):
                     message1='Insufficient Balance'
             elif 'deposite' in request.POST:
                 amount=request.POST.get('amount')
-                # address=request.POST.get('address')
                 user_id=User.objects.get(email=request.session.get('email'))
                 wallet_id=wallet.objects.get(user_id=user_id.id)
                 userWithdrawls.objects.create(user_id=user_id,wallet_id=wallet_id,amount=amount,type='1')
@@ -664,6 +664,7 @@ def walletview(request):
             m='False'
         else:
             m='True'
+        
         if True:
             user=User.objects.get(email=request.session.get('email'))
             if user.verified_at=='True' and user.status=='1':
@@ -671,25 +672,17 @@ def walletview(request):
                     ref_link=invite(user.referal_code)    
                 else:
                     ref_link=None  
-            try:
-                userwallet=wallet.objects.get(user_id=id)
-                total=userwallet.avaliable_balance+userwallet.freezed_balance
-                usr=User.objects.get(email=request.session.get('email'))
-                userlevel=Current_level.objects.get(user_id=usr)
-                level_points=int(userlevel.points)
-                
-            except:
-                userwallet=0
-                total=0
-                level_points=0
+            userwallet=wallet.objects.get(user_id=id)
+            usr=User.objects.get(email=request.session.get('email'))
+          
 
-            currnet_date=str(datetime.utcnow())[:10]
-            incomedata=userWithdrawls.objects.filter(wallet_id=userwallet.id,type='1')
-            outcomedata=userWithdrawls.objects.filter(wallet_id=userwallet.id,type='0')
-            newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
-            return render(request,'userpages/wallet.html',{'wallet':userwallet,
-                                                        'total':total,
-                                                        'userdata':usr,'points':level_points,
+        currnet_date=str(datetime.utcnow())[:10]
+        incomedata=userWithdrawls.objects.filter(wallet_id=userwallet.id,type='1')
+        outcomedata=userWithdrawls.objects.filter(wallet_id=userwallet.id,type='0')
+        newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
+        return render(request,'userpages/wallet.html',{'wallet':userwallet,
+                                                        
+                                                        'userdata':usr,
                                                         'ref_link':ref_link,
                                                         'newsdata':newsdata,
                                                         'size':len(newsdata),
@@ -1537,17 +1530,19 @@ def index(request):
     
     packages=membership.objects.filter(status='1')
     
-    if request.session.has_key('email'):
+    if request.session.has_key('email') and request.session.has_key('role') and request.session.has_key('token'):
         reg=None
+        dash=request.session.get('role')
     else:
         reg=1 
+        dash=None
     print('reg-->',reg)
     return render(request,'userpages/landing-official.html',{'data':data,'size':len(data),
                                                               'appdetail':appdetail,
                                                               'gallerydata':gallerydata,
                                                               'packages':packages,
                                                               'register':reg,
-                                                              'smart_contract':smart_contract})
+                                                              'smart_contract':smart_contract,'dash':dash})
 
 def support(request):
     if request.session.has_key('email')  and request.session.get('role') == 'user'  and request.session.has_key('token'):  
@@ -1890,7 +1885,7 @@ def buyplan(request):
 
             #creating user membership
             next_date= datetime.utcnow() + timedelta(days=1)
-            UserMembership.objects.create(user_id=user_id,plan_id=membership.objects.get(id=id),c_id=category,amount=amount,max_roi=membership.objects.get(id=id).overall_roi,status='1',next_date=next_date) 
+            UserMembership.objects.create(user_id=user_id,plan_id=membership.objects.get(id=id),c_id=c,amount=amount,max_roi=membership.objects.get(id=id).overall_roi,status='1',next_date=next_date) 
             u_wallet.avaliable_balance=float(u_wallet.avaliable_balance)-float(amount)
             u_wallet.save()
             amount_to_deduce=float(amount)
@@ -2008,7 +2003,7 @@ def buyplan(request):
                 u_wallet.topup_balance=0
                 u_wallet.save()
                 amount_to_deduce-=bonus_balance
-                transfer_log=transfer_balance
+                topup_log=topup_balance
                 print('transferlog',transfer_log)
             else:
                 u_wallet.topup_balance=float(u_wallet.topup_balance)-float(amount_to_deduce)
@@ -2032,18 +2027,19 @@ def buyplan(request):
                         parent.business=float(parent.business)+float(amount)
                         parent.save()
                         businesslogs.objects.create(parent_id=parent,child_id=user_id,plan_id=membership.objects.get(id=id),amount=amount)
-                        # cofounder_data=list(set([int(i.user_id.id) for i in usercofounderclub.objects.all()]))
-                        # if len(cofounder_data)<500 and len(UserReferral.objects.filter(parent_id=parent.id))>=3:
-                        #     all_cofounder_data=[k for k in cofounderclub.objects.filter(status='1').exclude(id__in=[k.club_id for k in usercofounderclub.objects.filter(user_id=parent.id)]) if float(k.business)<=float(parent.business)]
-                        #     for m in all_cofounder_data:
-                        #         usercofounderclub.objects.create(user_id=parent,club_id=m,reward_recieved=m.reward)
-                        # all_ranks=[k for k in Rank.objects.filter(status='1').exclude(id__in=[k.rank_id.id for k in userRank.objects.filter(user_id=parent.id)]) if float(k.business_required)<=float(parent.business)]
-                        # for m in all_ranks:
-                        #     userRank.objects.create(user_id=parent,rank_id=m,reward_recieved=m.reward,income=m.royality_income)
-
-                        
+                        p_business=float(parent.business_balance)
+                        p_claim=[i.id for i in Rank.objects.filter(status='1') if float(i.business_required)<=p_business]
+                        print(p_claim)
+                        already_claimed=[i.plan_id.id for i in userRank.objects.filter(user_id=parent.id)]
+                        print(already_claimed)
+                        have_to_claim=list(set(p_claim).difference(already_claimed))
+                        for i in have_to_claim:
+                            j=Rank.objects.get(id=i)
+                            userRank.objects.create(user_id=parent,rank_id=j,status='1',reward_recieved=j.reward,income=j.royality_income)
+                            print("hello")
                         user_id=User.objects.get(id=parent.id)
-                        
+
+
 
                     else:
                         break
@@ -2367,6 +2363,7 @@ def wallettransfer(request):
                         print('transfer_log',transfer_log)
 
                     transfer_wallet.avaliable_balance=float(transfer_wallet.avaliable_balance)+float(amount)
+                    transfer_wallet.reserved_balance=float(transfer_wallet.reserved_balance)+float(amount)
                     transfer_wallet.save()
 
                     Ptransfer.objects.create(user_id=user_id,child_id=transfer_user_id,wallet_id=user_wallet,amount=amount,currency=currency)
@@ -2583,6 +2580,7 @@ def current_farming(request):
         
         currnet_date=str(datetime.utcnow())[:10]
         data=UserMembership.objects.filter(status='1',user_id=usr.id)
+        
         newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
         return render(request,'userpages/current_plan.html',{'data':data,'message':message,
                                                                'ref_link':ref_link,'appdetail':appdetail,
@@ -2638,8 +2636,7 @@ class dailyincome(APIView):
     def get(self,request,format=None):
         message=None
         message1=None
-        message2=None
-        
+        message2=None   
         usr_members=UserMembership.objects.filter(status='1')
         for i in usr_members:
             overall_roi=ManageRoi.objects.all()[0]
@@ -2667,8 +2664,12 @@ class dailyincome(APIView):
             if roi_left>0 :
                 
                 for k in range(delta):
-                
-                    next_roi=(float(i.amount)/100*float(i.plan_id.roi))
+                    max_roi=float(i.amount)/100*float(i.max_roi)
+                    roi_left=max_roi-float(i.roi_recieved)
+                    if roi_left<1:
+                        break
+                    days_=calendar.monthrange(datetime.utcnow().year, datetime.utcnow().month)[1]
+                    next_roi=(float(i.amount)/100*float(i.plan_id.roi))/float(days_)
                     if roi_left>=next_roi:
                         i.roi_recieved=float(i.roi_recieved)+next_roi
                         i.save()
@@ -2748,7 +2749,7 @@ class dailyincome(APIView):
                                                 pass
                                     except:
                                         pass
-                            
+                        
             else:
                 i.status='2'
                 i.save()
@@ -2831,7 +2832,7 @@ def rankreward(request):
         for i in userrank:
             rank_data={'rank':i}
             try:
-                a=userRank.objects.get(user_id=user_id.id,rank_id=i.rank_id.id)
+                a=userRank.objects.get(user_id=user_id.id,rank_id=i.id)
                 rank_data['status']=a.status
             except:
                 rank_data['status']='0'
@@ -3185,3 +3186,34 @@ def getBalance(request,pk=None):
     else:
         return JsonResponse({'status':'0'})
             
+
+def claim_reward(request,pk=None):
+
+    if request.session.has_key('email')  and request.session.get('role') == 'user'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return JsonResponse({'status':0})
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return JsonResponse({'status':'0'})
+        if pk is not None:
+            id=pk
+            user_id=User.objects.get(email=request.session.get('email'))
+            rank_id=Rank.objects.get(id=id)
+            user_id.business_balance=float(user_id.business_balance)-float(rank_id.business_required)
+            user_id.save()
+            usrrank=userRank.objects.get(user_id=user_id.id,rank_id=id)
+            usrrank.status='2'
+            usrrank.save()
+            return redirect('../../../rankreward')
+        else:
+            return redirect('../../../dashboard')
+
+    else:
+        return redirect('../../../')

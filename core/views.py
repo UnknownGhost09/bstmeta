@@ -47,13 +47,12 @@ def home(request,pk=None):
         lst.append(usersviamonth+'12')
         subscription_amount=[sum(i) if len(i)>0 else 0 for i in [[0 if len(i)==0 else float(j.amount) for j in i  ] for i in [UserMembership.objects.filter(date__contains=i) for i in lst]]]
         current_date=str(datetime.utcnow())[:10]
-        recent_join=User.objects.filter(status='1',verified_at='True',created_at__contains=current_date)
+        recent_join=User.objects.filter(status='1',verified_at='True',created_at__contains=current_date).exclude(role='admin')
         recent_withdrawls=userWithdrawls.objects.filter(status='1',date__contains=current_date,type='0')
-        print('recent withdrawls-->',recent_withdrawls)
-        print('current date',current_date)
+
         recent_deposits=userWithdrawls.objects.filter(status='1',date__contains=current_date,type='1')
-        pending_deposit=userWithdrawls.objects.filter(status='0',type='1',date__contains=current_date)
-        pending_withdrawls=userWithdrawls.objects.filter(status='0',type='0',date__contains=current_date)
+        pending_deposit=userWithdrawls.objects.filter(status='0',type='1')
+        pending_withdrawls=userWithdrawls.objects.filter(status='0',type='0')
         
         
         data={'total_users':len(User.objects.exclude(role='admin').all()),'total_verified_users':len(User.objects.exclude(role='admin').filter(verified_at='True',paid_members='True')),
@@ -71,7 +70,7 @@ def home(request,pk=None):
 
         return render(request,'pages/home.html',data)
     else:
-        return redirect('../../login')
+        return redirect('../../../')
 
 
 
@@ -1885,8 +1884,13 @@ def manageuserroi(request):
             except:
                 pass
             return redirect('../../../')
-        
-        
+        u=request.session.get('email')
+        message=None
+        message1=None
+        try:
+            appdetail=appsettings.objects.get(status='1')
+        except:
+            appdetail=None
         if request.method=='POST':
             id=request.POST.get('id')
             name=request.POST.get("name")
@@ -1895,9 +1899,14 @@ def manageuserroi(request):
                 if obj.farming_roi_status=='1':
                     obj.farming_roi_status='0'
                     obj.save()
+                    message='Done'
                 else:
-                    obj.farming_roi_status='1'
-                    obj.save()
+                    if obj.zero_pin=='0':
+                        obj.farming_roi_status='1'
+                        obj.save()
+                        message='Done'
+                    else:
+                        message1='Cannot Change Zero Pin Id'
             elif name=='staking':
                 obj=User.objects.get(id=id)
                 if obj.staking_roi_status=='1':
@@ -1916,7 +1925,10 @@ def manageuserroi(request):
                     obj.save()
         else:
             return redirect('../../../../admin/dashboard')
-        return redirect(f'../../../admin/manageroi/{id}')
+        user_id=User.objects.get(id=id)
+                
+        return render(request,'pages/manageuserroi.html',{'userdata':user_id,'u':u,'appdetail':appdetail,'message':message,'message1':message1})
+                
     else:
         return redirect('../../../')
 
@@ -1961,6 +1973,7 @@ def manageroi(request,pk=None):
                     obj.farming_roi='0'
                     obj.save()
                 else:
+                    
                     obj.farming_roi='1'
                     obj.save()
             elif name=='staking':
@@ -2193,5 +2206,93 @@ def tree(request,pk=None):
             return render(request,'pages/tree.html',{'u':u,'appdetail':appdetail,'data':child_data,'usr_ref_income':usr_ref_income,'usr':usr,'message':message})
         else:
             return redirect('../../../admin/dashboard')
+    else:
+        return redirect('../../../')
+    
+def unlock_levels(request,pk=None):
+    if request.session.has_key('email')  and request.session.get('role') == 'admin'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return redirect('../../../')
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return redirect('../../../')
+        if pk is not None:
+            message=None
+            message1=None
+            try:
+                u=User.objects.get(email=request.session.get('email'))
+            except:
+                return redirect('../../../admin/dashboard')
+            try:
+                appdetail=appsettings.objects.get(status='1')
+            except:
+                appdetail=None
+            usr=User.objects.get(id=pk)
+            usr.zero_pin='1'
+            usr.farming_roi_status='0'
+            usr.save()
+            level_id=max([int(i.id) for i in levels.objects.all()])
+            level_id=levels.objects.get(id=level_id)
+            try:
+                usr_level=Current_level.objects.get(user_id=usr.id)
+                usr_level.level_id=level_id
+                usr_level.save()
+            except:
+                Current_level.objects.create(user_id=usr,level_id=level_id)
+            message='User Id Changed To Zero Pin ID'
+            obj=User.objects.exclude(email=request.session.get('email')).filter(verified_at='True')
+            return render(request,'pages/users.html',{'userdata':obj,'u':u,'appdetail':appdetail,'message':message,'message1':message1})
+        else:
+            return redirect('../../../admin/dashboard')
+    else:
+        return redirect('../../../')
+    
+def rank_requests(request):
+    if request.session.has_key('email')  and request.session.get('role') == 'admin'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return redirect('../../../')
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return redirect('../../../')
+        
+        try:
+            appdetail=appsettings.objects.get(status='1')
+        except:
+            appdetail=None
+        u=User.objects.get(email=request.session.get('email'))
+        message=None
+        message1=None
+        if request.method=='POST':
+            if 'approve' in request.POST:
+                id=request.POST.get('id')
+                ob=userRank.objects.get(id=id)
+                ob.status='3'
+                ob.save()
+                message='Done'
+            elif 'delete' in request.POST:
+               
+                id=request.POST.get('id')
+                ob=userRank.objects.get(id=id)
+                ob.status='4'
+                ob.save()
+                message='Done'
+        data=userRank.objects.filter(status='2')
+
+        return render(request,'pages/claim_rewards.html',{'u':u,'appdetail':appdetail,'message':message,'message1':message1,'data':data})
+       
     else:
         return redirect('../../../')

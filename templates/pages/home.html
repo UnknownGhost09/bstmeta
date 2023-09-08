@@ -265,7 +265,7 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-6">
-                        <span class="text-muted mb-3 lh-1 d-block">Recent Joins</span>
+                        <span class="text-muted mb-3 lh-1 d-block">Today's Joins</span>
                         <h4 class="mb-3">
                             <span class="counter-value  text-success" data-target="{{recent_join}}"></span>
                         </h4>
@@ -293,7 +293,7 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-6">
-                        <span class="text-muted mb-3 lh-1 d-block">Recent Withdrawls</span>
+                        <span class="text-muted mb-3 lh-1 d-block">Today's Withdrawls</span>
                         <h4 class="mb-3">
                             <span class='text-success'>$</span>
                             <span class="counter-value text-success" data-target="{{recent_withdrawls_len|floatformat:"2"}}"></span>
@@ -417,7 +417,7 @@
                                         <td>
                                             <div>
                                                 <h5 class="font-size-14 mb-1">{{i.user_id.username}}</h5>
-                                                <p id='date' class="text-muted mb-0 font-size-12">{{i.date}}</p>
+                                                <p id='date' class="text-muted mb-0 font-size-12">{{i.date|slice:'0:19'}}</p>
                                             </div>
                                         </td>
 
@@ -452,7 +452,7 @@
                                         <td>
                                             <div>
                                                 <h5 class="font-size-14 mb-1">{{i.user_id.username}}</h5>
-                                                <p class="text-muted mb-0 font-size-12">{{i.date}}</p>
+                                                <p class="text-muted mb-0 font-size-12">{{i.date|slice:'0:19'}}</p>
                                             </div>
                                         </td>
                                         <td>
@@ -486,7 +486,7 @@
     <div class="col-xl-6">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Recent Transactions</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Today's Transactions</h4>
                 <div class="flex-shrink-0">
                     <ul class="nav justify-content-end nav-tabs-custom rounded card-header-tabs" role="tablist">
                       

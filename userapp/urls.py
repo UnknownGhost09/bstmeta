@@ -54,6 +54,8 @@ urlpatterns = [
     path('downlineteam',views.downlineteam),
     path('reset_password/<str:pk>/',views.reset_password),
     path('newpassword',views.newpassword),
-    path('getBalance/<str:pk>/',views.getBalance)
+    path('getBalance/<str:pk>/',views.getBalance),
+    path('claim_reward/<str:pk>/',views.claim_reward)
+
 
 ]

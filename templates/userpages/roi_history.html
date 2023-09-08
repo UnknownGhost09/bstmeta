@@ -23,7 +23,8 @@
       <table id='test' class="table hover table-borderless dt-responsive nowrap w-100 text-nowrap">
         <thead>
             <tr>
-                <th scope="col"><p class="text-white text-opacity-75 mb-0">Package</p></th>
+                <th scope="col"><p class="text-white text-opacity-75 mb-0">Package Name</p></th>
+                <th scope="col"><p class="text-white text-opacity-75 mb-0">Category Name</p></th>
                 <th scope="col"><p class="text-white text-opacity-75 mb-0">ROI recieved</p></th>
                 <th scope="col"><p class="text-white text-opacity-75 mb-0">Overall Recieved ROI</p></th>
                 <th scope='col'><p class="text-white text-opacity-75 mb-0">Package Amount</p></th>
@@ -35,7 +36,8 @@
           {% for i in data %}
         
           <tr>
-            <td>{{i.plan_id.plan_id.name}}</td>
+            <td class='planname'>{{i.plan_id.plan_id.name}}</td>
+            <td class='planname'>{{i.plan_id.c_id.name}}</td>
             <td>$ {{i.roi}}</td>
             <td>$ {{i.plan_id.roi_recieved}}</a></td>
             <td>$ {{i.plan_id.amount}}</td>

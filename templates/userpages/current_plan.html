@@ -25,7 +25,10 @@
                 <thead>
                   <tr>
                     <th scope="col">
-                      <p class="text-white text-opacity-75 mb-0">Plan Name</p>
+                      <p class="text-white text-opacity-75 mb-0">Package Name</p>
+                    </th>
+                    <th scope="col">
+                      <p class="text-white text-opacity-75 mb-0">Category Name</p>
                     </th>
                     <th scope="col">
                       <p class="text-white text-opacity-75 mb-0">
@@ -55,6 +58,7 @@
                   {% for i in data%}
                   <tr>
                     <td class='fw-bold planname'>{{i.plan_id.name}}</td>
+                    <td class='fw-bold planname'>{{i.c_id.name}}</td>
                     <td>{{i.amount}}</td>
                     <td>{{i.date|slice:"0:19"}}</td>
                     <td>{{i.roi_recieved}}</td>

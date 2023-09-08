@@ -1,0 +1,137 @@
+{% extends 'pages/sidebar.html' %}
+
+{% block content %}
+
+{% load static %}
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+        <div class='card'>
+            <div class="card-header">
+                <h4 class="card-title">User Rank & Rewards</h4>
+               
+            </div>
+            <div class='card-body'>
+
+                <div class='table-responsive'>
+                    <table id= 'test' class="table table-borderless dt-responsive nowrap w-100  text-nowrap">
+                        <thead>
+                          <tr >
+                            <th scope='col'>Username</th>
+                            <th scope='col'>Overall Business</th>
+                            <th scope="col">Rank</th>
+                            <th scope="col">Cash Reward</th>
+                            <th scope="col">Reward</th>
+                            <th scope="col">Date</th>
+                            <th scope='col'>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in data %}
+                          <tr>         
+                            <td class='fw-bold'>{{i.user_id.username}}</td>
+                          
+                            <td>$ {{i.user_id.business}}</td>
+                        
+                            
+                            <td>{{i.rank_id.rank}}</td>
+                            {% if i.rank_id.royality_income %}
+                            <td>$ {{i.income}}</td>
+                                {% else%}
+                            <td>-</td>
+                            {% endif %}
+                            {% if i.rank_id.reward %}
+                            <td>{{i.rank_id.reward}}</td>
+                                {% else%}
+                            <td>-</td>
+                            {% endif %}
+                            <td>{{i.date|slice:'0:19'}}</td>
+
+                            <td> <button class='btn bg-success'  data-bs-toggle="modal" data-bs-target="#edit{{i.id}}" title='approve'><i class='fas fa-pencil text-primary'></i></button>
+                                <div class="modal fade" id="edit{{i.id}}" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Are You sure to approve</h1>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                              <div class="modal-body row mb-3">
+                                        
+                                                    <form action="../../../admin/rank_requests" method="post">
+                                                        {% csrf_token %}
+                                                        <div class="row mb-3 gap-1">
+                                                            <div class="col-sm-10 w-100">
+                                                                <input type="text" class="form-control " name="id" hidden value="{{i.id}}">
+                                                                
+                                                              </div>
+                                                          
+                                                        </div>
+                                                             <div class="row mb-3">
+                                        
+                                                          <div class="col-sm-10">
+                                                            <button type="submit" class="btn bg-success" name="approve">Approve</button>
+                                                            <button type="submit" class="btn bg-primary" name="close">Close</button>
+                                                          </div>
+                                                        </div>
+                                                        </form>
+                                              </div>
+                                        
+                                            </div>
+                                          </div>
+                                            
+                                              </div>
+        
+                                              <button class='btn bg-danger'  data-bs-toggle="modal" data-bs-target="#delete" title='delete'><i class=" fas fa-trash-alt"></i></button>
+                                <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="delete" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Are You Sure To delete</h1>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                              <div class="modal-body row mb-3">
+                                        
+                                                    <form action="../../../admin/withdraw_manage" method="post">
+                                                        {% csrf_token %}
+                                                        <div class="row mb-3 gap-1">
+                                                            <div class="col-sm-10 w-100">
+                                                                <input type="text" class="form-control " name="id" hidden value="{{i.id}}">
+        
+                                                               
+                                                              </div>
+                                                            
+                                                             <div class="row mb-3">
+                                        
+                                                          <div class="col-sm-10">
+                                                            <button type="submit" class="btn bg-danger" name="delete">Delete</button>
+                                                            <button type="submit" class="btn bg-primary" name="close" data-bs-dismiss="modal">Cancel</button>
+                                                          </div>
+                                                          
+                                                           
+                                                          
+                                                        </div>
+                                                        </form>
+                                              </div>
+                                        
+                                            </div>
+                                          </div>
+                                            
+                                              </div>
+                                </td>
+
+                          
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                    </table>
+                  </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

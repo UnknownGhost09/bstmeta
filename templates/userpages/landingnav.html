@@ -44,6 +44,36 @@ class="header navbar navbar-expand-lg px-lg-5 py-3 px-3 sticky-top bg-black"
             >About us</a
           >
         </li>
+        <li>
+          {% if register %}
+            <a
+              href="../../../loginpage"
+              class="d-lg-none d-inline-flex text-decoration-none border rounded-5 px-5 py-2 text-white fw-semibold button"
+            
+              rel="noopener"
+            >
+              Login
+            </a>
+            {% elif dash == 'admin' %}
+            <a
+              href="../../../admin/dashboard"
+              class="d-lg-none d-inline-flex text-decoration-none border rounded-5 px-5 py-2 text-white fw-semibold button"
+            
+              rel="noopener"
+            >
+              Dashboard
+            </a>
+            {% elif dash == 'user' %}
+            <a
+              href="../../../dashboard"
+              class="d-lg-none d-inline-flex text-decoration-none border rounded-5 px-5 py-2 text-white fw-semibold button"
+            
+              rel="noopener"
+            >
+              Dashboard
+            </a>
+          {% endif %} 
+        </li>
       </ul>
     </div>
   </div>
@@ -67,6 +97,25 @@ class="header navbar navbar-expand-lg px-lg-5 py-3 px-3 sticky-top bg-black"
     rel="noopener"
   >
     Login
+  </a>
+
+  {% elif dash == 'admin' %}
+  <a
+    href="../../../admin/dashboard"
+    class="d-none d-lg-inline-flex text-decoration-none border rounded-5 px-5 py-2 text-white fw-semibold button"
+  
+    rel="noopener"
+  >
+    Dashboard
+  </a>
+  {% elif dash == 'user' %}
+  <a
+    href="../../../dashboard"
+    class="d-none d-lg-inline-flex text-decoration-none border rounded-5 px-5 py-2 text-white fw-semibold button"
+  
+    rel="noopener"
+  >
+    Dashboard
   </a>
   {% endif %}
 </div>

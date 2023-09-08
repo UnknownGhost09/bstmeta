@@ -29,18 +29,28 @@
                             {% for i in userrank %}
                           <tr>         
                             <td class='fw-bold planname'>{{i.rank.rank}}</td>
+                            {% if i.rank.royality_income %}
                             <td>$ {{i.rank.royality_income}}</td>
+                            {% else %}
+                            <td>-</td>
+                            {% endif %}
+                            {% if i.rank.reward %}
                             <td>{{i.rank.reward}}</td>
+                            {% else %}
+                            <td>-</td>
+                            {% endif %}
                             <td>$ {{i.rank.business_required}}</td>
 
                             <td>
 
                                 {% if i.status == '0' %}
-                                <span class="badge text-bg-danger p-2 rounded-pill">Not Achived</span>
+                                <span class="badge text-bg-danger p-2 rounded-pill w-50">Not Achived</span>
                                 {% elif i.status == '1' %}
-                                <span class="badge text-bg-warning p-2 rounded-pill">Proceeding</span>
+                                <a href='../../../claim_reward/{{i.rank.id}}'><span class="badge text-bg-warning p-2 rounded-pill w-50" title='Click To Claim Reward'>Claim</span></a>
                                 {% elif i.status == '2' %}
-                                <span class="badge text-bg-success p-2 rounded-pill">Achived</span>
+                                <span class="badge text-bg-secondary p-2 rounded-pill w-50">In Process</span>
+                                {% elif i.status == '3' %}
+                                <span class="badge text-bg-success p-2 rounded-pill w-50">Achived</span>
                                 {% endif %}
                             </td>
                           </tr>

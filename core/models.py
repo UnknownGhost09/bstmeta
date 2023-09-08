@@ -27,6 +27,8 @@ class User(AbstractUser):
     farming_roi_status=models.CharField(max_length=200,default='1')
     staking_roi_status=models.CharField(max_length=100,default='1')
     level_income_status=models.CharField(max_length=100,default='1')
+    zero_pin=models.CharField(max_length=200,default='0')
+    business_balance=models.CharField(max_length=250,default='0')
 
     class Meta:
         db_table='users'

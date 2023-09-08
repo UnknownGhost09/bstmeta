@@ -20,11 +20,11 @@
           <tr >
             <th scope="col">Username</th>
             <th scope="col">Rank Achived</th>
+            <th scope='col'>Income</th>
             <th scope='col'>Reward</th>
-            <th scope="col">Overall Business</th>
             <th scope="col">Date</th>
             <th scope="col">Status</th>
-            <th scope='col'>Profile</th>
+       
           </tr>
         </thead>
         <tbody>
@@ -32,19 +32,30 @@
           <tr>         
             <td class='fw-bold planname'>{{i.user_id.username}}</td>
             <td>{{ i.rank_id.rank }}</td>
-            <td>{{i.points|floatformat:"2" }}</td>
-            <td>{{ i.overallbusiness|floatformat:"2" }}</td>
+            {% if i.rank_id.royality_income %}
+            <td>$ {{i.income}}</td>
+                    {% else%}
+              <td>-</td>
+                {% endif %}
+              {% if i.rank_id.reward %}
+                <td>{{i.reward_recieved}}</td>
+                        {% else%}
+                    <td>-</td>
+                  {% endif %}
+          
             <td>{{i.date|slice:"0:19"}}</td>
-           
+           <td>
             {% if i.status == '0' %}
-            <td>Pending</td>
+            <span class="badge text-bg-danger p-2 rounded-pill w-50">Not Achived</span>
             {% elif i.status == '1' %}
-            <td>Completed</td>
-            {% else %}
-            <td> Canceled</td>
-            {% endif %}
-            <td>{{i.date}}</td>
-            <td><a href='../../../admin/users/{{i.user_id.id}}' class="h4 text-secondary"><i class="fas fa-arrow-alt text-primary"></i></a> </td>
+            <span class="badge text-bg-warning p-2 rounded-pill w-50" >Claim</span>
+            {% elif i.status == '2' %}
+            <span class="badge text-bg-secondary p-2 rounded-pill w-50">In Process</span>
+            {% elif i.status == '3' %}
+            <span class="badge text-bg-success p-2 rounded-pill w-50">Achived</span>
+              {% endif %}
+           </td>
+
           </tr>
           {% endfor %}
         </tbody>
