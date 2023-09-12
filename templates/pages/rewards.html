@@ -1,0 +1,245 @@
+{% extends 'pages/sidebar.html' %}
+{% block content %}
+
+<div class="main-content">
+
+  <div class="page-content">
+      <div class="container-fluid">
+
+    <div class="card">
+      <div class="card-header">
+        <div class='d-flex justify-content-between align-items center'>
+        <h4 class="card-title">Rewards</h4>
+                  <!-- center modal -->
+                  <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center">Add Reward</button>
+
+                  <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title">Add Reward
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+
+                                <form action="../../../admin/rewards" method="post" enctype="multipart/form-data">
+                                  {% csrf_token %}
+                                   
+                                  
+          
+                                  <div class="mb-3">
+                                    <label class="form-label" for="formrow-firstname-input">Rank Name</label>
+                                    <input type="text" class="form-control" placeholder='Enter Rank Name' id="formrow-firstname-input"  name='rank'>
+                                </div>
+
+                           
+
+                              <div class="mb-3">
+                                <label class="form-label" for="formrow-firstname-input">Required Buisness</label>
+                                <input type="number" class="form-control" placeholder='Required Business' id="formrow-firstname-input"  name='business_required'>
+                            </div>
+
+                            <div class="mb-3">
+                              <label class="form-label" for="formrow-firstname-input">Reward Income (%)</label>
+                              <input type="text" class="form-control" placeholder='Reward Income in percent' id="formrow-firstname-input"  name='reward'>
+                          </div>
+
+                          <div class="mb-3">
+                            <label class="form-label" for="formrow-firstname-input">Turnover</label>
+                            <select class="form-control"  id="choices-single-no-search" name='turnover'>
+                                
+                                  <option value="Team" selected>Team Turnover</option>
+                                  <option value="Company" selected>Company Turnover</option>
+                                  
+                              </select>
+                        </div>
+                          
+                          <div class="mb-3">
+                            <label class="form-label" for="formrow-firstname-input">Days</label>
+                            <input type="number" class="form-control" placeholder='days' id="formrow-firstname-input"  name='days'>
+                        </div>
+                 
+                   
+                     
+                                  <div class="mt-4">
+                                      <button type="submit" class="btn btn-primary w-md" name='submit'>Submit</button>
+                                  </div>
+                                  </form>
+
+
+                              </div>
+                          </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+   
+        </div>
+    </div>
+        <div class="card-body">
+          
+          <h5 class="card-title">Rewards</h5>
+          
+
+     
+
+     
+
+          <!-- Default Table -->
+          <form id="level" method="post">
+            {% csrf_token %}
+            <div class='table-responsive'>
+          <table id='test' class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrap">
+            <thead>
+              <tr >   
+                          
+                <th scope="col">Rank</th>    
+                <th scope="col">Business Required</th>  
+                <th scope='col'>Reward</th>   
+                <th scope='col'>Days</th>
+                <th scale='col'>Turnover</th>
+                <th scope="col">Status</th>
+                <th scope='col'>Action</th>  
+                
+                
+              </tr>
+            </thead>
+            <tbody>
+                {% for i in rankdata %}
+              <tr >   
+             
+                <td class='fw-bold planname'>{{ i.rank }}</td>  
+             
+            
+                <td>$ {{ i.business_required }}</td>
+                <td>{{ i.income }}</td>     
+                <td>{{ i.days }}</td>
+                <td>{{ i.turnover }} Turnover</td>
+                <td class='d-flex justify-content-between align-items-center ps-5'>
+              
+                  <div class="form-check form-switch pt-2">
+                    <form action="../../../admin/rewards" method="post">
+                      {% csrf_token %}
+                      {% if i.status == '1' %}
+                      
+                    <input class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked" data-id="{{i.id}}" title='active' checked>
+                  {% else %}
+                  <input  class="form-check-input h4"  name='inactive' type="checkbox" role="switch" id="flexSwitchCheckChecked" data-id="{{i.id}}" title="inactive">
+                  {% endif %}
+                  </form>
+                  </div>
+                  
+                </td> 
+                <td>
+              <i class="fas fa-pencil-alt h4 text-primary" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center{{i.id}}" title='edit'></i>
+
+              <div class="modal fade bs-example-modal-center{{i.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title">Edit Rank</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body text-wrap">
+                              <form action='../../../admin/rewards' method='post'>
+                                  {% csrf_token %}
+                                  <input type='text' name='id' hidden value='{{i.id}}'>
+                                  
+                               
+                                  <div class="mb-3">
+                                    <label class="form-label" for="formrow-firstname-input">Rank Name</label>
+                                    <input type="text" class="form-control" placeholder='Enter Rank Name' id="formrow-firstname-input" value="{{i.rank}}" name='rank'>
+                                </div>
+
+                           
+
+                              <div class="mb-3">
+                                <label class="form-label" for="formrow-firstname-input">Required Buisness</label>
+                                <input type="number" class="form-control" placeholder='Required Business' id="formrow-firstname-input" value="{{i.business_required}}" name='business_required'>
+                            </div>
+
+                            <div class="mb-3">
+                              <label class="form-label" for="formrow-firstname-input">Reward Income (%)</label>
+                              <input type="text" class="form-control" placeholder='reward' id="formrow-firstname-input" value="{{i.income}}" name='reward'>
+                          </div>
+                          <select class="form-control"  id="choices-single-no-search" name='turnover'>
+                                {% if i.turnover == 'Team' %}
+                            <option value="Team" selected>Team Turnover</option>
+                            <option value="Company" >Company Turnover</option>
+                            {% else %}
+                            <option value="Company" selected >Company Turnover</option>
+                            <option value="Team" >Team Turnover</option>
+                            {% endif %}
+                            
+                        </select>
+                          <div class="mb-3">
+                            <label class="form-label" for="formrow-firstname-input">Days</label>
+                            <input type="number" class="form-control" placeholder='reward' id="formrow-firstname-input" value="{{i.days}}" name='days'>
+                        </div>
+                                  <div class="mt-4">
+                                      <button type="submit" class="btn btn-primary w-md" name='update'>Update</button>
+                                  </div>
+                              </form>
+                          </div>
+                      </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
+    
+            </td> 
+              </tr>
+              {% endfor %}        
+            </tbody>
+          </table>
+        </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}  
+
+  $(document.body).on('click','#flexSwitchCheckChecked',function(){
+
+ 
+    var pid = $(this).attr('value');
+    var uid = $(this).attr('data-id');
+    var csrftoken = getCookie('csrftoken');
+    console.log(pid,uid)
+
+    $.ajax({
+      type: 'POST',      
+      url: '../../../admin/rewards',
+      data: {
+        
+        id: uid,
+       
+        csrfmiddlewaretoken: csrftoken,
+    },
+
+      success: function () {
+        console.log("success");
+      }
+    });
+
+  });
+  
+
+</script>
+
+{% endblock %}

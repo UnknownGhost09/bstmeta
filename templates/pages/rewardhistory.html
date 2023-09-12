@@ -9,10 +9,9 @@
 
     <div class='card'>
       <div class="card-header">
-        <h4 class="card-title">User Ranks</h4>
-        <p class="card-title-desc">Ranks Achived by Users
+        <h4 class="card-title">User Rewards</h4>
+        <p class="card-title-desc">Rewards Achived by Users
         </p>
-        
     </div>
         <div class="card-body">
           <div class='table-responsive'>
@@ -21,7 +20,7 @@
           <tr >
             <th scope="col">Username</th>
             <th scope="col">Rank Achived</th>
-            <th scope='col'>Income</th>
+
             <th scope='col'>Reward</th>
             <th scope="col">Date</th>
             <th scope="col">Status</th>
@@ -33,16 +32,9 @@
           <tr>         
             <td class='fw-bold planname'>{{i.user_id.username}}</td>
             <td>{{ i.rank_id.rank }}</td>
-            {% if i.rank_id.royality_income %}
+   
             <td>$ {{i.income}}</td>
-                    {% else%}
-              <td>-</td>
-                {% endif %}
-              {% if i.rank_id.reward %}
-                <td>{{i.reward_recieved}}</td>
-                        {% else%}
-                    <td>-</td>
-                  {% endif %}
+           
           
             <td>{{i.date|slice:"0:19"}}</td>
            <td>

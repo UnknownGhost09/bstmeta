@@ -58,8 +58,8 @@
                   data-id="{{ i.parent_id.id }}" {% endcomment %}
                 >
                   <td class='fw-bold planname'>{{i.user.username}}</td>
-                  <td>{{i.user.email}}</td>
-                  <td>$ {{i.referral_income}}</td>
+                  <td class='text-white'>{{i.user.email}}</td>
+                  <td class='text-white'>$ {{i.referral_income}}</td>
                   {% if i.user.paid_members == 'True' %}
                     <td><span class='badge text-white text-bg-success p-2 rounded-pill'>Active</span></td>
                    {% else %}
@@ -71,7 +71,7 @@
                    {% else %}
                    <td><span class='badge text-white text-bg-warning p-2 rounded-pill'>Inactive</span></td>
                    {% endif %}
-                  <td class='date'>{{i.user.created_at|slice:"0:19"}}</td>
+                  <td class='text-white'>{{i.user.created_at|slice:"0:19"}}</td>
                 </tr>
 
                 {% endfor %}

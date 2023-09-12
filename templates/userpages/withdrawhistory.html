@@ -20,7 +20,7 @@
       
  
   </div>
-    <div class="card-body">
+    <div class="card-body bg-dark">
    
         <div class="table-responsive">
             <table
@@ -40,10 +40,10 @@
               <tbody>
                 {% for i in data %}
                 <tr>
-                  <td>{{i.amount}}</td>
-                  <td>{{i.fees}}</td>
-                  <td>{{i.currency}}</td>
-                  <td>{{i.address}}</td>
+                  <td class='text-white'>{{i.amount}}</td>
+                  <td class='text-white'>{{i.fees}}</td>
+                  <td class='text-white'>{{i.currency}}</td>
+                  <td class='text-white'>{{i.address}}</td>
                   {% if i.status == '0' %}
                   <td>
                     <span

@@ -20,7 +20,7 @@
       <h4 class="card-title">$ {{total_income|floatformat:"2"}}</h4>
       </div>
   </div>
-    <div class="card-body">
+    <div class="card-body bg-dark">
    
       <div class="table-responsive">
 
@@ -39,9 +39,9 @@
         
           <tr>
  
-            <td>{{i.child_id.username}}</td>
-            <td>$ {{i.refferal_income|floatformat:"2"}}</a></td>
-            <td>{{i.date|slice:"0:19"}}</td>
+            <td class='text-white'>{{i.child_id.username}}</td>
+            <td class='text-white'>$ {{i.refferal_income|floatformat:"2"}}</a></td>
+            <td class='text-white'>{{i.date|slice:"0:19"}}</td>
              {% if i.status == '0' %}
               <td>
                 <span

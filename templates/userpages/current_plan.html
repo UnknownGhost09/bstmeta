@@ -59,10 +59,10 @@
                   <tr>
                     <td class='fw-bold planname'>{{i.plan_id.name}}</td>
                     <td class='fw-bold planname'>{{i.c_id.name}}</td>
-                    <td>{{i.amount}}</td>
-                    <td>{{i.date|slice:"0:19"}}</td>
-                    <td>{{i.roi_recieved}}</td>
-                    <td>{{i.plan_id.roi}} %</td>
+                    <td class='text-white'>{{i.amount}}</td>
+                    <td class='text-white'>{{i.date|slice:"0:19"}}</td>
+                    <td class='text-white'>{{i.roi_recieved}}</td>
+                    <td class='text-white'>{{i.plan_id.roi}} %</td>
 
                 
                     {% if i.status == '1' %}

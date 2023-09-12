@@ -59,7 +59,10 @@ urlpatterns = [
     path('level_income',views.level_income),
     path('tree/<str:pk>/',views.tree),
     path('unlock_levels/<str:pk>',views.unlock_levels),
-    path('rank_requests',views.rank_requests)
+    path('rank_requests',views.rank_requests),
+    path('rewards',views.rewards),
+    path('reward_requests',views.reward_requests),
+    path('rewardhistory',views.rewardhistory)
    
 
 ]

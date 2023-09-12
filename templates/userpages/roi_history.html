@@ -16,7 +16,7 @@
     <div class="card-header rounded-4">
       <h4 class="card-title">ROI History</h4>
   </div>
-    <div class="card-body">
+    <div class="card-body bg-dark">
    
       <div class="table-responsive">
 
@@ -38,10 +38,10 @@
           <tr>
             <td class='planname'>{{i.plan_id.plan_id.name}}</td>
             <td class='planname'>{{i.plan_id.c_id.name}}</td>
-            <td>$ {{i.roi}}</td>
-            <td>$ {{i.plan_id.roi_recieved}}</a></td>
-            <td>$ {{i.plan_id.amount}}</td>
-            <td>{{i.date|slice:"0:19"}}</td>
+            <td class='text-white'>$ {{i.roi}}</td>
+            <td class='text-white'>$ {{i.plan_id.roi_recieved}}</a></td>
+            <td class='text-white'>$ {{i.plan_id.amount}}</td>
+            <td class='text-white'>{{i.date|slice:"0:19"}}</td>
     
           </tr>
       

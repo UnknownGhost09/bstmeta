@@ -13,7 +13,7 @@
                 </p>
             </div>
             <div class="card">
-                <div class="card-body">
+                <div class="card-body bg-dark">
                     <div class='table-responsive'>
                         <table id ='test' class="table hover table-borderless dt-responsive nowrap w-100 table-striped-columns text-nowrapp">
                             <thead>
@@ -28,11 +28,11 @@
                             </thead>
                             {% for i in data %}
                             <tr>
-                                <td>{{i.plan_name}}</td>
-                                <td>{{i.name}}</td>
-                                <td>{{i.amount}}</td>
-                                <td>{{i.refferal_commision}}</td>
-                                <td>{{i.date}}</td>
+                                <td class='text-white'>{{i.plan_name}}</td>
+                                <td class='text-white'>{{i.name}}</td>
+                                <td class='text-white'>{{i.amount}}</td>
+                                <td class='text-white'>{{i.refferal_commision}}</td>
+                                <td class='text-white'>{{i.date}}</td>
                             </tr>
                             {% endfor %}
                             <tbody>

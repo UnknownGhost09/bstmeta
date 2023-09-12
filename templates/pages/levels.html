@@ -40,6 +40,11 @@
                         <label class="form-label" for="formrow-firstname-input">Level Income (%)</label>
                         <input type="number" class="form-control" id="formrow-firstname-input"  name='standard'>
                     </div>
+
+                    <div class="mb-3">
+                      <label class="form-label" for="formrow-firstname-input">Referral Requireds</label>
+                      <input type="number" class="form-control" id="formrow-firstname-input"  name='reffers'>
+                  </div>
              
               
          
@@ -73,6 +78,7 @@
               <tr >               
                 <th scope="col">Level</th>
                 <th scope="col">Level Income</th> 
+                <th scope='col'>Referral Required</th>
                 
                 <th scope='col'>action</th>
                    
@@ -83,6 +89,7 @@
                 <tr >
                   <td class="level-id">{{ i.id }}</td>
                   <td>{{i.points}} %</td>
+                  <td>{{i.reffers}}</td>
                  
                   <td>
                     <i class="fas fa-arrow-alt-circle-right h4 text-primary" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center{{i.id}}"></i>
@@ -91,7 +98,7 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Edit Level Income</h5>
+                                <h5 class="modal-title">Edit Level</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body text-wrap">
@@ -103,6 +110,10 @@
                                         <label class="form-label" for="formrow-firstname-input">Level Income (%)</label>
                                         <input type="number" class="form-control" id="formrow-firstname-input"  name='standard' value="{{i.points}}">
                                     </div>
+                                    <div class="mb-3">
+                                      <label class="form-label" for="formrow-firstname-input">Referral Requireds</label>
+                                      <input type="number" class="form-control" id="formrow-firstname-input"  name='reffers' value='{{i.reffers}}'>
+                                  </div>
                                
 
                                     <div class="mt-4">

@@ -293,10 +293,11 @@
             >
               <i class="fa fa-fw fa-bars"></i>
             </button>
-             <div class="page-title-right pt-3">
+
+            <div class="page-title-right pt-3 overflow-auto d-sm-block d-none">
               <div class="bg-light border p-1 rounded-3" id="reffer">
                 <div class="p-1">
-                  <div class="d-md-flex">
+                  <div class="d-flex">
                     <p class="my-auto font-w-500 tx-s-12">BSC</p>
                     <br />
                     <div
@@ -326,31 +327,12 @@
                 </div>
               </div>
             </div> 
+          
             <!-- App Search-->
           </div>
-
+          
           <div class="d-flex">
-            <div class="dropdown d-inline-block d-lg-none ms-2">
-              <button
-                type="button"
-                class="btn header-item"
-                id="page-header-search-dropdown"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i data-feather="search" class="icon-lg"></i>
-              </button>
-              <div
-                class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                aria-labelledby="page-header-search-dropdown"
-              >
-                <form class="p-3">
-                  <div class="form-group m-0"></div>
-                </form>
-              </div>
-            </div>
-
+           
             {% comment %}
             <div class="dropdown d-none d-sm-inline-block">
               <button
@@ -741,9 +723,22 @@
                   <span
                     class="badge rounded-pill bg-soft-danger text-danger float-end"
                   ></span>
-                  <span data-key="t-forms">Rank & Reward</span>
+                  <span data-key="t-forms">Rank</span>
                 </a>
               </li> 
+
+
+              <li>
+                <a href="../../../rewards">
+                  <i class="fa-solid fa-ranking-star"></i>
+                  <span
+                    class="badge rounded-pill bg-soft-danger text-danger float-end"
+                  ></span>
+                  <span data-key="t-forms">Royality Rewards</span>
+                </a>
+              </li> 
+
+              
 
               <li>
                 <a href="../../../support">
@@ -1509,6 +1504,102 @@
           document.querySelector("#mini-chart12"),
           options
         )).render();
+
+        var minichart4Colors = getChartColorsArray("#mini-chart13"),
+        options = {
+          series: [
+            {
+              data: [
+                12, 14, 20, 47, 30, 15, 470, 75, 6, 19, 14, 2, 47, 42, 15,
+              ],
+            },
+          ],
+          chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+          colors: minichart4Colors,
+          stroke: { curve: "smooth", width: 2 },
+          tooltip: {
+            fixed: { enabled: !1 },
+            x: { show: !1 },
+            y: {
+              title: {
+                formatter: function (r) {
+                  return "";
+                },
+              },
+            },
+            marker: { show: !1 },
+          },
+        };
+      (chart = new ApexCharts(
+        document.querySelector("#mini-chart13"),
+        options
+      )).render();
+
+
+
+      var minichart4Colors = getChartColorsArray("#mini-chart14"),
+      options = {
+        series: [
+          {
+            data: [
+              20, 14, 20, 47, 30, 15, 47, 75, 6, 19, 25, 2, 47, 42, 15,
+            ],
+          },
+        ],
+        chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+        colors: minichart4Colors,
+        stroke: { curve: "smooth", width: 2 },
+        tooltip: {
+          fixed: { enabled: !1 },
+          x: { show: !1 },
+          y: {
+            title: {
+              formatter: function (r) {
+                return "";
+              },
+            },
+          },
+          marker: { show: !1 },
+        },
+      };
+    (chart = new ApexCharts(
+      document.querySelector("#mini-chart14"),
+      options
+    )).render();
+
+
+
+    var minichart4Colors = getChartColorsArray("#mini-chart15"),
+    options = {
+      series: [
+        {
+          data: [
+            20, 14, 20, 47, 30, 15, 47, 75, 6, 19, 25, 2, 47, 42, 15,
+          ],
+        },
+      ],
+      chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+      colors: minichart4Colors,
+      stroke: { curve: "smooth", width: 2 },
+      tooltip: {
+        fixed: { enabled: !1 },
+        x: { show: !1 },
+        y: {
+          title: {
+            formatter: function (r) {
+              return "";
+            },
+          },
+        },
+        marker: { show: !1 },
+      },
+    };
+  (chart = new ApexCharts(
+    document.querySelector("#mini-chart15"),
+    options
+  )).render();
+
+
       } catch (e) {
         console.log(e);
       }

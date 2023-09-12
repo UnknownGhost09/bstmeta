@@ -3,14 +3,15 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 User=get_user_model()
+import heapq
 import time
 import calendar
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerial,VerifySerial
+from .serializers import UserSerial
 from core.serializer import UserReferral,referserial
-from core.models import Current_level,Rank,userRank,wallet,Transactions,membership,Login_history,UserMembership,userWithdrawls,TicketModel,UserReferral,plansmodel,levels,Emailservice,newsmodel,appsettings,UserAddressDetail,levelincome,userunlockedlevel,UserStaking,Ptransfer,gallaryimages,FarmingRoiLogs,StakingRoiLogs,youtubevideo,businesslogs,usercofounderclub,cofounderclub,ManageRoi,WithdrawSettingModel,categorymodel
+from core.models import Current_level,Rank,userRank,wallet,Transactions,membership,Login_history,UserMembership,userWithdrawls,TicketModel,UserReferral,plansmodel,levels,Emailservice,newsmodel,appsettings,UserAddressDetail,levelincome,userunlockedlevel,UserStaking,Ptransfer,gallaryimages,FarmingRoiLogs,StakingRoiLogs,youtubevideo,businesslogs,ManageRoi,WithdrawSettingModel,categorymodel,userRewards,Rewards,rewardLogs
 from django.contrib.auth.hashers import make_password
 import jwt
 from datetime import datetime
@@ -30,7 +31,25 @@ import jwt
 KEYS = getattr(settings, "KEY_", None)
 import requests
 
-from dateutil.relativedelta import relativedelta
+from dateutil import relativedelta
+
+
+import math
+ 
+# Function to print a:b:c
+def solveProportion(a, b1, b2, c):
+ 
+    A = a * b2
+    B = b1 * b2
+    C = b1 * c
+ 
+    # To print the given proportion
+    # in simplest form.
+    gcd1 = math.gcd(math.gcd(A, B), C)
+ 
+    print( str(A // gcd1) + ":" +
+           str(B // gcd1) + ":" +
+           str(C // gcd1))
 
 def getdata():
     api=r'https://api.dex-trade.com/v1/public/ticker?pair=ALPUSDT'
@@ -70,8 +89,7 @@ def home(request,pk=None):
                 farming_roi=FarmingRoiLogs.objects.filter(user_id=user.id)
                 total_farming_roi=sum([float(i.roi_recieved) for i in  UserMembership.objects.filter(user_id=user.id,status='1')])
 
-                farming_balance=sum([float(i.amount) for i in UserMembership.objects.filter(user_id=user.id,status='1')])
-
+            
                 userwallet=wallet.objects.get(user_id=user.id) 
                 user_refferals=User.objects.filter(referal_by=user.referal_code)
                 total_user_refferals=len(user_refferals)
@@ -83,16 +101,41 @@ def home(request,pk=None):
                     m='True'
 
                 team=[]
+                active_team=[]
+                non_active_team=[]
+                total_team_business=[]
                 child_id=[i.referal_code for i in user_refferals]
+               
                 if len(child_id)>0:
                     while True:
+                        total_team_business.extend([float(i.business) for i in User.objects.filter(referal_code__in=child_id)])
                         team.extend(child_id)
                         child_id=[i.referal_code for i in User.objects.filter(referal_by__in=child_id)]
                         if len(child_id)==0:
                             break
                 team=len(team)
-             
+                total_team_business=sum(total_team_business)
+            
                 
+                child_id=[i.referal_code for i in user_refferals if i.status=='1']
+                if len(child_id)>0:
+                    while True:
+                        active_team.extend(child_id)
+                        child_id=[i.referal_code for i in User.objects.filter(referal_by__in=child_id) if i.status=='1']
+                        if len(child_id)==0:
+                            break
+              
+                active_team=len(active_team)
+                child_id=[i.referal_code for i in user_refferals if i.status=='0']
+                if len(child_id)>0:
+                    while True:
+                        non_active_team.extend(child_id)
+                        child_id=[i.referal_code for i in User.objects.filter(referal_by__in=child_id) if i.status=='0']
+                        if len(child_id)==0:
+                            break
+                non_active_team=len(non_active_team)
+                
+
                 currnet_date=str(datetime.utcnow())[:10]
     
                 newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
@@ -103,54 +146,105 @@ def home(request,pk=None):
 
 
                 level_income=levelincome.objects.filter(parent_id=user.id)
-                ytv=youtubevideo.objects.filter(type='1',status='1')
-                video_data=youtubevideo.objects.filter(type='2',status='1')
-                print(video_data)
-                if len(ytv)>0:
-                    ytv=ytv[0]
-                else:
-                    ytv=None
+                
+                usr_rank=userRank.objects.filter(user_id=user.id,status='3')
+                
                 try:
-                    alpdata=getdata().get('data').get('last')
+                    reward_income=sum([float(i.income) for i in usr_rank])
                 except:
-                    alpdata=None
-                total_income=float(total_farming_roi)+float(refferal_income)
+                    reward_income=0
+                total_income=float(total_farming_roi)+float(refferal_income)+sum([float(i.level_income) for i in level_income])+reward_income
+                
+                current_package_amount=sum([float(i.amount) for i in  UserMembership.objects.filter(user_id=user.id)])
+                
+                
+                userrank=Rewards.objects.filter(status='1')
+              
 
-                # print(total_income)
-                
-                
+                r=[]
+                print(r)
+                for i in userrank:
+                    rank_data={'rank':i}
+                    try:
+                        a=userRewards.objects.get(user_id=user.id,rank_id=i.id)
+                        rank_data['status']=a.status
+                    except:
+                        rank_data['status']='0'
+                    r.append(rank_data)
+                print(r)
+                lev_income={}
+                for i in level_income:
+                    print(i.level_income)
+                    if i.level_id.id not in lev_income:
+                        lev_income[i.level_id.id]=float(i.level_income)
+                    else:
+                        lev_income[i.level_id.id]+=float(i.level_income)
+                max_level=max([i.id for i in levels.objects.all()])
+                for i in range(1,max_level+1):
+                    if i not in lev_income:
+                        lev_income[i]=0
+
+                top_achivers=userRank.objects.filter(status='3')
+                largest=heapq.nlargest(3,[(float(i.child_id.business),i.child_id.id) for i in UserReferral.objects.filter(parent_id=user.id)])
+                largest_id=[i[1] for i in largest]
+                all_business=sum(i[0] for i in largest)
+                legdata=User.objects.filter(id__in=largest_id)
+                if all_business >0:
+                    leg=[{'user':i,'ratio':(float(i.business)/all_business)*100} for i in legdata]
+                else:
+                    leg=[{'user':i,'ratio':0} for i in legdata]
+
+                o=UserMembership.objects.filter(user_id=user.id,status='1')
+                roi_left=sum([((float(i.amount)/100)*float(i.max_roi))-float(i.roi_recieved) for i in o])
+                overall_=sum([(float(i.amount)/100)*float(i.max_roi) for i in o])
+                gto=sum([float(i.child_id.business) for i in UserReferral.objects.filter(parent_id=user.id)])
+                try:
+                    royality_reward=sum([float(i.reward_recieved) for i in userRewards.objects.filter(user_id=user.id)])
+                except:
+                    royality_reward=0
+    
                 return render(request,'userpages/home.html',{'total_income':total_income,
                                                              'userwallet':userwallet,
                                                              'user_refferals':user_refferals,
-                                                            'total_farming_roi':total_farming_roi,
+                                                            'userrank':r,
                                                              'total_user_refferals':total_user_refferals,
                                                              'total_withdrawls':total_withdrawls,
                                                              'u':user.email,
-                                                             'last':alpdata,
                                                              'ref_link':ref_link,
                                                              'newsdata':newsdata,
                                                             'size':len(newsdata),
-                                                            'appdetail':appdetail,
-                                                            'ytv':ytv,
-                                                            'farming_balance':farming_balance,
+                                                            'appdetail':appdetail,       
                                                             'refferal_income':refferal_income,
                                                             'team':team,
                                                             'farming_roi':farming_roi,
                                                             'userdata':user,
-                                                            'video_data':video_data,
+                                                            'topachivers':top_achivers,
                                                             'm':m,
                                                             'smart_contract':smart_contract,
-                                                            'level_income_logs':level_income,
-                                                            'level_income':sum([float(i.level_income) for i in level_income])
+                                                            'level_income_logs':lev_income,
+                                                            'level_income':sum([float(i.level_income) for i in level_income]),
+                                                            'reward_income':reward_income,
+                                                            'active_team':active_team,
+                                                            'non_active_team':non_active_team,
+                                                            'total_team_business':total_team_business,
+                                                            'current_package_amount':current_package_amount,
+                                                            'total_farming_roi':total_farming_roi,
+                                                            'legdata':leg,
+                                                            'roi_left':roi_left,
+                                                            'overall_':overall_,
+                                                            'gto':gto,
+                                                            'royality_reward':royality_reward
                                                              })
             else:
                 del request.session['email']
                 del request.session['role']
+                del request.session['token']
                 return redirect('../../../')
                                    
         except:
             del request.session['email']
             del request.session['role']
+            del request.session['token']
             return redirect('../../../')
             
 
@@ -490,8 +584,8 @@ def loginpage(request):
             try:
                 username=User.objects.get(email=em).username
             except:
-                return render(request,'userpages/login_2.html',{'message':'Incorrect Email','appdetail':appdetail})
-            usr=authenticate(username=username,password=ps)
+                return render(request,'userpages/login_2.html',{'message1':'Incorrect Email','appdetail':appdetail})
+            usr=authenticate(email=em,password=ps)
             if usr is not None:
             
                 if usr.role == 'admin' : 
@@ -1819,7 +1913,6 @@ def buyplan(request):
         if 'buyplan' in request.POST:   
             id=request.POST.get('id')
             category=request.POST.get('category')
-            print(category)
             amount=request.POST.get('amount')
             memberplan=membership.objects.get(id=id)
             min_amount=memberplan.min_amount
@@ -2016,6 +2109,19 @@ def buyplan(request):
             user_id.paid_members='True'
             user_id.activation_date= str(time.time())     
             user_id.save()
+            if user_id.referal_by is not None:
+                try:
+                    p=User.objects.get(referal_code=user_id.referal_by)
+                    if p.verified_at=='True' and p.paid_members=='True':
+                        p_membership=UserMembership.objects.filter(user_id=p.id)
+                        for x in p_membership:
+                            x.max_roi='400'
+                            x.save()
+                    else:
+                        pass
+
+                except:
+                    pass
 
             while True:
                 if user_id.referal_by is not None:
@@ -2029,14 +2135,53 @@ def buyplan(request):
                         businesslogs.objects.create(parent_id=parent,child_id=user_id,plan_id=membership.objects.get(id=id),amount=amount)
                         p_business=float(parent.business_balance)
                         p_claim=[i.id for i in Rank.objects.filter(status='1') if float(i.business_required)<=p_business]
-                        print(p_claim)
                         already_claimed=[i.plan_id.id for i in userRank.objects.filter(user_id=parent.id)]
-                        print(already_claimed)
                         have_to_claim=list(set(p_claim).difference(already_claimed))
+
+
+                        #royality rewards
+                        largest=heapq.nlargest(3,[float(i.child_id.business) for i in UserReferral.objects.filter(parent_id=parent.id)])
+                        ratio=[int((i/sum(largest))*100) for i in largest]
+                        ratio.sort()
+                        rwds=[i.id for i in Rewards.objects.all() if float(i.business_required)<=sum(largest)]
+                        created_at=parent.created_at[:10]
+                        d1=datetime.strptime(created_at, r"%Y-%m-%d")
+                        d2=datetime.strptime(str(datetime.utcnow())[:10],r"%Y-%m-%d")
+                        delta=d2-d1
+                        delta=int(delta.days)
+
+                        if len(rwds)>0 and ratio[0]==30 and ratio[1]==30 and ratio[2]==40:
+                            for y in rwds:
+                                r=Rewards.objects.get(id=y)
+                                if r.rank=='Platinum' and len(userRewards.objects.all())<=100:
+                                    if int(r.days)>=delta:
+                                        userRewards.objects.create(user_id=parent,rank_id=r,status='1',next_date=str(datetime.now()+relativedelta.relativedelta(months=1)))
+                                        try:
+                                            ex=userRewards.objects.get(user_id=parent.id,rank_id=Rewards.objects.get(name='Gold').id)
+                                            ex.status='4'
+                                            ex.save()
+                                        except:
+                                            pass
+                                else:
+                                    if int(r.days)>=delta:
+                                        userRewards.objects.create(user_id=parent,rank_id=r,status='1',next_date=str(datetime.now()+relativedelta.relativedelta(months=1)))
+                    
+
+                        
+
+
+
+
+
+
+
+                        # End Royality Rewards
+
                         for i in have_to_claim:
                             j=Rank.objects.get(id=i)
-                            userRank.objects.create(user_id=parent,rank_id=j,status='1',reward_recieved=j.reward,income=j.royality_income)
-                            print("hello")
+                            if j.days>=delta:
+                                userRank.objects.create(user_id=parent,rank_id=j,status='1',reward_recieved=j.reward,income=j.royality_income)
+                                
                         user_id=User.objects.get(id=parent.id)
 
 
@@ -2079,20 +2224,10 @@ def buyplan(request):
 
                         #parent unlocked levels
                         parent_unlocked_levels=userunlockedlevel.objects.get(user_id=parent.id)
-                        try:
-                            first_lev=levels.objects.get(id=int(parent_unlocked_levels.level_id.id)+1)
-                            print(first_lev)
-                            parent_unlocked_levels.level_id=first_lev
-                            parent_unlocked_levels.save()
-                        except:
-                            pass
+                        parent_total_refs=UserReferral.objects.filter(parent_id=parent.id)
+                        p_level=max([i.id for i in levels.objects.all() if int(i.reffers)<=len(parent_total_refs)])
+                        parent_unlocked_levels.level_id=levels.objects.get(id=p_level)
 
-                        try:
-                            next_lev=levels.objects.get(i=parent_unlocked_levels+2)
-                            parent_unlocked_levels.level_id=next_lev
-                            parent_unlocked_levels.save()
-                        except:
-                            pass
                     message='Package Bought Successfully'
                     return render(request,'userpages/membership.html',{'data':data_,'message':message,
                                                                'ref_link':ref_link,'appdetail':appdetail,
@@ -2224,7 +2359,7 @@ def wallettransfer(request):
         newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
         user_id=User.objects.get(email=request.session.get('email'))
         user_wallet=wallet.objects.get(user_id=user_id.id)
-        bal=float(user_wallet.roi_balance)+float(user_wallet.level_balance)+float(user_wallet.bonus_balance)+float(user_wallet.referral_balance)+float(user_wallet.deposit_balance)+float(user_wallet.reserved_balance)
+        bal=float(user_wallet.roi_balance)+float(user_wallet.level_balance)+float(user_wallet.bonus_balance)+float(user_wallet.referral_balance)+float(user_wallet.deposit_balance)+float(user_wallet.reserved_balance)+float(user_wallet.topup_balance)
         if request.method=='POST':
             if 'transfer' in request.POST:
                 currency=request.POST.get('currency')
@@ -2260,6 +2395,7 @@ def wallettransfer(request):
                     direct_balance=float(user_wallet.referral_balance)
                     deposit_balance=float(user_wallet.deposit_balance)
                     transfer_balance=float(user_wallet.reserved_balance)
+                    topup_balance=float(user_wallet.topup_balance)
                     print(roi_balance,type(roi_balance))
 
                     roi_log=0
@@ -2268,6 +2404,7 @@ def wallettransfer(request):
                     direct_log=0
                     deposit_log=0
                     transfer_log=0
+                    topup_log=0
                                 # roicutting
                     print('amount to deduce --> ',amount_to_deduce)
                     if roi_balance<=amount_to_deduce:
@@ -2350,7 +2487,7 @@ def wallettransfer(request):
                     if transfer_balance <=amount_to_deduce:
                         user_wallet.reserved_balance=0
                         user_wallet.save()
-                        amount_to_deduce-=bonus_balance
+                        amount_to_deduce-=transfer_balance
                         transfer_log=transfer_balance
                         print('transferlog',transfer_log)
                     else:
@@ -2361,6 +2498,20 @@ def wallettransfer(request):
                                     
                         message='Done'
                         print('transfer_log',transfer_log)
+                    if topup_balance <=amount_to_deduce:
+                        user_wallet.topup_balance=0
+                        user_wallet.save()
+                        amount_to_deduce-=topup_balance
+                        topup_log=transfer_balance
+                        print('transferlog',transfer_log)
+                    else:
+                        user_wallet.topup_balance=float(user_wallet.topup_balance)-float(amount_to_deduce)
+                        user_wallet.save()
+                        topup_log=amount_to_deduce
+                        amount_to_deduce-=amount_to_deduce
+                                    
+                        message='Done'
+                        print('transfer_log',topup_log)
 
                     transfer_wallet.avaliable_balance=float(transfer_wallet.avaliable_balance)+float(amount)
                     transfer_wallet.reserved_balance=float(transfer_wallet.reserved_balance)+float(amount)
@@ -2638,6 +2789,8 @@ class dailyincome(APIView):
         message1=None
         message2=None   
         usr_members=UserMembership.objects.filter(status='1')
+
+
         for i in usr_members:
             overall_roi=ManageRoi.objects.all()[0]
             if overall_roi.farming_roi=='0':
@@ -2653,7 +2806,7 @@ class dailyincome(APIView):
             delta=d1-d2
             delta=int(delta.days)
             if delta>0:
-                message='Roi Already Givenn'
+                message='Roi Already Given'
                 print(delta)
                 continue
             else:
@@ -2685,40 +2838,40 @@ class dailyincome(APIView):
                         child_id=i.user_id
                         if overall_roi.level_income=='1':
                             for j in range(1,levelid+1):
-                                if child_id.referal_by is not None:
-                                
+                                if child_id.referal_by is not None:       
                                     try:
                                         parent=User.objects.get(referal_code=child_id.referal_by)
-                                        print(parent)
-                                        if parent.verified_at=='True'  and parent.level_income_status=='1':
-                                            try:
-                                                print(j)
-                                                level_id=levels.objects.get(id=j)
-                                                level_roi=next_roi/100*float(level_id.points)
-                                                levelincome.objects.create(parent_id=parent,child_id=i.user_id,level_id=level_id,level_income=level_roi,date=logdate)
-                                                parent_wallet=wallet.objects.get(user_id=parent.id)
-                                                parent_wallet.avaliable_balance=float(parent_wallet.avaliable_balance)+float(next_roi)
-                                                parent_wallet.level_balance=float(parent_wallet.level_balance)+float(next_roi)
-                                                parent_wallet.save()
+                                        p_levels=int(userunlockedlevel.objects.get(user_id=parent.id).level_id.id)
+                                        if p_levels>=j:
+                                            if parent.verified_at=='True'  and parent.level_income_status=='1':
+                                                try:
+                                                    level_id=levels.objects.get(id=j)
+                                                    level_roi=next_roi/100*float(level_id.points)
+                                                    levelincome.objects.create(parent_id=parent,child_id=i.user_id,level_id=level_id,level_income=level_roi,date=logdate)
+                                                    parent_wallet=wallet.objects.get(user_id=parent.id)
+                                                    parent_wallet.avaliable_balance=float(parent_wallet.avaliable_balance)+float(next_roi)
+                                                    parent_wallet.level_balance=float(parent_wallet.level_balance)+float(next_roi)
+                                                    parent_wallet.save()
+                                                    child_id=parent
+                                                    print('new_parent_id -->',child_id)
+                                                    message2='Level Income Saved Successfully'
+                                                except:
+                                                    pass
+                                            else:
                                                 child_id=parent
-                                                print('new_parent_id -->',child_id)
-                                                message2='Level Income Saved Successfully'
-                                            except:
-                                                pass
+                                        else:
+                                            break
                                     except:
                                         pass
                         else:
-                            message1='Level Income Closed'
-
-                                        
+                            message1='Level Income Closed'                        
 
                     else:
                         logdate=d1+timedelta(days=k)
                         i.roi_recieved=float(i.roi_recieved)+roi_left
                         i.status='2'
                         i.save()
-                        FarmingRoiLogs.objects.create(user_id=i.user_id,plan_id=i,roi=roi_left,date=logdate)
-                      
+                        FarmingRoiLogs.objects.create(user_id=i.user_id,plan_id=i,roi=roi_left,date=logdate)    
                         user_wallet=wallet.objects.get(user_id=i.user_id.id)
                         user_wallet.avaliable_balance=float(user_wallet.avaliable_balance)+roi_left
                         user_wallet.roi_balance=float(user_wallet.roi_balance)+roi_left
@@ -2731,32 +2884,87 @@ class dailyincome(APIView):
                                 if child_id.referal_by is not None:
                                     try:
                                         parent=User.objects.get(referal_code=child_id.referal_by)
-                                        print(parent)
-                                        if parent.verified_at=='True'  and parent.level_income_status=='1':
-                                            try:
-                                                print(j)
-                                                level_id=levels.objects.get(id=j)
-                                                level_roi=next_roi/100*float(level_id.points)
-                                                levelincome.objects.create(parent_id=parent,child_id=i.user_id,level_id=level_id,level_income=level_roi,date=logdate)
-                                                parent_wallet=wallet.objects.get(user_id=parent.id)
-                                                parent_wallet.avaliable_balance=float(parent_wallet.avaliable_balance)+float(roi_left)
-                                                parent_wallet.level_balance=float(parent_wallet.level_balance)+float(roi_left)
-                                                parent_wallet.save()
+                                        p_levels=int(userunlockedlevel.objects.get(user_id=parent.id).level_id.id)
+                                        if p_levels>=j:
+                                            if parent.verified_at=='True'  and parent.level_income_status=='1':
+                                                try:
+                                                    
+                                                    level_id=levels.objects.get(id=j)
+                                                    level_roi=next_roi/100*float(level_id.points)
+                                                    levelincome.objects.create(parent_id=parent,child_id=i.user_id,level_id=level_id,level_income=level_roi,date=logdate)
+                                                    parent_wallet=wallet.objects.get(user_id=parent.id)
+                                                    parent_wallet.avaliable_balance=float(parent_wallet.avaliable_balance)+float(roi_left)
+                                                    parent_wallet.level_balance=float(parent_wallet.level_balance)+float(roi_left)
+                                                    parent_wallet.save()
+                                                    child_id=parent
+                                                    print('new_parent_id -->',child_id)
+                                                    message2='Level Income Saved Successfully'
+                                                except:
+                                                    pass
+                                            else:
                                                 child_id=parent
-                                                print('new_parent_id -->',child_id)
-                                                message2='Level Income Saved Successfully'
-                                            except:
-                                                pass
+                                        else:
+                                            break
                                     except:
                                         pass
                         
             else:
                 i.status='2'
                 i.save()
+
+        
+
+        
+
+
         
 
         return Response({'status':True,message:[message,message1,message2]})
 
+
+class RoyalityReward(APIView):
+    def get(self,request,format=None):
+        message=None
+        rwds=userRewards.objects.filter(status='3')
+        for j in rwds:
+            nxt_date=str(j.next_date[:10])
+            current_date=str(datetime.now())
+            d1=datetime.strptime(nxt_date[:10], r"%Y-%m-%d")
+            d2=datetime.strptime(current_date[:10], r"%Y-%m-%d")
+            delta = relativedelta.relativedelta(d1, d2)
+            delta=int(delta.months)
+            if delta>0:
+                if j.status=='1':
+                    x=delta
+                    for i in range(1,delta+1):
+                        if j.rank_id.turnover=='Team':
+                            usr_id=j.user_id
+                            childs=[i.id for i in User.objects.filter(referal_by=usr_id.referal_code,status='1')]
+                            obj=sum([float(i.amount) for i in businesslogs.objects.filter(parent_id__in=childs) if relativedelta.relativedelta(datetime.strptime(str(datetime.now())[:10], r"%Y-%m-%d"),datetime.strptime(i.date[:10], r"%Y-%m-%d")).months==x])
+                            income=float(j.rank_id.income)/100*float(obj)
+                            rewardLogs.objects.create(rank_id=j,reward_recieved=income,date=str(d1)+relativedelta.relativedelta(months=i))
+                            usr_wallet=wallet.objects.get(user_id=j.user_id.id)
+                            usr_wallet.avaliable_balance=float(usr_wallet.avaliable_balance)+income
+                            usr_wallet.bonus_balance=float(usr_wallet.bonus_balance)+income
+                            usr_wallet.save()
+                            j.reward_recieved=float(j.reward_recieved)+income
+                            j.save()
+                            x-=1
+
+                        elif j.rank_id.turnover=='Company':
+                            usr_id=j.user_id
+                            obj=sum([float(i.amount) for i in businesslogs.objects.all() if relativedelta.relativedelta(datetime.strptime(str(datetime.now())[:10], r"%Y-%m-%d"),datetime.strptime(i.date[:10], r"%Y-%m-%d")).months==x])
+                            income=float(j.rank_id.income)/100*float(obj)
+                            rewardLogs.objects.create(rank_id=j,reward_recieved=income,date=str(d1)+relativedelta.relativedelta(months=i))
+                            usr_wallet=wallet.objects.get(user_id=j.user_id.id)
+                            usr_wallet.avaliable_balance=float(usr_wallet.avaliable_balance)+income
+                            usr_wallet.bonus_balance=float(usr_wallet.bonus_balance)+income
+                            usr_wallet.save()
+                            j.reward_recieved=float(j.reward_recieved)+income
+                            j.save()
+                            x-=1
+                    j.next_date=str(datetime.now()+relativedelta.relativedelta(months=1))
+        return Response({'status':"True",'message':message})
 
 def packages(request):
     currnet_date=str(datetime.utcnow())[:10]
@@ -2839,6 +3047,60 @@ def rankreward(request):
             r.append(rank_data)
         print(r)
         return render(request,'userpages/rankandrewards.html',{'message':message,
+                                                               'ref_link':ref_link,'appdetail':appdetail,
+                                                               'u':request.session.get('email'),
+                                                               'plan_name':'Farming Package','newsdata':newsdata,
+                                                               'size':len(newsdata),
+                                                               'userrank':r,
+                                                               'last':alpdata,'smart_contract':smart_contract})
+    else:
+        return redirect('../../../') 
+    
+
+def rewards(request):
+    if request.session.has_key('email')  and request.session.get('role') == 'user'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return redirect('../../../')
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return redirect('../../../')
+        message=None
+        smart_contract=WithdrawSettingModel.objects.get(id=1)
+        try:
+            appdetail=appsettings.objects.get(status='1')
+        except:
+            appdetail=None
+        try:
+            alpdata=getdata().get('data').get('last')
+        except:
+            alpdata=None
+        id=User.objects.get(email=request.session.get('email')).id
+        usr=User.objects.get(id=id)     
+        message=None
+        ref_link=invite(usr.referal_code)  
+        
+        currnet_date=str(datetime.utcnow())[:10]
+        newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
+        userrank=Rewards.objects.filter(status='1')
+        user_id=User.objects.get(email=request.session.get('email'))
+        r=[]
+        for i in userrank:
+            rank_data={'rank':i}
+            try:
+                a=userRewards.objects.get(user_id=user_id.id,rank_id=i.id)
+                rank_data['status']=a.status
+            except:
+                rank_data['status']='0'
+            r.append(rank_data)
+    
+        return render(request,'userpages/rewards.html',{'message':message,
                                                                'ref_link':ref_link,'appdetail':appdetail,
                                                                'u':request.session.get('email'),
                                                                'plan_name':'Farming Package','newsdata':newsdata,
@@ -3209,6 +3471,35 @@ def claim_reward(request,pk=None):
             user_id.business_balance=float(user_id.business_balance)-float(rank_id.business_required)
             user_id.save()
             usrrank=userRank.objects.get(user_id=user_id.id,rank_id=id)
+            usrrank.status='2'
+            usrrank.save()
+            return redirect('../../../rankreward')
+        else:
+            return redirect('../../../dashboard')
+
+    else:
+        return redirect('../../../')
+    
+def rewards_claim(request,pk=None):
+
+    if request.session.has_key('email')  and request.session.get('role') == 'user'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return JsonResponse({'status':0})
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return JsonResponse({'status':'0'})
+        if pk is not None:
+            id=pk
+            user_id=User.objects.get(email=request.session.get('email'))
+            
+            usrrank=userRewards.objects.get(user_id=user_id.id,rank_id=id)
             usrrank.status='2'
             usrrank.save()
             return redirect('../../../rankreward')

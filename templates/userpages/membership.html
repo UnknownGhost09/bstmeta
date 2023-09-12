@@ -44,7 +44,7 @@
                       </th>
                       <th scope="col">
                         <p class="text-white text-opacity-75 mb-0">
-                          ROI per day
+                          ROI per month
                         </p>
                       </th>
                       <th scope="col">
@@ -61,14 +61,14 @@
                     {% for i in data%}
                     <tr>
                       <td class="fw-bold planname">{{i.data.name}}</td>
-                      <td>$ {{i.data.min_amount}}</td>
+                      <td class='text-white'>$ {{i.data.min_amount}}</td>
                       {% if i.data.max_amount %}
-                      <td>$ {{i.data.max_amount}}</td>
+                      <td class='text-white'>$ {{i.data.max_amount}}</td>
                       {% else %}
-                      <td>Above</td>
+                      <td class='text-white'>Above</td>
                       {% endif %}
-                      <td>{{i.data.roi}} %</td>
-                      <td>{{i.data.overall_roi}} %</td>
+                      <td class='text-white'>{{i.data.roi}} %</td>
+                      <td class='text-white'>{{i.data.overall_roi}} %</td>
 
                       <td>
                         <button

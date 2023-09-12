@@ -3,7 +3,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
 User=get_user_model()
 from django.contrib.auth import authenticate
-from .models import levels,Rank,userRank,wallet,Transactions,UserReferral,Current_level,Login_history,status_activity,Emailservice,membership,UserMembership,userWithdrawls,WithdrawSettingModel,TicketModel,plansmodel,newsmodel,appsettings,levelincome,UserAddressDetail,UserStaking,gallaryimages,Ptransfer,youtubevideo,cofounderclub,usercofounderclub,ManageRoi,changesponserlogs,categorymodel
+from .models import levels,Rank,userRank,wallet,Transactions,UserReferral,Current_level,Login_history,status_activity,Emailservice,membership,UserMembership,userWithdrawls,WithdrawSettingModel,TicketModel,plansmodel,newsmodel,appsettings,levelincome,UserAddressDetail,UserStaking,gallaryimages,Ptransfer,youtubevideo,cofounderclub,usercofounderclub,ManageRoi,changesponserlogs,categorymodel,FarmingRoiLogs,Rewards,userRewards
 from django.http import JsonResponse
 from django.conf import settings
 KEYS = getattr(settings, "KEY_", None)
@@ -142,6 +142,82 @@ def rank(request):
 
         data=Rank.objects.all()
         return render(request,'pages/rank.html',{'u':u,
+                                                  'appdetail':appdetail,'rankdata':data,
+                                                  'message':message,
+                                                  'message1':message1})
+    else:
+        return redirect('../../../')
+    
+
+def rewards(request):
+    if request.session.has_key('email')  and request.session.get('role') == 'admin'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return redirect('../../../')
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return redirect('../../../')
+        message=None
+        message1=None
+        u=User.objects.get(email=request.session.get('email'))
+        try:
+            appdetail=appsettings.objects.get(status='1')
+        except:
+            appdetail=None
+        if request.method=='POST':
+            if 'submit' in request.POST:
+                rank=request.POST.get('rank')  
+                business_required=request.POST.get('business_required')  
+                reward=request.POST.get('reward') 
+                days=request.POST.get('days') 
+                turnover=request.POST.get('turnover')
+                try:
+                    Rewards.objects.create(rank=rank,business_required=business_required,income=reward,days=days,turnover=turnover)
+                    message='New Reward Created Successfully'
+                except:
+                    message1='Reward already Exists'
+            elif 'update' in request.POST:
+                id=request.POST.get('id')
+                rank=request.POST.get('rank')  
+                business_required=request.POST.get('business_required')
+                reward=request.POST.get('reward')
+                days=request.POST.get('days')
+                turnover=request.POST.get('turnover')
+
+                obj=Rewards.objects.get(id=id)
+                try:
+                    obj.rank=rank
+             
+                    obj.business_required=business_required
+                    obj.income=reward
+                    obj.days=days
+                    obj.turnover=turnover
+                    obj.save()
+                    message='data updated successfully'
+                except:
+                    message1='Reward Already Exists'
+
+            else:
+                id=request.POST.get('id')
+                obj=Rewards.objects.get(id=id)
+                print(id)
+                if obj.status=='1':
+                    obj.status='0'
+                    message='Reward Deactivated Successfully'
+                elif obj.status=='0':
+                    obj.status='1'
+                    message='Reward Activated Successfully'
+                obj.save()
+                
+
+        data=Rewards.objects.all()
+        return render(request,'pages/rewards.html',{'u':u,
                                                   'appdetail':appdetail,'rankdata':data,
                                                   'message':message,
                                                   'message1':message1})
@@ -379,17 +455,20 @@ def levelsview(request):
             if 'update' in request.POST:
                 id=request.POST.get('id')
                 standard=request.POST.get('standard')
+                reffers=request.POST.get('reffers')
                 
                 obj=levels.objects.get(id=id)
                 obj.points=standard
+                obj.reffers=reffers
                 
                 obj.save()
                 message='SAVED SUCCESSFULLY'
             if 'create' in request.POST:
                 id=request.POST.get('id')
                 standard=request.POST.get('standard')
+                reffers=request.POST.get('reffers')
                 try:
-                    levels.objects.create(id=id,points=standard)
+                    levels.objects.create(id=id,points=standard,reffers=reffers)
                     message='SAVED SUCCESSFULLY'
                 except:
                     message1='ALREADY HAVE THIS LEVEL'
@@ -1075,6 +1154,33 @@ def user_rank(request):
         return render(request,'pages/userranks.html',{'data':data,'u':u,'appdetail':appdetail})
     else:
         return redirect('../../../login')
+    
+
+def rewardhistory(request):
+    if request.session.has_key('email')  and request.session.get('role') == 'admin'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return redirect('../../../')
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return redirect('../../../')
+        
+        u=User.objects.get(email=request.session.get('email'))
+        try:
+            appdetail=appsettings.objects.get(status='1')
+        except:
+            appdetail=None
+        data=userRewards.objects.all()
+        
+        return render(request,'pages/rewardhistory.html',{'data':data,'u':u,'appdetail':appdetail})
+    else:
+        return redirect('../../../login')
 
 def clubhistory(request):
     if request.session.has_key('email')  and request.session.get('role') == 'admin'  and request.session.has_key('token'):  
@@ -1522,7 +1628,7 @@ def roihistory(request):
             except:
                 pass
             return redirect('../../../')
-        data=UserMembership.objects.all()
+        data=FarmingRoiLogs.objects.all()
         try:
             appdetail=appsettings.objects.get(status='1')
         except:
@@ -2293,6 +2399,50 @@ def rank_requests(request):
         data=userRank.objects.filter(status='2')
 
         return render(request,'pages/claim_rewards.html',{'u':u,'appdetail':appdetail,'message':message,'message1':message1,'data':data})
+       
+    else:
+        return redirect('../../../')
+    
+
+def reward_requests(request):
+    if request.session.has_key('email')  and request.session.get('role') == 'admin'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return redirect('../../../')
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return redirect('../../../')
+        
+        try:
+            appdetail=appsettings.objects.get(status='1')
+        except:
+            appdetail=None
+        u=User.objects.get(email=request.session.get('email'))
+        message=None
+        message1=None
+        if request.method=='POST':
+            if 'approve' in request.POST:
+                id=request.POST.get('id')
+                ob=userRewards.objects.get(id=id)
+                ob.status='3'
+                ob.save()
+                message='Done'
+            elif 'delete' in request.POST:
+               
+                id=request.POST.get('id')
+                ob=userRewards.objects.get(id=id)
+                ob.status='4'
+                ob.save()
+                message='Done'
+        data=userRewards.objects.filter(status='2')
+
+        return render(request,'pages/reward_requests.html',{'u':u,'appdetail':appdetail,'message':message,'message1':message1,'data':data})
        
     else:
         return redirect('../../../')

@@ -20,7 +20,7 @@
       
       </div>
   </div>
-    <div class="card-body">
+    <div class="card-body bg-dark">
    
         <div class="table-responsive">
             <table
@@ -39,9 +39,9 @@
               <tbody>
                 {% for i in data %}
                 <tr>
-                  <td>{{i.amount}}</td>
-                  <td>{{i.currency}}</td>
-                  <td>{{i.address}}</td>
+                  <td class='text-white'>{{i.amount}}</td>
+                  <td class='text-white'>{{i.currency}}</td>
+                  <td class='text-white'>{{i.address}}</td>
                   {% if i.status == '0' %}
                   <td>
                     <span
@@ -64,7 +64,7 @@
                     >
                   </td>
                   {% endif %}
-                  <td>{{i.date|slice:"0:19"}}</td>
+                  <td class='text-white'>{{i.date|slice:"0:19"}}</td>
                 </tr>
                 {% endfor %}
               </tbody>

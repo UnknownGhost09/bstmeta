@@ -19,7 +19,7 @@
       <h4 class="card-title">$ {{overallincome}}</h4>
       </div>
   </div>
-    <div class="card-body">
+    <div class="card-body bg-dark">
    
       <div class="table-responsive">
 
@@ -38,9 +38,9 @@
         
           <tr>
  
-            <td>{{i.level_id.id}} Level</td>
-            <td>$ {{i.level_income}}</a></td>
-            <td>{{i.date|slice:"0:19"}}</td>
+            <td class='text-white'>{{i.level_id.id}} Level</td>
+            <td class='text-white'>$ {{i.level_income}}</a></td>
+            <td class='text-white'>{{i.date|slice:"0:19"}}</td>
              {% if i.status == '0' %}
               <td>
                 <span

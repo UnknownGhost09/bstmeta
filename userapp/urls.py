@@ -55,7 +55,10 @@ urlpatterns = [
     path('reset_password/<str:pk>/',views.reset_password),
     path('newpassword',views.newpassword),
     path('getBalance/<str:pk>/',views.getBalance),
-    path('claim_reward/<str:pk>/',views.claim_reward)
+    path('claim_reward/<str:pk>/',views.claim_reward),
+    path('rewards',views.rewards),
+    path('rewards_claim/<str:pk>/',views.rewards_claim),
+    path('rolyality_reward',views.RoyalityReward.as_view())
 
 
 ]

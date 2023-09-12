@@ -18,7 +18,7 @@
       <p class="card-title-desc">All Wallet Tranasactions
       </p>
   </div>
-    <div class="card-body">
+    <div class="card-body bg-dark">
    
       <div class="table-responsive">
 
@@ -40,10 +40,10 @@
         
           <tr>
  
-            <td>{{data.coin}}</td>
-            <td>{{data.network}}</a></td>
-            <td>{{data.amount}}</td>
-            <td>{{data.address}}</td>
+            <td class='text-white'>{{data.coin}}</td>
+            <td class='text-white'>{{data.network}}</a></td>
+            <td class='text-white'>{{data.amount}}</td>
+            <td class='text-white'>{{data.address}}</td>
             <td>
               {% if i.type == '1' %}
                 Income
@@ -60,7 +60,7 @@
               Failed
               {% endif %}
             </td>
-            <td>{{data.created_at|slice:"0:19"}}</td>
+            <td class='text-white'>{{data.created_at|slice:"0:19"}}</td>
           </tr>
       
           {% endfor %}

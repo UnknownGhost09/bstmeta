@@ -16,16 +16,16 @@
         <link href="{% static 'assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet" type="text/css" />
 
         <!-- preloader css -->
-        <link rel="stylesheet" href="{% static 'assets/css/preloader.min.css' %}" type="text/css" />
-        <link href="{% static 'assets/libs/dropzone/min/dropzone.min.css' %}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{% static './assets/css/preloader.min.css' %}" type="text/css" />
+        <link href="{% static './assets/libs/dropzone/min/dropzone.min.css' %}" rel="stylesheet" type="text/css" />
         <!-- Bootstrap Css -->
-        <link href="{% static 'assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="{% static './assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
-        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static './assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
-        <link href="{% static 'assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="{% static 'assets/libs/flatpickr/flatpickr.min.css' %}">
-        <link href="{% static 'assets/libs/choices.js/public/assets/styles/choices.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static './assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{% static './assets/libs/flatpickr/flatpickr.min.css' %}">
+        <link href="{% static './assets/libs/choices.js/public/assets/styles/choices.min.css' %}" rel="stylesheet" type="text/css">
 
 
         <!-- preloader css -->
@@ -326,8 +326,8 @@
                                     
                                     <li><a href="../../../admin/withdraw_manage" data-key="t-maintenance">Pending Withdrawls</a></li>
                                     <li><a href="../../../admin/deposite_manage" data-key="t-maintenance">Pending Deposit</a></li>
-                                    <li><a href="../../../admin/rank_requests" data-key="t-maintenance">Rank And Rewards</a></li>
-                                    
+                                    <li><a href="../../../admin/rank_requests" data-key="t-maintenance">Ranks</a></li>
+                                    <li><a href="../../../admin/reward_requests" data-key="t-maintenance">Rewards</a></li>
                                 
                                 </ul>
                             </li>
@@ -344,7 +344,13 @@
                         <li>
                             <a href="../../../admin/rank">
                                 <i class="fa-solid fa-ranking-star"></i>
-                                <span data-key="t-horizontal">Rank & Rewards</span>
+                                <span data-key="t-horizontal">Rank </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../../../admin/rewards">
+                                <i class="fa-solid fa-ranking-star"></i>
+                                <span data-key="t-horizontal">Rewards</span>
                             </a>
                         </li>
 {% comment %} 
@@ -373,7 +379,7 @@
                                 <li><a href="../../../admin/roihistory" data-key="t-starter-page">ROI History</a></li>                    
                                 <li><a href="../../../admin/ticket_history" data-key="t-starter-page">Support History</a></li>  
                                 <li><a href="../../../admin/userrank" data-key="t-starter-page">User Ranks</a></li>  
-
+                                <li><a href="../../../admin/rewardhistory" data-key="t-starter-page">Reward History</a></li>  
          
 
                                                            

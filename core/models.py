@@ -222,6 +222,7 @@ class appsettings(models.Model):
 
 class levels(models.Model):
     points=models.CharField(max_length=200)
+    reffers=models.CharField(max_length=250,default='1')
     class Meta:
         db_table='levels'
 
@@ -399,6 +400,34 @@ class Rank(models.Model):
     class Meta:
         db_table='rank'
 
+
+class Rewards(models.Model):
+    rank=models.CharField(max_length=250)
+    income=models.CharField(max_length=250)
+    business_required=models.CharField(max_length=250)
+    days=models.CharField(max_length=250)
+    turnover=models.CharField(max_length=200,default='Team')
+    status=models.CharField(max_length=250,default='1')
+    class Meta:
+        db_table = 'rewards'
+        
+
+class userRewards(models.Model):
+    user_id=models.ForeignKey("core.User", db_column='user_id', on_delete=models.CASCADE)
+    rank_id=models.ForeignKey("core.Rewards", db_column='rank_id', on_delete=models.CASCADE,default='1')
+    reward_recieved=models.CharField(max_length=200,default='0')
+    status=models.CharField(max_length=100,default='0') 
+    date=models.CharField(max_length=200,default=datetime.now())
+    next_date=models.CharField(max_length=250,default=datetime.now())
+    class Meta:
+        db_table='userrewards'
+
+class rewardLogs(models.Model):
+    rank_id=models.ForeignKey("core.userRewards", db_column='rank_id', on_delete=models.CASCADE)
+    reward_recieved=models.CharField(max_length=200,default='0')
+    date=models.CharField(max_length=200,default=datetime.now())
+    class Meta:
+        db_table='rewardlogs'
 
 class cofounderclub(models.Model):
     club=models.CharField(max_length=200,unique=True)
