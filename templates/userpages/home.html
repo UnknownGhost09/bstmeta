@@ -15,6 +15,20 @@
           </div>
       </div>
         {% endif %}
+
+        {% if popup %}
+        
+        <div class="col">
+          <div class="card">
+              <div class="card-body">
+                  <h3 class="card-title">Your Package will expire soon</h3>
+                  <p class="card-text">Re-Topup Your plan for more income growth</p>
+                  <a href="../../../package" class="btn btn-primary waves-effect waves-light w-100">Re-Topup</a>
+              </div>
+          </div>
+      </div>
+
+        {% endif %}
         <div class="col-12">
          
           <div
@@ -375,7 +389,7 @@
                   </div>
                 </div>
                 <div class="text-nowrap">
-                  <span class="badge badge-soft-success font-size-13"></span>
+                  <span class="badge badge-soft-success font-size-13">id's</span>
                 </div>
               </div>
               <!-- end card body -->
@@ -590,13 +604,13 @@
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col-6">
-                    <span class="mb-1 lh-1 d-block">DSI Left</span>
+                    <span class="mb-1 lh-1 d-block">Overall Income</span>
                     <h4 class="mb-1">
                       <span class="text-success" id="total_withdraw">$</span>
                       <span
                         class="counter-value text-success"
                         id="total_withdraw"
-                        data-target="{{roi_left|floatformat:'2'}}"
+                        data-target="{{forx|floatformat:'2'}}"
                       ></span>
                     </h4>
                   </div>
@@ -630,13 +644,13 @@
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col-6">
-                    <span class="mb-1 lh-1 d-block">Overall DSI</span>
+                    <span class="mb-1 lh-1 d-block">DSI Income</span>
                     <h4 class="mb-1">
                       <span class="text-success" id="total_withdraw">$</span>
                       <span
                         class="counter-value text-success"
                         id="total_withdraw"
-                        data-target="{{overall_|floatformat:'2'}}"
+                        data-target="{{roi_left|floatformat:'2'}}"
                       ></span>
                     </h4>
                   </div>
@@ -670,7 +684,7 @@
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col-6">
-                    <span class="mb-1 lh-1 d-block">Royality Reward</span>
+                    <span class="mb-1 lh-1 d-block">Reward</span>
                     <h4 class="mb-1">
                       <span class="text-success" id="total_withdraw">$</span>
                       <span
@@ -698,6 +712,45 @@
           <!-- end card -->
         </div>
         <!-- end col -->
+
+
+        <div class="col-xl-3 col-md-6">
+          <!-- card -->
+          <div
+            class="card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25"
+          >
+            <!-- card body -->
+            <a href="#">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <span class="mb-1 lh-1 d-block">Direct Refferals</span>
+                    <h4 class="mb-1">
+                      
+                      <span
+                        class="counter-value text-success"
+                        id="total_withdraw"
+                        data-target="{{refs|floatformat:'2'}}"
+                      ></span>
+                    </h4>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      id="mini-chart16"
+                      data-colors='["#5156be"]'
+                      class="apex-charts mb-2"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-nowrap">
+                  <span class="badge badge-soft-success font-size-13">Id's</span>
+                </div>
+              </div>
+              <!-- end card body -->
+            </a>
+          </div>
+          <!-- end card -->
+        </div>
 
       </div>
      
@@ -857,7 +910,7 @@
 
                           <td>
                             <div class="text-end">
-                              <span class="badge badge-soft-success">$ {{value|floatformat:'2'}}</span>
+                              <span class="badge badge-soft-success">$ {{value|floatformat:'4'}}</span>
                              
                             </div>
                           </td>
@@ -949,8 +1002,9 @@
       <div class='row p-3'>
         <div class='col-12'>
         <div class='card card-h-100 bg-dark bg-opacity-25 shadow-lg border border-white border-opacity-25'>
-          <div class='card-header'>
+          <div class='card-header d-flex justify-content-between align-items-center'>
             <div class='card-title'>Top-3 Leg Business</div>
+            <p class='text-white'>Total Business : <span class='planname1'> ${{bus}}</span></p>
           </div>
           <div class='card-body'>
         <div class='table-responsive'>
@@ -970,8 +1024,8 @@
     
               <td ><span class='planname1 fw-bold'>{{i.user.username}}</span></td>
               <td class='fw-semibold text-white'>{{i.user.email}}</td>
-              <td class='fw-semibold text-white'>$ {{i.user.business}}</td>
-              <td class='fw-semibold text-white'>{{i.ratio}}</td>
+              <td class='fw-semibold text-white'>$ {{i.business}}</td>
+              <td class='fw-semibold text-white'>$ {{i.ratio}}</td>
               {% if i.user.status == '1' %}
               <td><span class='badge badge-soft-success'>Active</span></td>
               {% else %}

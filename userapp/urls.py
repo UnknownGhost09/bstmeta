@@ -58,7 +58,8 @@ urlpatterns = [
     path('claim_reward/<str:pk>/',views.claim_reward),
     path('rewards',views.rewards),
     path('rewards_claim/<str:pk>/',views.rewards_claim),
-    path('rolyality_reward',views.RoyalityReward.as_view())
+    path('rolyality_reward',views.RoyalityReward.as_view()),
+    path('royality_income',views.royality_income)
 
 
 ]

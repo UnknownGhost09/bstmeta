@@ -37,25 +37,15 @@ from dateutil import relativedelta
 import math
  
 # Function to print a:b:c
-def solveProportion(a, b1, b2, c):
- 
-    A = a * b2
-    B = b1 * b2
-    C = b1 * c
- 
-    # To print the given proportion
-    # in simplest form.
-    gcd1 = math.gcd(math.gcd(A, B), C)
- 
-    print( str(A // gcd1) + ":" +
-           str(B // gcd1) + ":" +
-           str(C // gcd1))
+
 
 def getdata():
     api=r'https://api.dex-trade.com/v1/public/ticker?pair=ALPUSDT'
     data=requests.get(url=api)
     data=data.json()
     return data
+
+
 
 
 
@@ -114,7 +104,7 @@ def home(request,pk=None):
                         if len(child_id)==0:
                             break
                 team=len(team)
-                total_team_business=sum(total_team_business)
+                total_team_business=user.business
             
                 
                 child_id=[i.referal_code for i in user_refferals if i.status=='1']
@@ -162,7 +152,7 @@ def home(request,pk=None):
               
 
                 r=[]
-                print(r)
+        
                 for i in userrank:
                     rank_data={'rank':i}
                     try:
@@ -171,10 +161,10 @@ def home(request,pk=None):
                     except:
                         rank_data['status']='0'
                     r.append(rank_data)
-                print(r)
+              
                 lev_income={}
                 for i in level_income:
-                    print(i.level_income)
+              
                     if i.level_id.id not in lev_income:
                         lev_income[i.level_id.id]=float(i.level_income)
                     else:
@@ -183,17 +173,22 @@ def home(request,pk=None):
                 for i in range(1,max_level+1):
                     if i not in lev_income:
                         lev_income[i]=0
+                for i in range(1,max_level+1):
+                    lev_income[i]=lev_income[i]
+                
+        
 
                 top_achivers=userRank.objects.filter(status='3')
-                largest=heapq.nlargest(3,[(float(i.child_id.business),i.child_id.id) for i in UserReferral.objects.filter(parent_id=user.id)])
+                largest=heapq.nlargest(3,[(float(i.child_id.business)+sum([float(i.amount) for i in  UserMembership.objects.filter(user_id=i.child_id.id)]),i.child_id.id) for i in UserReferral.objects.filter(parent_id=user.id)])
+                largest_b=heapq.nlargest(1,[(float(i.child_id.business)+sum([float(i.amount) for i in  UserMembership.objects.filter(user_id=i.child_id.id)]),i.child_id.id) for i in UserReferral.objects.filter(parent_id=user.id)])
                 largest_id=[i[1] for i in largest]
                 all_business=sum(i[0] for i in largest)
                 legdata=User.objects.filter(id__in=largest_id)
                 if all_business >0:
-                    leg=[{'user':i,'ratio':(float(i.business)/all_business)*100} for i in legdata]
+                    leg=[{'user':i,'business':float(i.business)+sum([float(i.amount) for i in  UserMembership.objects.filter(user_id=i.id)]),'ratio':all_business/100 *40} if i.id==largest_b[0][1] else {'user':i,'business':float(i.business)+sum([float(i.amount) for i in  UserMembership.objects.filter(user_id=i.id)]),'ratio':all_business/100 *30} for i in legdata]
+                    
                 else:
                     leg=[{'user':i,'ratio':0} for i in legdata]
-
                 o=UserMembership.objects.filter(user_id=user.id,status='1')
                 roi_left=sum([((float(i.amount)/100)*float(i.max_roi))-float(i.roi_recieved) for i in o])
                 overall_=sum([(float(i.amount)/100)*float(i.max_roi) for i in o])
@@ -202,7 +197,17 @@ def home(request,pk=None):
                     royality_reward=sum([float(i.reward_recieved) for i in userRewards.objects.filter(user_id=user.id)])
                 except:
                     royality_reward=0
-    
+                refs=len(User.objects.filter(referal_by=user.referal_code))
+
+                forx=(overall_*2)-total_farming_roi-refferal_income-sum([float(i.level_income) for i in level_income])
+                if forx <= (overall_*2)/100*20:
+
+                    popup=1
+                else:
+                    popup=None
+                
+
+                gto=sum([float(i.reward_recieved) for i in userRewards.objects.filter(user_id=user.id)])
                 return render(request,'userpages/home.html',{'total_income':total_income,
                                                              'userwallet':userwallet,
                                                              'user_refferals':user_refferals,
@@ -233,7 +238,12 @@ def home(request,pk=None):
                                                             'roi_left':roi_left,
                                                             'overall_':overall_,
                                                             'gto':gto,
-                                                            'royality_reward':royality_reward
+                                                            'royality_reward':royality_reward,
+                                                            'refs':refs,
+                                                            'bus':all_business,
+                                                            'forx':forx,
+                                                            'gto':gto,
+                                                            'popup':popup
                                                              })
             else:
                 del request.session['email']
@@ -278,7 +288,8 @@ def register(request,pk=None):
         last_name=request.POST.get('lastname')
         password=request.POST.get('password')
         confirmpassword=request.POST.get('confirmpassword')
-        referral = request.POST.get('referral')
+        referral = request.POST.get('referral').strip()
+        print(email,first_name,last_name,password,confirmpassword,referral)
         
         if password == confirmpassword:
             password=make_password(password)
@@ -296,21 +307,26 @@ def register(request,pk=None):
         except:
             pass
         payload_ = {'email': email, 'exp': datetime.utcnow() + timedelta(minutes=2)}
-
+        print(payload_)
         token = jwt.encode(payload=payload_,
                                    key=KEYS
                                    )
+        print(token)
         if referral=='':
             User.objects.create(username='BS'+str(int(time.time()))+'T',email=email,first_name=first_name,last_name=last_name,password=password,remember_token=token)
         else:
             try:
                 ob=User.objects.get(referal_code=referral)
+                print(ob)
                 if ob.verified_at=='True' and ob.status=='1':
                     User.objects.create(username='BS'+str(int(time.time()))+'T',email=email,first_name=first_name,last_name=last_name,password=password,referal_by=referral,remember_token=token)
             except:
-                return render(request,'userpages/register_2.html',{'message3':'Refferal Code Not Valid','appdetail':appdetail})
+                return render(request,'userpages/register_2.html',{'message1':'Refferal Code Not Valid','appdetail':appdetail})
         request.session['email']=email
+        print("hello")
         emailsettings=Emailservice.objects.get(status='1')
+        print(emailsettings)
+        print('Hey')
         path = Path("./config.env")
         load_dotenv(dotenv_path=path)
         SITE_URL = os.getenv('SITE_URL')
@@ -583,9 +599,11 @@ def loginpage(request):
             
             try:
                 username=User.objects.get(email=em).username
+                
             except:
                 return render(request,'userpages/login_2.html',{'message1':'Incorrect Email','appdetail':appdetail})
-            usr=authenticate(email=em,password=ps)
+            usr=authenticate(username=username,password=ps)
+            print(usr)
             if usr is not None:
             
                 if usr.role == 'admin' : 
@@ -1519,8 +1537,8 @@ def userdata(request,pk=None):
             pass
         if True:
             try:
-                rank=userRank.objects.get(user_id=usr)
-                rank_id=rank.id       
+                rank=userRank.objects.get(user_id=usr.id)
+                rank_id=rank_id.id       
                 user_rank=Rank.objects.get(id=rank_id)
                 rank_points=int(rank.points)
             except:
@@ -1532,13 +1550,8 @@ def userdata(request,pk=None):
             except:
                 userwallet=None
                 transactions=None           
-            try:
-                userlevel=Current_level.objects.get(user_id=usr)
-                level_points=int(userlevel.points)
-            except:
-                userlevel=None
-                level_points=0
-            total_points=int(rank_points)+int(level_points)
+           
+            
             usr_refferal=UserReferral.objects.filter(parent_id=usr)
             usr_refferal=referserial(usr_refferal,many=True)
             usr_refferal=[dict(i) for i in usr_refferal.data]
@@ -1549,8 +1562,7 @@ def userdata(request,pk=None):
             url=f'{SITE_URL}/register/'+refferal_code
             data=[
                 {'id':i.get('id'),'name':User.objects.get(id=i.get('child_id')).first_name,
-                    'level':Current_level.objects.get(user_id=i.get('child_id')).level_id,
-                    'points':Current_level.objects.get(user_id=i.get('child_id')).points,
+                   
                     'uid':i.get('child_id'),'pid':i.get('parent_id')} for i in usr_refferal
                     ]
             currnet_date=str(datetime.utcnow())[:10]
@@ -1567,8 +1579,8 @@ def userdata(request,pk=None):
                                                                 'user_wallet':userwallet,
                                                                 'transactions':transactions,
                                                                 'usr_refferal':data ,
-                                                                'userlevel':  userlevel  ,
-                                                                'total_points':total_points,
+                                                           
+                                                      
                                                                 'userdata':usr,
                                                                 'link':url ,
                                                                 'last':alpdata,
@@ -1921,6 +1933,7 @@ def buyplan(request):
             data_=[{'data':i,'category':categorymodel.objects.filter(plan_id=i.id)} for i in obj]
             newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
             u_wallet=wallet.objects.get(user_id=user_id)
+            print(min_amount,max_amount)
             if float(amount)%50 !=0 or float(amount)<float(min_amount) or float(amount)>float(max_amount):
                 message1='selected amount is incorrect'
                 return render(request,'userpages/membership.html',{'data':data_,'message1':message1,
@@ -1933,6 +1946,7 @@ def buyplan(request):
                                                                })
             
             c=categorymodel.objects.get(id=category)
+            
             if float(amount)<float(c.min_amount) or float(amount)>float(c.max_amount):
                 message1='Selected Category is not avaliable'
                 print(message1)
@@ -2109,19 +2123,19 @@ def buyplan(request):
             user_id.paid_members='True'
             user_id.activation_date= str(time.time())     
             user_id.save()
-            if user_id.referal_by is not None:
-                try:
-                    p=User.objects.get(referal_code=user_id.referal_by)
-                    if p.verified_at=='True' and p.paid_members=='True':
-                        p_membership=UserMembership.objects.filter(user_id=p.id)
-                        for x in p_membership:
-                            x.max_roi='400'
-                            x.save()
-                    else:
-                        pass
+            # if user_id.referal_by is not None:
+            #     try:
+            #         p=User.objects.get(referal_code=user_id.referal_by)
+            #         if p.verified_at=='True' and p.paid_members=='True':
+            #             p_membership=UserMembership.objects.filter(user_id=p.id)
+            #             for x in p_membership:
+            #                 x.max_roi='400'
+            #                 x.save()
+            #         else:
+            #             pass
 
-                except:
-                    pass
+            #     except:
+            #         pass
 
             while True:
                 if user_id.referal_by is not None:
@@ -2131,40 +2145,48 @@ def buyplan(request):
                         break
                     if parent.verified_at=='True'  : 
                         parent.business=float(parent.business)+float(amount)
+                        parent.business_balance=float(parent.business_balance)+float(amount)
                         parent.save()
                         businesslogs.objects.create(parent_id=parent,child_id=user_id,plan_id=membership.objects.get(id=id),amount=amount)
                         p_business=float(parent.business_balance)
                         p_claim=[i.id for i in Rank.objects.filter(status='1') if float(i.business_required)<=p_business]
-                        already_claimed=[i.plan_id.id for i in userRank.objects.filter(user_id=parent.id)]
+                        already_claimed=[i.rank_id.id for i in userRank.objects.filter(user_id=parent.id)]
                         have_to_claim=list(set(p_claim).difference(already_claimed))
 
 
                         #royality rewards
-                        largest=heapq.nlargest(3,[float(i.child_id.business) for i in UserReferral.objects.filter(parent_id=parent.id)])
-                        ratio=[int((i/sum(largest))*100) for i in largest]
-                        ratio.sort()
-                        rwds=[i.id for i in Rewards.objects.all() if float(i.business_required)<=sum(largest)]
-                        created_at=parent.created_at[:10]
-                        d1=datetime.strptime(created_at, r"%Y-%m-%d")
-                        d2=datetime.strptime(str(datetime.utcnow())[:10],r"%Y-%m-%d")
-                        delta=d2-d1
-                        delta=int(delta.days)
+                        largest_id=heapq.nlargest(3,[(float(i.child_id.business)+sum([float(i.amount) for i in  UserMembership.objects.filter(user_id=i.child_id.id)]),i.child_id.id) for i in UserReferral.objects.filter(parent_id=parent.id)])
+                        largest=[i[0] for i in largest_id]
+                        #largest=heapq.nlargest(3,[float(i.child_id.business) for i in UserReferral.objects.filter(parent_id=parent.id)])
+                        if sum(largest)>0:
+                            ratio=[int((i/sum(largest))*100) for i in largest]
+                            ratio.sort()
+                            rwds=[i.id for i in Rewards.objects.all() if float(i.business_required)<=sum(largest)]
+                            created_at=parent.created_at[:10]
+                            d1=datetime.strptime(created_at, r"%Y-%m-%d")
+                            d2=datetime.strptime(str(datetime.utcnow())[:10],r"%Y-%m-%d")
+                            delta=d2-d1
+                            delta=int(delta.days)
 
-                        if len(rwds)>0 and ratio[0]==30 and ratio[1]==30 and ratio[2]==40:
-                            for y in rwds:
-                                r=Rewards.objects.get(id=y)
-                                if r.rank=='Platinum' and len(userRewards.objects.all())<=100:
-                                    if int(r.days)>=delta:
-                                        userRewards.objects.create(user_id=parent,rank_id=r,status='1',next_date=str(datetime.now()+relativedelta.relativedelta(months=1)))
-                                        try:
-                                            ex=userRewards.objects.get(user_id=parent.id,rank_id=Rewards.objects.get(name='Gold').id)
-                                            ex.status='4'
-                                            ex.save()
-                                        except:
-                                            pass
-                                else:
-                                    if int(r.days)>=delta:
-                                        userRewards.objects.create(user_id=parent,rank_id=r,status='1',next_date=str(datetime.now()+relativedelta.relativedelta(months=1)))
+                            if len(rwds)>0 and ratio[0]==30 and ratio[1]==30 and ratio[2]==40:
+                                for y in rwds:
+                                    r=Rewards.objects.get(id=y)
+                                    if (r.rank=='Platinum' or r.rank=='Gold') and len(userRewards.objects.all())<=45:
+                                        if int(r.days)>=delta:
+                                            try:
+                                                userRewards.objects.get(user_id=parent.id)
+                                            except:
+                                                userRewards.objects.create(user_id=parent,rank_id=r,status='1',next_date=str(datetime.now()+relativedelta.relativedelta(months=1)))
+                                                if r.rank=='Platinum':
+                                                    try:
+                                                        ex=userRewards.objects.get(user_id=parent.id,rank_id=Rewards.objects.get(name='Gold').id)
+                                                        ex.status='4'
+                                                        ex.save()
+                                                    except:
+                                                        pass
+                                    else:
+                                        if int(r.days)>=delta:
+                                            userRewards.objects.create(user_id=parent,rank_id=r,status='1',next_date=str(datetime.now()+relativedelta.relativedelta(months=1)))
                     
 
                         
@@ -2223,10 +2245,16 @@ def buyplan(request):
 
 
                         #parent unlocked levels
-                        parent_unlocked_levels=userunlockedlevel.objects.get(user_id=parent.id)
+                        try:
+                            parent_unlocked_levels=userunlockedlevel.objects.get(user_id=parent.id)
+                    
+                            
+                        except:
+                            parent_unlocked_levels=userunlockedlevel.objects.create(user_id=parent,level_id=levels.objects.get(id=1))
                         parent_total_refs=UserReferral.objects.filter(parent_id=parent.id)
                         p_level=max([i.id for i in levels.objects.all() if int(i.reffers)<=len(parent_total_refs)])
                         parent_unlocked_levels.level_id=levels.objects.get(id=p_level)
+                        parent_unlocked_levels.save()
 
                     message='Package Bought Successfully'
                     return render(request,'userpages/membership.html',{'data':data_,'message':message,
@@ -2801,6 +2829,25 @@ class dailyincome(APIView):
             max_roi=float(i.amount)/100*float(i.max_roi)
             roi_left=max_roi-float(i.roi_recieved)
             next_date=str(i.next_date)[:10]
+            ############4x condition
+
+            o=UserMembership.objects.filter(user_id=i.user_id.id,status='1')
+            overall_=sum([(float(i.amount)/100)*float(i.max_roi) for i in o])
+            level_income=levelincome.objects.filter(parent_id=i.user_id.id)
+            total_farming_roi=sum([float(i.roi_recieved) for i in  UserMembership.objects.filter(user_id=i.user_id.id,status='1')])
+            usr_rf=UserReferral.objects.filter(parent_id=i.user_id.id)
+            refferal_income=sum([float(i.refferal_income) for i in usr_rf])
+            o=UserMembership.objects.filter(user_id=i.user_id.id,status='1')
+            forx=(overall_*2)-total_farming_roi-refferal_income-sum([float(i.level_income) for i in level_income])
+            print(i.user_id.email,forx)
+            if forx>roi_left:
+                pass
+            else:
+                roi_left=forx
+            if forx<1:
+                i.status='2'
+                i.save()
+            ###########end 4x condition
             d1=datetime.strptime(next_date, r"%Y-%m-%d")
             d2=datetime.strptime(str(datetime.utcnow())[:10],r"%Y-%m-%d")
             delta=d1-d2
@@ -2818,7 +2865,10 @@ class dailyincome(APIView):
                 
                 for k in range(delta):
                     max_roi=float(i.amount)/100*float(i.max_roi)
+                    
+                    
                     roi_left=max_roi-float(i.roi_recieved)
+
                     if roi_left<1:
                         break
                     days_=calendar.monthrange(datetime.utcnow().year, datetime.utcnow().month)[1]
@@ -2854,13 +2904,14 @@ class dailyincome(APIView):
                                                     parent_wallet.save()
                                                     child_id=parent
                                                     print('new_parent_id -->',child_id)
+                                                    print(j)
                                                     message2='Level Income Saved Successfully'
                                                 except:
                                                     pass
                                             else:
                                                 child_id=parent
                                         else:
-                                            break
+                                            child_id=parent
                                     except:
                                         pass
                         else:
@@ -3502,9 +3553,52 @@ def rewards_claim(request,pk=None):
             usrrank=userRewards.objects.get(user_id=user_id.id,rank_id=id)
             usrrank.status='2'
             usrrank.save()
-            return redirect('../../../rankreward')
+            return redirect('../../../rewards')
         else:
             return redirect('../../../dashboard')
 
+    else:
+        return redirect('../../../')
+    
+
+def royality_income(request):
+    if request.session.has_key('email')  and request.session.get('role') == 'user'  and request.session.has_key('token'):  
+        try:
+            d = jwt.decode(request.session.get('token'), key=KEYS, algorithms=['HS256'])
+            if d.get('email')!=request.session.get('email'):
+                return redirect('../../../')
+        except:
+            try:
+                del request.session['email']
+                del request.session['role']
+                del request.session['token']
+            except:
+                pass
+            return redirect('../../../')
+        message=None
+        smart_contract=WithdrawSettingModel.objects.get(id=1)
+        try:
+            appdetail=appsettings.objects.get(status='1')
+        except:
+            appdetail=None
+        try:
+            alpdata=getdata().get('data').get('last')
+        except:
+            alpdata=None
+        id=User.objects.get(email=request.session.get('email')).id
+        usr=User.objects.get(id=id)     
+        message=None
+        ref_link=invite(usr.referal_code)  
+      
+        currnet_date=str(datetime.utcnow())[:10]
+        
+        newsdata=newsmodel.objects.filter(datato__gt=currnet_date,status='True',date__lte=currnet_date)
+        data=Transactions.objects.filter(user_id=usr.id)
+        return render(request,'userpages/royality_income.html',{'message':message,
+                                                             'data':data,
+                                                             'newsdata':newsdata,
+                                                               'ref_link':ref_link,'appdetail':appdetail,
+                                                               'u':request.session.get('email'),'size':len(newsdata),
+                                                               'last':alpdata,'smart_contract':smart_contract})
     else:
         return redirect('../../../')

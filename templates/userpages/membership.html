@@ -75,14 +75,14 @@
                           type="button"
                           class="btn btn-success waves-effect waves-light"
                           data-bs-toggle="modal"
-                          data-bs-target="#firstmodal{{i.id}}"
+                          data-bs-target="#firstmodal{{i.data.id}}"
                         >
                           BUY
                         </button>
                         <!-- First modal dialog -->
                         <div
                           class="modal fade"
-                          id="firstmodal{{i.id}}"
+                          id="firstmodal{{i.data.id}}"
                           aria-hidden="true"
                           aria-labelledby="exampleModalToggleLabel"
                           tabindex="-1"
@@ -125,7 +125,7 @@
                                       class="form-control"
                                       id="formrow-firstname-input"
                                       placeholder="$ {{i.data.min_amount}}  -  $ {{i.data.max_amount}}"
-                                      name="amount"
+                                      name="amount" required
                                     />
                                     {% else %}
 
@@ -134,7 +134,7 @@
                                       class="form-control"
                                       id="formrow-firstname-input"
                                       placeholder="$ {{i.data.min_amount}}  -  Above"
-                                      name="amount"
+                                      name="amount" required
                                     />
                                     {% endif %}
                                   </div>

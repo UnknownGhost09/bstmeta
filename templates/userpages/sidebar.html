@@ -617,6 +617,13 @@
                       >Direct Refferal Income</a
                     >
                   </li>
+
+
+                  <li>
+                    <a href="../../../royality_income" data-key="t-starter-page"
+                      >Royality Reward Income</a
+                    >
+                  </li>
                 </ul>
               </li>
 
@@ -1598,6 +1605,38 @@
     document.querySelector("#mini-chart15"),
     options
   )).render();
+
+
+
+  var minichart4Colors = getChartColorsArray("#mini-chart16"),
+  options = {
+    series: [
+      {
+        data: [
+          20, 14, 20, 47, 30, 15, 47, 75, 6, 19, 25, 2, 47, 42, 15,
+        ],
+      },
+    ],
+    chart: { type: "line", height: 50, sparkline: { enabled: !0 } },
+    colors: minichart4Colors,
+    stroke: { curve: "smooth", width: 2 },
+    tooltip: {
+      fixed: { enabled: !1 },
+      x: { show: !1 },
+      y: {
+        title: {
+          formatter: function (r) {
+            return "";
+          },
+        },
+      },
+      marker: { show: !1 },
+    },
+  };
+(chart = new ApexCharts(
+  document.querySelector("#mini-chart16"),
+  options
+)).render();
 
 
       } catch (e) {

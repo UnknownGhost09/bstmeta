@@ -26,7 +26,6 @@
                 <th scope="col"><p class="text-white text-opacity-75 mb-0">Package Name</p></th>
                 <th scope="col"><p class="text-white text-opacity-75 mb-0">Category Name</p></th>
                 <th scope="col"><p class="text-white text-opacity-75 mb-0">ROI recieved</p></th>
-                <th scope="col"><p class="text-white text-opacity-75 mb-0">Overall Recieved ROI</p></th>
                 <th scope='col'><p class="text-white text-opacity-75 mb-0">Package Amount</p></th>
                 <th scope='col'><p class="text-white text-opacity-75 mb-0">Date</p></th>
               </tr>
@@ -38,8 +37,7 @@
           <tr>
             <td class='planname'>{{i.plan_id.plan_id.name}}</td>
             <td class='planname'>{{i.plan_id.c_id.name}}</td>
-            <td class='text-white'>$ {{i.roi}}</td>
-            <td class='text-white'>$ {{i.plan_id.roi_recieved}}</a></td>
+            <td class='text-white'>$ {{i.roi|floatformat:'2'}}</td>
             <td class='text-white'>$ {{i.plan_id.amount}}</td>
             <td class='text-white'>{{i.date|slice:"0:19"}}</td>
     

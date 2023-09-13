@@ -39,7 +39,7 @@
           <tr>
  
             <td class='text-white'>{{i.level_id.id}} Level</td>
-            <td class='text-white'>$ {{i.level_income}}</a></td>
+            <td class='text-white'>$ {{i.level_income|floatformat:'2'}}</a></td>
             <td class='text-white'>{{i.date|slice:"0:19"}}</td>
              {% if i.status == '0' %}
               <td>
